@@ -1,5 +1,5 @@
 ---
-title: "H.pylori Rhesus Microbiome Analysiss"
+title: "H.pylori Rhesus Microbiome Analysis"
 author: 
   - "Noah Siegel"
 date:  "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
@@ -80,7 +80,7 @@ kable(subsetted, align = 'c', digits = 3, caption = "H.pylori Metadata") %>% kab
 subsetted <- subsetted[1:(length(subsetted)-1)]
 ```
 
-```{r echo=F}
+```{r echo=F, fig.cap = "This plot only includes animals that had material sequenced and not all 25 animals from the study"}
 no_duplicates <- metadata %>% filter(site=="BAL") # will remove duplicates
 p <- ggscatter(no_duplicates,
           y = "IL8_Lavage", 
@@ -107,7 +107,7 @@ ggsave(plot=p,
 p
 ```
 
-```{r echo=F}
+```{r echo=F, fig.cap = "This plot only includes animals that had material sequenced and not all 25 animals from the study"}
 no_duplicates <- metadata %>% filter(site=="BAL") # will remove duplicates
 p <- ggscatter(no_duplicates,
           y = "IL8_Plasma",
@@ -337,28 +337,6 @@ kable(t1$res_alpha_diff, align = 'c', digits = 3, caption = "All alpha diversity
   add_header_above(c("Apha Diversity Assessement" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%",height = "600px")
 ```
 
-## H.pylori CFU
-
-```{r echo=F, out.extra='style="float:left"'}
-hpylori <- metadata %>%
-  select(SampleID, Treatment, site, log10_cfu.gm)
-p <- ggplot(hpylori, aes(x=Treatment, y=log10_cfu.gm, color=site))  + 
-  geom_boxplot(alpha=0.8, size=1) +
-  geom_point(alpha=0.8, size=4) +
-  scale_color_manual(name="Site", labels = c("Lavage", "Buccal"), values=c("dark red", "dark blue")) +
-  theme_classic(base_size = 28) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("H.pylori Log10 CFU") +
-  facet_wrap(~site + Treatment, scales= "free_x", nrow=1)
-ggsave(plot=p,
-       filename="results/hpylori-log10cfu.png",
-       width=16,
-       height=8,
-       dpi=300)
-p
-```
-
 ```{r echo=F, out.extra='style="float:left"'}
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
 
@@ -377,9 +355,7 @@ p
 
 ## Taxa barplots
 
-#### Microbiota Composition at Phylum level
-
-```{r echo=F}
+```{r echo=F, fig.cap = "Microbiota Composition at Phylum level."}
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 10)
 p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 28) +
@@ -394,9 +370,8 @@ ggsave(plot= p,
 p
 ```
 
-#### Microbiota Composition at Class level
 
-```{r echo=F}
+```{r echo=F, fig.cap = "Microbiota Composition at Class level."}
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 10)
 p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 28) +
@@ -411,9 +386,7 @@ ggsave(plot=p,
 p
 ```
 
-#### Microbiota Composition at Order level
-
-```{r echo=F}
+```{r echo=F, fig.cap = "Microbiota Composition at Order level."}
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 10)
 p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22)+
@@ -428,13 +401,9 @@ ggsave(plot=treatment_site,
 p
 ```
 
-#### Microbiota Composition at Family level
-
-
-
-```{r echo=F}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 20)
-p <- t1$plot_bar(use_colors=hitesh, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+```{r echo=F, fig.cap = "Microbiota Composition at Family level."}
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 10)
+p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
@@ -447,9 +416,7 @@ ggsave(plot=p,
 p
 ```
 
-#### Microbiota Composition at Genus level
-
-```{r echo=F}
+```{r echo=F, fig.cap = "Microbiota Composition at Genus level."}
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 10)
 p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
@@ -463,9 +430,7 @@ ggsave(plot=p,
        dpi=300)
 p
 ```
-
-#### Microbiota Composition at Species level
-```{r echo=F}
+```{r echo=F, fig.cap = "Microbiota Composition at Species level. The most abundance sequences at the species level were unidentified taxa. This does not mean there was no species level detection."}
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Species", ntaxa = 10)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
@@ -479,7 +444,7 @@ ggsave(plot=p,
        dpi=300)
 p
 ```
-The most abundance sequences at the species level were unidentified taxa. This not not mean there was no species level detection.
+
 
 ## DeSeq2 differential abundance between BAL and Swabs
 
@@ -910,8 +875,7 @@ ComplexHeatmap::pheatmap(matrix, scale= "row",
 
 ## Compostion correlation with Il8 (Serum and BAL)
 
-### IL8 and lavage genus abundance Spearman correlations separated by H. pylori status
-```{r echo=F, cache=F}
+```{r echo=F, cache=F, fig.cap = "IL8 and lavage genus abundance Spearman correlations separated by H. pylori status"}
 #BAL
 bp <- subset_samples(physeq, site=="BAL")
 table <- as.data.frame(otu_table(bp))
@@ -967,8 +931,7 @@ ggsave(plot=p,
 p
 ```
 
-### IL8 and lavage genus abundance Spearman correlations independent of H. pylori status
-```{r echo=F}
+```{r echo=F, fig.cap = "IL8 and lavage genus abundance Spearman correlations independent of H. pylori status"}
 # calculate correlations for different groups using parameter by_group
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 # return t1$res_cor
@@ -985,8 +948,7 @@ ggsave(plot=p,
 p
 ```
 
-### IL8 and lavage alpha diversity Spearman correlations inpendent of H. pylori status
-```{r echo=F}
+```{r echo=F, fig.cap = "IL8 and lavage alpha diversity Spearman correlations inpendent of H. pylori status"}
 dataset$cal_alphadiv(PD = TRUE)
 t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
@@ -1005,8 +967,7 @@ ggsave(plot=p,
 p
 ```
 
-### IL8 and Buccal genus abundance Spearman correlations separated by H. pylori status
-```{r echo=F, cache=F}
+```{r echo=F, cache=F, fig.cap = "IL8 and Buccal genus abundance Spearman correlations separated by H. pylori status"}
 #Swab
 bp <- subset_samples(physeq, site=="Swab")
 table <- as.data.frame(otu_table(bp))
@@ -1062,8 +1023,7 @@ ggsave(plot=p,
 p
 ```
 
-### IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status
-```{r echo=F}
+```{r echo=F, fig.cap = "IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status"}
 # calculate correlations for different groups using parameter by_group
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 # return t1$res_cor
@@ -1080,8 +1040,7 @@ ggsave(plot=p,
 p
 ```
 
-### IL8 and Buccal alpha diversity Spearman correlations independent of H. pylori status
-```{r echo=F}
+```{r echo=F, fig.cap = "IL8 and Buccal alpha diversity Spearman correlations independent of H. pylori status"}
 dataset$cal_alphadiv(PD = TRUE)
 t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])

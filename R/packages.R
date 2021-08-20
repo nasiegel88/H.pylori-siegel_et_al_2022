@@ -67,3 +67,18 @@ if(!require(ggpubr)){
   install.packages("ggpubr")
   library(ggpubr)
 }
+if(!require(RColorBrewer)){
+  install.packages("RColorBrewer")
+  library("RColorBrewer")
+}
+
+if(!require(tidytree)){
+  install.packages("tidytree")
+  library("tidytree")
+}
+if(!require(ggtree)){
+  BiocManager::install("ggtree")
+  library("ggtree")
+}
+
+

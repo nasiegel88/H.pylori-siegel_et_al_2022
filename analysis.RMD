@@ -7,10 +7,12 @@ knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs",
   output_format = "all")})
 output:
-  html_document: default
+  github_document:
+    html_preview: true
 ---
 
 ## Data used in analysis
+
 ```{r include=F}
 source("R/packages.R")
 source("R/seasons.R")
@@ -38,6 +40,7 @@ physeq<-qza_to_phyloseq(
     metadata = file
     )
 physeq <- subset_taxa(physeq, Genus != "NA")
+
 ```
 
 ```{r include=F}
@@ -48,11 +51,11 @@ phytree <- phy_tree(physeq)
 ```
 
 ```{r echo=F}
-# oringal physeq
+# original physeq
 table <- as.data.frame(otu_table(physeq))
 
 kbl(table, booktabs = T, digits = 3, caption = "ASV Count Table") %>% kable_styling(position = "left") %>%
-  add_header_above(c("ASV Count Table" = 24), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
+  add_header_above(c("ASV Count Table" = 27), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
 
 taxa <- as.data.frame(tax_table(physeq))
 taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
@@ -79,6 +82,8 @@ kable(subsetted, align = 'c', digits = 3, caption = "H.pylori Metadata") %>% kab
   add_header_above(c("H.pylori Metadata" = 9), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 subsetted <- subsetted[1:(length(subsetted)-1)]
 ```
+
+## Sequenced animal IL8 to H. pylori load correlations
 
 ```{r echo=F, fig.cap = "This plot only includes animals that had material sequenced and not all 25 animals from the study"}
 no_duplicates <- metadata %>% filter(site=="BAL") # will remove duplicates
@@ -132,7 +137,7 @@ ggsave(plot=p,
 p
 ```
 
-```{r echo=F}
+```{r echo=F, inlcude=F}
 # original physeq
 dataset <- microtable$new(sample_table = subsetted,
                           otu_table = table,
@@ -145,11 +150,183 @@ dataset$tidy_dataset()
 dataset$cal_abund()
 ```
 
-## ASVs associated with lavage
+## Overlapping Taxa Between Sites and H. pylori Status
+
+### Lavage overlapping taxa
+
+```{r cache=F, echo=F}
+#BAL
+bp <- subset_samples(physeq, site=="BAL")
+
+table <- as.data.frame(otu_table(bp))
+taxa <- as.data.frame(tax_table(bp))
+taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
+taxa$Phylum   <- str_c("p_", taxa$Phylum  , sep="_")
+taxa$Class    <- str_c("c_", taxa$Class   , sep="_")
+taxa$Order    <- str_c("o_", taxa$Order   , sep="_")
+taxa$Family   <- str_c("f_", taxa$Family  , sep="_")
+taxa$Genus    <- str_c("g_", taxa$Genus   , sep="_")
+taxa$Species  <- str_c("s_", taxa$Species, sep="_") 
+subsetted <- metadata %>% select(SampleID,
+                Treatment,
+                site,
+                Site_status,
+                sex,
+                log10_cfu.gm,
+                IL8_Lavage,
+                IL8_Plasma
+)
+row.names(subsetted) <- subsetted[,1]
+# original physeq
+data <- microtable$new(sample_table = subsetted,
+                          otu_table = table,
+                          tax_table = taxa,
+                          phylo_tree = phytree)
+class(data)
+data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
+data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
+data$tidy_dataset()
+data$cal_abund()
+data1 <- data$merge_samples(use_group = "Treatment")
+t1 <- trans_venn$new(data1, ratio = "numratio")
+p <- t1$plot_venn(color_circle = c("green", "purple"),
+             text_name_size = 6,
+             text_size = 9) +
+  ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")
+ggsave(plot=p,
+       filename="results/venn-diagram-lavage.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+### Buccal overlapping taxa
+
+```{r}
+#swab
+bp <- subset_samples(physeq, site=="Swab")
+
+table <- as.data.frame(otu_table(bp))
+taxa <- as.data.frame(tax_table(bp))
+taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
+taxa$Phylum   <- str_c("p_", taxa$Phylum  , sep="_")
+taxa$Class    <- str_c("c_", taxa$Class   , sep="_")
+taxa$Order    <- str_c("o_", taxa$Order   , sep="_")
+taxa$Family   <- str_c("f_", taxa$Family  , sep="_")
+taxa$Genus    <- str_c("g_", taxa$Genus   , sep="_")
+taxa$Species  <- str_c("s_", taxa$Species, sep="_") 
+subsetted <- metadata %>% select(SampleID,
+                Treatment,
+                site,
+                Site_status,
+                sex,
+                log10_cfu.gm,
+                IL8_Lavage,
+                IL8_Plasma
+)
+row.names(subsetted) <- subsetted[,1]
+# original physeq
+data <- microtable$new(sample_table = subsetted,
+                          otu_table = table,
+                          tax_table = taxa,
+                          phylo_tree = phytree)
+class(data)
+data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
+data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
+data$tidy_dataset()
+data$cal_abund()
+data1 <- data$merge_samples(use_group = "Treatment")
+t1 <- trans_venn$new(data1, ratio = "numratio")
+p <- t1$plot_venn(color_circle = c("orange", "blue"), 
+             text_name_size = 6,
+             text_size = 9) +
+  ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")
+ggsave(plot=p,
+       filename="results/venn-diagram-buccal.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+## Lefse analysis and differential abundance for both sites
+
+```{r cache=F, echo=F}
+ps <- subset_taxa(physeq, !is.na(Species) & !Phylum %in% c("", "uncharacterized"))
+
+table <- as.data.frame(otu_table(ps))
+taxa <- as.data.frame(tax_table(ps))
+taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
+taxa$Phylum   <- str_c("p_", taxa$Phylum  , sep="_")
+taxa$Class    <- str_c("c_", taxa$Class   , sep="_")
+taxa$Order    <- str_c("o_", taxa$Order   , sep="_")
+taxa$Family   <- str_c("f_", taxa$Family  , sep="_")
+taxa$Genus    <- str_c("g_", taxa$Genus   , sep="_")
+taxa$Species  <- str_c("s_", taxa$Species, sep="_") 
+subsetted <- metadata %>% select(SampleID,
+                Treatment,
+                site,
+                Site_status,
+                sex,
+                log10_cfu.gm,
+                IL8_Lavage,
+                IL8_Plasma
+)
+row.names(subsetted) <- subsetted[,1]
+# original physeq
+data <- microtable$new(sample_table = subsetted,
+                          otu_table = table,
+                          tax_table = taxa,
+                          phylo_tree = phytree)
+class(data)
+data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
+data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
+data$tidy_dataset()
+data$cal_abund()
+  
+t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", alpha = 0.01, lefse_subgroup = NULL)
+p <- t1$plot_lefse_bar(LDA_score = 2) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Swab", "H. pylori (+) Swab", "H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("Orange", "Blue", "green", "purple"))  +
+  ggtitle("Lefse taxa from bronchoalveolar lavage and oral swab")
+ggsave(plot=p,
+       filename="results/lefse-bal-swab.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+### Lefse table
+
+```{r echo=F}
+df <- t1$res_lefse[1:5, ]
+kable(df, align = 'c', digits = 4, caption = "Lefse taxa from bronchoalveolar lavage and oral swab") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Lefse taxa from bronchoalveolar lavage and oral swab" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+### Relative abundance of differential taxa
+
+```{r cache=F, echo=F}
+p <- t1$plot_diff_abund(use_number = 1:10) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Swab", "H. pylori (+) Swab", "H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("Orange", "Blue", "green", "purple")) +
+  ggtitle("Lefse relative abundance from bronchoalveolar lavage and oral swab")
+ggsave(plot=p,
+       filename="results/lefse-rel.abundance-bal-swab.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+## Lefse and differential abundance for bronchoalveolar lavage
 
 ```{r cache=F, echo=F}
 # bal physeq
-bp <- subset_samples(physeq, site=="BAL")
+ps <- subset_taxa(physeq, !is.na(Species) & !Phylum %in% c("", "uncharacterized"))
+bp <- subset_samples(ps, site=="BAL")
 table <- as.data.frame(otu_table(bp))
 taxa <- as.data.frame(tax_table(bp))
 taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
@@ -180,26 +357,50 @@ data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "uni
 data$tidy_dataset()
 data$cal_abund()
 data$sample_table <- subset(data$sample_table, site == "BAL")
-data1 <- data$merge_samples(use_group = "Treatment")
-t1 <- trans_venn$new(data1, ratio = "numratio")
-p <- t1$plot_venn(color_circle = c("green", "purple"),
-             text_name_size = 12,
-             text_size = 10)  +
-  theme(text = element_text(size=12)) +
-  ggtitle("BAL")
+
+
+t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", alpha = 0.01, lefse_subgroup = NULL)
+p <- t1$plot_lefse_bar(LDA_score = 2) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
+  ggtitle("Lefse Taxa from Bronchoalveolar Lavage")
 ggsave(plot=p,
-       filename="results/bal-venn.png",
+       filename="results/lefse-bal.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
-## ASVs associated with buccal swabs 
+### Lefse table
+
+```{r echo=F}
+df <- t1$res_lefse[1:25, ]
+kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from Bronchoalveolar Lavage") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Lefse Taxa from Bronchoalveolar Lavage" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+### Relative abundance of differential taxa
+
+```{r echo=F}
+p <- t1$plot_diff_abund(use_number = 1:10) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
+  ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage")
+ggsave(plot=p,
+       filename="results/lefse-rel.abundance-bal.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+## Lefse and differential abundance for oral swabs
 
 ```{r cache=F, echo=F}
 # swab physeq
-bp <- subset_samples(physeq, site=="Swab")
+ps <- subset_taxa(physeq, !is.na(Species) & !Phylum %in% c("", "uncharacterized"))
+bp <- subset_samples(ps, site=="Swab")
 table <- as.data.frame(otu_table(bp))
 taxa <- as.data.frame(tax_table(bp))
 taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
@@ -230,23 +431,46 @@ data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "uni
 data$tidy_dataset()
 data$cal_abund()
 data$sample_table <- subset(data$sample_table, site == "Swab")
-data1 <- data$merge_samples(use_group = "Treatment")
-t1 <- trans_venn$new(data1, ratio = "numratio")
 
-p <- t1$plot_venn(color_circle = c("orange", "blue"),
-             text_name_size = 12,
-             text_size = 10)  +
-  theme(text = element_text(size=12)) +
-  ggtitle("Swab")
+t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", alpha = 0.01, lefse_subgroup = NULL)
+p <- t1$plot_lefse_bar(LDA_score = 2) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Swab", "H. pylori (+) Swab"), values=c("Orange", "Blue")) +
+  ggtitle("Lefse taxa from oral swabs")
 ggsave(plot=p,
-       filename="results/swab-venn.png",
+       filename="results/lefse-swab.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
-## Unweighted unifrac PCoA plots
+### Lefse table
+
+```{r echo=F}
+df <- t1$res_lefse[1:13, ]
+kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from oral swabs") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Lefse taxa from oral swabs" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+### Relative abundance of differential taxa
+
+```{r echo=F}
+p <- t1$plot_diff_abund(use_number = 1:10) +
+  scale_colour_manual(values=c("black", "black", "black", "black")) +
+  scale_fill_manual(name="Status",labels = c("H. pylori (-) Swab", "H. pylori (+) Swab"), values=c("Orange", "Blue")) +
+  ggtitle("Lefse relative abundance from oral swabs")
+ggsave(plot=p,
+       filename="results/lefse-rel.abundance-swab.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+## Beta diversity
+
+### Unweighted unifrac PCoA plots
 
 ```{r include=F}
 data=uwunifrac$data$Vectors %>%
@@ -261,8 +485,7 @@ theme_q2r() +
 scale_color_manual(name="Site", labels = c("Lavage", "Buccal"), values=c("dark red", "dark blue")) + 
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Site Unweighted unifrac PCoA")
+  ggtitle("Unweighted unifrac PCoA")
 ggsave(plot=site,
        filename="results/site-unweighted_unifrac.png",
        width=16,
@@ -276,7 +499,6 @@ theme_q2r() +
 scale_color_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage", "H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("green", "purple", "orange", "blue")) + 
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Status Unweighted unifrac PCoA")
 ggsave(plot=treatment_site,
        filename="results/site_treatment-unweighted_unifrac.png",
@@ -288,46 +510,91 @@ treatment_site
 
 ```{r echo=F}
 data1 <- clone(dataset)
-data1$tidy_dataset()
 data1$cal_betadiv(unifrac = TRUE)
+data1$tidy_dataset()
 
 t1 <- trans_beta$new(dataset = data1, group = "Site_status", measure = "bray", ordination = "PCoA")
 t1$cal_group_distance(within_group = T)
-p <- t1$plot_group_distance(distance_pair_stat = F) +
+p <- t1$plot_group_distance(distance_pair_stat = T) +
   scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue")) +
-  geom_boxplot(alpha=0.8, size=1) +
   theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Beta diversity")
 ggsave(plot=p,
-       filename="results/bray-curtis.png",
+       filename="results/bray-curtis-site_status.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
-## Alpha Diversity (Observed ASVs)
+
+### Bray-Curtis
 
 ```{r echo=F}
-p <- plot_richness(physeq, x="Site_status", color="site", measures=c("Observed")) + 
-  geom_boxplot(alpha=0.8, size=1) +
-  geom_point(alpha=0.8, size=4) +
-  facet_wrap(~site + Treatment, scales= "free_x", nrow=1) +
-  scale_color_manual(name="Site", labels = c("Lavage", "Buccal"), values=c("dark red", "dark blue")) +
+data1 <- clone(dataset)
+data1$cal_betadiv(unifrac = TRUE)
+data1$tidy_dataset()
+
+t1 <- trans_beta$new(dataset = data1, group = "site", measure = "bray", ordination = "PCoA")
+t1$cal_group_distance(within_group = T)
+p <- t1$plot_group_distance(distance_pair_stat = T) +
+  scale_color_manual(name="Status", values=c("dark red", "dark blue")) +
   theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Observed ASVs")
+  ggtitle("Beta diversity")
 ggsave(plot=p,
-       filename="results/observed-asvs.png",
+       filename="results/bray-curtis-site.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
-## Alpha diversity measures
+## Alpha Diversity
+
+### Shannon index by site and H. pylori status
+
+```{r echo=F}
+data1 <- clone(dataset)
+data1$cal_alphadiv(PD = TRUE)
+data1$tidy_dataset()
+
+t1 <- trans_alpha$new(dataset = data1, group = "Site_status")
+p <- t1$plot_alpha(pair_compare = F, measure = "Shannon") +
+  scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue")) +
+  theme_classic(base_size = 22) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Site & status")
+ggsave(plot=p,
+       filename="results/shannon-site-status.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+### Shannon index by site only
+
+```{r echo=F}
+data1 <- clone(dataset)
+data1$cal_alphadiv(PD = TRUE)
+data1$tidy_dataset()
+
+t1 <- trans_alpha$new(dataset = data1, group = "site")
+p <- t1$plot_alpha(pair_compare = T, measure = "Shannon") +
+  scale_color_manual(name="Status", values=c("dark red", "dark blue")) +
+  theme_classic(base_size = 22) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  ggtitle("Status")
+ggsave(plot=p,
+       filename="results/shannon-status.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+### Additional alpha diversity measures
 
 ```{r echo=F}
 data1$cal_alphadiv(PD = TRUE)
@@ -336,6 +603,10 @@ t1$cal_diff(method = "KW")
 kable(t1$res_alpha_diff, align = 'c', digits = 3, caption = "All alpha diversity measurees") %>% kable_styling(position = "center") %>%
   add_header_above(c("Apha Diversity Assessement" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%",height = "600px")
 ```
+
+## Helicobacter positive respiratory samples
+
+### Helicobacter positive samples separated by site
 
 ```{r echo=F, out.extra='style="float:left"'}
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
@@ -346,7 +617,26 @@ p <- plot_bar(hp, "Treatment", "Abundance","Species", title="Helicobacter ASVs")
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   facet_grid(cols = vars(site))
 ggsave(plot=p,
-       filename="results/helicobacter_abundance.png",
+       filename="results/helicobacter_abundance-treatment.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+### Helicobacter positive samples separated by animal
+
+```{r echo=F, out.extra='style="float:left"'}
+hp <-  subset_taxa(physeq, Genus == "Helicobacter")
+ hp@sam_data$MMU <- factor( hp@sam_data$MMU)
+
+p <- plot_bar(hp, "MMU", "Abundance","Species", title="Helicobacter ASVs")  +
+  theme_classic(base_size = 28) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_grid(cols = vars(site))
+ggsave(plot=p,
+       filename="results/helicobacter_abundance-mmu.png",
        width=16,
        height=8,
        dpi=300)
@@ -356,25 +646,65 @@ p
 ## Taxa barplots
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Phylum level."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 10)
-p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 28) +
+# increase the number color to match phyla number
+colourCount = 10
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 9)
+p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+  theme_classic(base_size = 22) +
+  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Phyla")
-ggsave(plot= p,
+  ggtitle("Phylum")
+ggsave(plot=p,
        filename="results/phylum-taxabarplots.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+
+colourCount = 10
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", groupmean="Site_status", ntaxa = 8)
+p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
+  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+ggsave(plot=p,
+       filename="results/phylum-piechart.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
+```{r echo=F}
+df <- t3$abund_data
+df$Taxonomy <- factor(df$Taxonomy)
+df$Sample <- factor(unique(df$Sample))
+taxa <- (unique(df$Taxonomy))
+table_percent <- df %>%
+            mutate(Taxonomy = factor(Taxonomy, 
+                levels = taxa[length(taxa):1]),
+              cumulative = cumsum(Abundance),
+                midpoint = cumulative - Abundance / 2,
+                `Average Percent Abundance` = paste0(round((Abundance) * 1, 1), "%"))
+tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
+tab$Taxonomy <- as.character(tab$Taxonomy)
+kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
+kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Phylum" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Class level."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 10)
-p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 28) +
+# increase the number color to match phyla number
+colourCount = 10
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 9)
+p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+  theme_classic(base_size = 22) +
+  scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Class")
@@ -384,27 +714,93 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p
-```
 
-```{r echo=F, fig.cap = "Microbiota Composition at Order level."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 10)
-p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22)+
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Order")
-ggsave(plot=treatment_site,
-       filename="results/order-taxabarplots.png",
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Class", groupmean="Site_status", ntaxa = 8)
+p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
+  scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+ggsave(plot=p,
+       filename="results/class-piechart.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
-```{r echo=F, fig.cap = "Microbiota Composition at Family level."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 10)
+```{r echo=F}
+df <- t3$abund_data
+df$Taxonomy <- factor(df$Taxonomy)
+df$Sample <- factor(unique(df$Sample))
+taxa <- (unique(df$Taxonomy))
+table_percent <- df %>%
+            mutate(Taxonomy = factor(Taxonomy, 
+                levels = taxa[length(taxa):1]),
+              cumulative = cumsum(Abundance),
+                midpoint = cumulative - Abundance / 2,
+                `Average Percent Abundance` = paste0(round((Abundance) * 1, 1), "%"))
+tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
+tab$Taxonomy <- as.character(tab$Taxonomy)
+kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
+kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Class" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+```{r echo=F, fig.cap = "Microbiota Composition at Order level."}
+# increase the number color to match phyla number
+colourCount = 10
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 9)
 p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
+  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle("Order")
+ggsave(plot=p,
+       filename="results/order-taxabarplots.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Order", groupmean="Site_status", ntaxa = 8)
+p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
+  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+ggsave(plot=p,
+       filename="results/order-piechart.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+```{r echo=F}
+df <- t3$abund_data
+df$Taxonomy <- factor(df$Taxonomy)
+df$Sample <- factor(unique(df$Sample))
+taxa <- (unique(df$Taxonomy))
+table_percent <- df %>%
+            mutate(Taxonomy = factor(Taxonomy, 
+                levels = taxa[length(taxa):1]),
+              cumulative = cumsum(Abundance),
+                midpoint = cumulative - Abundance / 2,
+                `Average Percent Abundance` = paste0(round((Abundance) * 1, 1), "%"))
+tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
+tab$Taxonomy <- as.character(tab$Taxonomy)
+kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
+kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Order" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+```{r echo=F, fig.cap = "Microbiota Composition at Family level."}
+# increase the number color to match phyla number
+colourCount = 10
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 9)
+p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+  theme_classic(base_size = 22) +
+  scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Family")
@@ -414,12 +810,48 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p
+
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Family", groupmean="Site_status", ntaxa = 8)
+p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
+  scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+ggsave(plot=p,
+       filename="results/family-piechart.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+
+```{r echo=F}
+df <- t3$abund_data
+df$Taxonomy <- factor(df$Taxonomy)
+df$Sample <- factor(unique(df$Sample))
+taxa <- (unique(df$Taxonomy))
+table_percent <- df %>%
+            mutate(Taxonomy = factor(Taxonomy, 
+                levels = taxa[length(taxa):1]),
+              cumulative = cumsum(Abundance),
+                midpoint = cumulative - Abundance / 2,
+                `Average Percent Abundance` = paste0(round((Abundance) * 1, 1), "%"))
+tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
+tab$Taxonomy <- as.character(tab$Taxonomy)
+kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
+kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Family" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 ```
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Genus level."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 10)
-p <- t1$plot_bar(use_colors=spring,others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+# increase the number color to match phyla number
+colourCount = 21
+getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
+
+t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 20)
+p <- t1$plot_bar(use_colors=spring,
+                 others_color = "grey70",
+                 facet = c("site","Treatment"), 
+                 xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
+  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Genus")
@@ -429,455 +861,42 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p
-```
-```{r echo=F, fig.cap = "Microbiota Composition at Species level. The most abundance sequences at the species level were unidentified taxa. This does not mean there was no species level detection."}
-t1 <- trans_abund$new(dataset = dataset, taxrank = "Species", ntaxa = 10)
-p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Species")
+
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Genus", groupmean="Site_status", ntaxa = 8)
+p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
+  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
 ggsave(plot=p,
-       filename="results/phylum-taxabarplots.png",
+       filename="results/genus-piechart.png",
        width=16,
        height=8,
        dpi=300)
 p
 ```
 
-
-## DeSeq2 differential abundance between BAL and Swabs
-
-#### Phylum level differential abundance
-
 ```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Phylum', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:10, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
+df <- t3$abund_data
+df$Taxonomy <- factor(df$Taxonomy)
+df$Sample <- factor(unique(df$Sample))
+taxa <- (unique(df$Taxonomy))
+table_percent <- df %>%
+            mutate(Taxonomy = factor(Taxonomy, 
+                levels = taxa[length(taxa):1]),
+              cumulative = cumsum(Abundance),
+                midpoint = cumulative - Abundance / 2,
+                `Average Percent Abundance` = paste0(round((Abundance) * 1, 1), "%"))
+tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
+tab$Taxonomy <- as.character(tab$Taxonomy)
+kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
+kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Genus" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 ```
 
-```{r echo=F}
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c("d98cfee4a9aa6242af0c509639f42f81"))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Phylum"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Phylum = as.factor(tax_table(ps.taxa.rel.sig)[, "Phylum"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/phylum-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Phylum Differential Taxa (DESeq2)",
-                         fontsize = 20)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Phylum Differential Taxa (DESeq2)",
-                         fontsize = 20)
-```
-
-#### Class level differential abundance
-
-```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Class', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:20, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
-```
-
-```{r echo=F}
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c("d98cfee4a9aa6242af0c509639f42f81"))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Class"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Order = as.factor(tax_table(ps.taxa.rel.sig)[, "Class"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/class-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Class Differential Taxa (DESeq2)",
-                         fontsize = 16)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Class Differential Taxa (DESeq2)",
-                         fontsize = 16)
-
-```
-
-#### Order level differential abundance
-
-```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Order', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:10, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
-```
-
-```{r echo=F}
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c("c465f577ff4ace3e12a8479197bd7198","56c853249a8f9e5238ac5101b0edc245"))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Order"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Order = as.factor(tax_table(ps.taxa.rel.sig)[, "Order"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/order-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Order Differential Taxa (DESeq2)",
-                         fontsize = 20)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Order Differential Taxa (DESeq2)",
-                         fontsize = 20)
-```
-
-#### Family level differential abundance
-
-```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Family', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:20, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
-```
-
-```{r echo=F}
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c("c465f577ff4ace3e12a8479197bd7198","56c853249a8f9e5238ac5101b0edc245"))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Family"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Family = as.factor(tax_table(ps.taxa.rel.sig)[, "Family"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/family-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Family Differential Taxa (DESeq2)",
-                         fontsize = 16)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Family Differential Taxa (DESeq2)",
-                         fontsize = 16)
-```
-
-#### Genus level differential abundance
-
-```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Genus', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:20, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
-```
-
-```{r echo=F}
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c("c465f577ff4ace3e12a8479197bd7198","56c853249a8f9e5238ac5101b0edc245"))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Genus"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Genus = as.factor(tax_table(ps.taxa.rel.sig)[, "Genus"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/genus-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row", name="Genus",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Genus Differential Taxa (DESeq2)",
-                         fontsize = 18)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row", name="Genus",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Genus Differential Taxa (DESeq2)",
-                         fontsize = 18)
-```
-
-#### Species level differential abundance
-
-```{r echo=F}
-sample_data(physeq)$site <- as.factor(sample_data(physeq)$site) # factorize for DESeq2
-ps.taxa <- tax_glom(physeq, taxrank = 'Species', NArm = FALSE)
-ps.taxa.pse <- ps.taxa
-otu_table(ps.taxa.pse) <- otu_table(ps.taxa) + 1
-ps.taxa.pse.sub <- subset_samples(ps.taxa.pse, site %in% c("BAL", "Swab"))
-ds = phyloseq_to_deseq2(ps.taxa.pse.sub, ~ site)
-ds = DESeq(ds, test="Wald", fitType="parametric")
-alpha = 0.05 
-res = results(ds, alpha=alpha)
-res = res[order(res$padj, na.last=NA), ]
-taxa_sig = rownames(res[1:20, ]) # select bottom 20 with lowest p.adj values
-ps.taxa.rel <- transform_sample_counts(physeq, function(x) x/sum(x)*100)
-ps.taxa.rel.sig <- prune_taxa(taxa_sig, ps.taxa.rel)
-# Only keep gut and tongue samples
-ps.taxa.rel.sig <- prune_samples(colnames(otu_table(ps.taxa.pse.sub)), ps.taxa.rel.sig)
-```
-
-```{r echo=F}
-ps.taxa.rel.sig = subset_taxa(ps.taxa.rel.sig, Species != "uncultured_bacterium")
-matrix <- as.matrix(data.frame(otu_table(ps.taxa.rel.sig)))
-
-remove <- as.factor(c(
-  
-"3ec7d55d640b59d6f412ae93441f6d16",
-"c465f577ff4ace3e12a8479197bd7198",
-"7a6f7f09204ae801cd0200f821858d82",
-"caa2d6a2760671284badf6b987c392da",
-"463b2f0461c807f6f6a2ebd7bcff9c7a",
-"3437ea5ad5d0b98274e368e0083b45ab",
-"4f19b1f01413c2c9402ad8afcc0fb165",
-"ca7aa200c01082de6dba0813d05b5d9f",
-"00b629e3b3acc8ca9d9839c41326c6e7",
-"25bd029405b99dc1b53f9799b1247a9c",
-"uncultured_bacterium"
-
-))
-
-matrix = matrix[!row.names(matrix)%in%remove,]
-
-rownames(matrix) <- as.character(tax_table(ps.taxa.rel.sig)[, "Species"]%>% na.exclude)
-
-metadata_sub <- data.frame(sample_data(ps.taxa.rel.sig))
-# Define the annotation color for columns and rows
-annotation_col = data.frame(
-    Treatment = as.factor(metadata_sub$Treatment), 
-    `Site` = as.factor(metadata_sub$site), 
-    check.names = FALSE
-)
-rownames(annotation_col) = rownames(metadata_sub)
-
-annotation_row = data.frame(
-    Species = as.factor(tax_table(ps.taxa.rel.sig)[, "Species"]%>% na.exclude)
-)
-rownames(annotation_row) = rownames(matrix)
-
-# ann_color should be named vectors
-phylum_col = RColorBrewer::brewer.pal(length(levels(annotation_row$Phylum)), "Paired")
-names(phylum_col) = levels(annotation_row$Phylum)
-ann_colors = list(
-    Treatment = c(`H.pylori_(+)` = "red", `H.pylori_(-)` = "blue"),
-    `Site` = c(BAL = "purple", Swab = "yellow"),
-    Phylum = phylum_col
-)
-
-svg("results/species-DEG_heatmap.svg", width=20, height=12)
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Species Differential Taxa (DESeq2)",
-                         fontsize = 14)
-dev.off()
-ComplexHeatmap::pheatmap(matrix, scale= "row",
-                         annotation_col = annotation_col, 
-                         annotation_row = annotation_row, 
-                         annotation_colors = ann_colors,
-                         main="Species Differential Taxa (DESeq2)",
-                         fontsize = 14)
-```
-
-
-## Compostion correlation with Il8 (Serum and BAL)
+## Genera correlation with Il8 concentration (Serum and BAL)
 
 ```{r echo=F, cache=F, fig.cap = "IL8 and lavage genus abundance Spearman correlations separated by H. pylori status"}
 #BAL
 bp <- subset_samples(physeq, site=="BAL")
+
 table <- as.data.frame(otu_table(bp))
 taxa <- as.data.frame(tax_table(bp))
 taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
@@ -921,7 +940,6 @@ t1$cal_cor(use_data = "other",
 p <- t1$plot_corr()+
   theme_classic(base_size = 20) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
    ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
@@ -938,7 +956,6 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 p <- t1$plot_corr()+
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
@@ -948,7 +965,13 @@ ggsave(plot=p,
 p
 ```
 
-```{r echo=F, fig.cap = "IL8 and lavage alpha diversity Spearman correlations inpendent of H. pylori status"}
+```{r echo=F}
+df <- t1$res_cor[1:20, ]
+kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Lavage IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+```
+
+```{r echo=F, fig.cap = "IL8 and lavage alpha diversity Spearman correlations inpendent of H. pylori status."}
 dataset$cal_alphadiv(PD = TRUE)
 t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
@@ -957,14 +980,19 @@ t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independnet of H. pylori status"), ""))))
+  ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-alpha_il8-spearman.png",
        width=16,
        height=8,
        dpi=300)
 p
+```
+
+```{r echo=F}
+df <- t1$res_cor[1:20, ]
+kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Lavage Alpha Diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 ```
 
 ```{r echo=F, cache=F, fig.cap = "IL8 and Buccal genus abundance Spearman correlations separated by H. pylori status"}
@@ -1013,7 +1041,6 @@ p <- t1$cal_cor(use_data = "other",
 p <- t1$plot_corr()+
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
@@ -1030,7 +1057,6 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 p <- t1$plot_corr()+
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
@@ -1038,6 +1064,12 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p
+```
+
+```{r echo=F}
+df <- t1$res_cor[1:40, ]
+kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Oral IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 ```
 
 ```{r echo=F, fig.cap = "IL8 and Buccal alpha diversity Spearman correlations independent of H. pylori status"}
@@ -1049,14 +1081,20 @@ t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independnet of H. pylori status"), ""))))
+#  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-alpha_il8-spearman.png",
        width=16,
        height=8,
        dpi=300)
 p
+```
+
+```{r echo=F}
+df <- t1$res_cor[1:20, ]
+kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+  add_header_above(c("Oral alpha diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 ```
 
 ```{r save_object, include=F}
@@ -1070,5 +1108,3 @@ save.image(file=file.path("rdata_objects", "hp_analysis.Rdata"))
 ```{r session_info, echo=F}
 sessionInfo()
 ```
-
-

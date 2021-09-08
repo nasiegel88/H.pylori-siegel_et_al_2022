@@ -10,10 +10,21 @@ if(!require(remotes)){
   install.packages("remotes")
   library(remotes)
 }
-
+if(!require(readxl)){
+  install.packages("readxl")
+  library("readxl")
+}
+if(!require(sjPlot)){
+  install.packages("sjPlot")
+  library("sjPlot")
+}
 if(!require(BiocManager)){
   install.packages("BiocManager")
   library(BiocManager)
+}
+if(!require(questionr)){
+  install.packages("questionr")
+  library(questionr)
 }
 
 if(!require(phyloseq)){

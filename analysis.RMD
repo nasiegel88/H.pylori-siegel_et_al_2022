@@ -7,15 +7,13 @@ knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs",
   output_format = "all")})
 output:
-  github_document:
-    html_preview: true
+  html_document
 ---
 
 ## Data used in analysis
 
 ```{r include=F}
 source("R/packages.R")
-source("R/seasons.R")
 # Set up global options for nice reports and keeping figures:
 knitr::opts_chunk$set(fig.width=14, fig.height=8, fig.align="center",
                       warning=FALSE, message=FALSE)
@@ -81,6 +79,38 @@ row.names(subsetted) <- subsetted[,1]
 kable(subsetted, align = 'c', digits = 3, caption = "H.pylori Metadata") %>% kable_styling(position = "center") %>%
   add_header_above(c("H.pylori Metadata" = 9), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
 subsetted <- subsetted[1:(length(subsetted)-1)]
+```
+
+## Odds ratios of variables based on H. pylori status
+
+```{r echo=F}
+age_data <- read_excel("data/metadata.xlsx", na = "NA")
+# remove NA rows
+age_data <- na.omit(age_data)
+
+model <- age_data %>% 
+  select(HP_status, age_days_infants, infant_weight_kg, il_bal_pg.ml, il_plasma_pg.ml)
+
+reg <- glm(as.factor(HP_status) ~ infant_weight_kg  + age_days_infants + il_bal_pg.ml + il_plasma_pg.ml, data=model, family=binomial)
+p=plot_model(reg, type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", title="Odds ratios of variables based on H. pylori status", color=c("black")) + 
+theme(text = element_text(size=25)) +
+  theme_linedraw(
+  base_size = 11,
+  base_family = "",
+  base_line_size = 1,
+  base_rect_size = 1
+)
+ggsave(plot=p,
+       filename="results/hp-oddsratios.png",
+       width=16,
+       height=8,
+       dpi=300)
+p
+```
+ 
+```{r echo=F}
+kable(odds.ratio(reg), digits = 3, booktabs = T) %>%
+  kable_styling(latex_options = c("striped", "scale_down"))
 ```
 
 ## Sequenced animal IL8 to H. pylori load correlations
@@ -203,7 +233,7 @@ p
 
 ### Buccal overlapping taxa
 
-```{r}
+```{r echo=F}
 #swab
 bp <- subset_samples(physeq, site=="Swab")
 
@@ -476,16 +506,22 @@ p
 data=uwunifrac$data$Vectors %>%
   select(SampleID, PC1, PC2) %>%
   left_join(metadata)
+uwunifrac$data$ProportionExplained
 ```
 
+```{r echo=F}
+uwunifrac$data$ProportionExplained
+```
 ```{r echo=F, figures-side, fig.show="hold"}
 site = ggplot(data,aes(x=PC1, y=PC2, color=`site`)) +
-geom_point(alpha=0.8, size=4) + 
+geom_point(alpha=0.8, size=5) + 
 theme_q2r() +
-scale_color_manual(name="Site", labels = c("Lavage", "Buccal"), values=c("dark red", "dark blue")) + 
+scale_color_manual(name="Site", labels = c("Lavage", "Buccal"),
+                   values=c("dark red", "dark blue")) + 
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Unweighted unifrac PCoA")
+  ggtitle("Unweighted unifrac PCoA") +
+            labs(x = "PC1 (40%)", y = "PC2 (9%)")
 ggsave(plot=site,
        filename="results/site-unweighted_unifrac.png",
        width=16,
@@ -494,12 +530,14 @@ ggsave(plot=site,
 site
 
 treatment_site = ggplot(data,aes(x=PC1, y=PC2, color=interaction(Treatment,site))) +
-geom_point(alpha=0.8, size=4) + 
+geom_point(alpha=0.8, size=5) + 
 theme_q2r() +
-scale_color_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage", "H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("green", "purple", "orange", "blue")) + 
+  scale_color_manual(name="Status", labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage", "H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("green", "purple", "orange", "blue")) + 
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Status Unweighted unifrac PCoA")
+  ggtitle("Status Unweighted unifrac PCoA") +
+            labs(x = "PC1 (40%)", y = "PC2 (9%)")
+                 
 ggsave(plot=treatment_site,
        filename="results/site_treatment-unweighted_unifrac.png",
        width=16,
@@ -560,11 +598,19 @@ data1$cal_alphadiv(PD = TRUE)
 data1$tidy_dataset()
 
 t1 <- trans_alpha$new(dataset = data1, group = "Site_status")
-p <- t1$plot_alpha(pair_compare = F, measure = "Shannon") +
-  scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue")) +
-  theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Site & status")
+df <- t1$alpha_data %>% 
+  group_by(Measure) %>% 
+  filter(Measure == "Shannon") %>%
+  select(Site_status, Value)
+
+p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) + 
+            geom_boxplot(size = 1) +
+            geom_point(size=4) +
+            scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue"))+
+            theme_classic(base_size = 22) +
+            theme(plot.title = element_text(hjust = 0.5)) +
+            ggtitle("Site & status") +
+            labs(x = "", y = "Shannon")
 ggsave(plot=p,
        filename="results/shannon-site-status.png",
        width=16,
@@ -581,13 +627,21 @@ data1$cal_alphadiv(PD = TRUE)
 data1$tidy_dataset()
 
 t1 <- trans_alpha$new(dataset = data1, group = "site")
-p <- t1$plot_alpha(pair_compare = T, measure = "Shannon") +
-  scale_color_manual(name="Status", values=c("dark red", "dark blue")) +
-  theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("Status")
+df <- t1$alpha_data %>% 
+  group_by(Measure) %>% 
+  filter(Measure == "Shannon") %>%
+  select(site, Value)
+
+p <- ggplot(df, aes_string(x = "site", y = "Value", col="site")) + 
+            geom_boxplot(size = 1) +
+            geom_point(size=4) +
+            scale_color_manual(name="Site", values=c("dark red", "dark blue"))+
+            theme_classic(base_size = 22) +
+            theme(plot.title = element_text(hjust = 0.5)) +
+            ggtitle("Status") +
+            labs(x = "", y = "Shannon")
 ggsave(plot=p,
-       filename="results/shannon-status.png",
+       filename="results/shannon.png",
        width=16,
        height=8,
        dpi=300)
@@ -651,7 +705,7 @@ colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 9)
-p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
   scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -702,7 +756,7 @@ colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 9)
-p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
   scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -750,7 +804,7 @@ colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 9)
-p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+p <- t1$plot_bar( others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
   scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -798,7 +852,7 @@ colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 9)
-p <- t1$plot_bar(use_colors=spring, others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
+p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +
   scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -846,8 +900,7 @@ colourCount = 21
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 20)
-p <- t1$plot_bar(use_colors=spring,
-                 others_color = "grey70",
+p <- t1$plot_bar(others_color = "grey70",
                  facet = c("site","Treatment"), 
                  xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic(base_size = 22) +

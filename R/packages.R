@@ -87,9 +87,9 @@ if(!require(tidytree)){
   install.packages("tidytree")
   library("tidytree")
 }
-if(!require(ggtree)){
-  BiocManager::install("ggtree")
-  library("ggtree")
-}
+#if(!require(ggtree)){
+#  BiocManager::install("ggtree")
+#  library("ggtree")
+#}
 
 

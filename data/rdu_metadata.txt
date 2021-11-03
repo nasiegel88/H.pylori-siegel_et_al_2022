@@ -1,0 +1,27 @@
+"RDU."	"SampleID"	"Treatment"	"site"	"sex"	"DOB"	"bx_date"	"age_at_bx"	"age_at_bx_days"	"log10_cfu.gm"	"IL8_Lavage"	"IL8_Plasma"
+"1"	"00458"	"LMiller_00458.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"5/22/2013"	"11/22/2013"	"6m"	180	0	NA	463.376
+"2"	"00458"	"LMiller_00458.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"5/22/2013"	"11/22/2013"	"6m"	180	0	NA	463.376
+"3"	"00459"	"LMiller_00459.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"5/22/2013"	"11/22/2013"	"6m"	180	0	NA	258.416
+"4"	"00459"	"LMiller_00459.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"5/22/2013"	"11/22/2013"	"6m"	180	0	NA	258.416
+"5"	"00461"	"LMiller_00461.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"5/24/2013"	"12/11/2013"	"6m 17d"	197	7.66	NA	704.55
+"6"	"00461"	"LMiller_00461.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"5/24/2013"	"12/11/2013"	"6m 17d"	197	7.66	NA	704.55
+"7"	"00462"	"LMiller_00462.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"5/6/2013"	"12/12/2013"	"7m 6d"	216	0	19.104	1075.626
+"8"	"00462"	"LMiller_00462.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"5/6/2013"	"12/12/2013"	"7m 6d"	216	0	19.104	1075.626
+"9"	"00463"	"LMiller_00463.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"6/20/2013"	"1/14/2014"	"6m 25d"	185	0	11.5902	423.59
+"10"	"00466"	"LMiller_00466.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"6/13/2013"	"1/14/2014"	"7m 1d"	211	3.81	11.2014	642.148
+"11"	"00466"	"LMiller_00466.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"6/13/2013"	"1/14/2014"	"7m 1d"	211	3.81	11.2014	642.148
+"12"	"00467"	"LMiller_00467.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"6/20/2013"	"1/14/2014"	"6m 25d"	205	6.09	15.5112	425.782
+"13"	"00467"	"LMiller_00467.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"6/20/2013"	"1/14/2014"	"6m 25d"	205	6.09	15.5112	425.782
+"14"	"00468"	"LMiller_00468.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"7/1/2013"	"1/14/2014"	"6m 13d"	193	0	15.5112	660.911
+"15"	"00468"	"LMiller_00468.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"7/1/2013"	"1/14/2014"	"6m 13d"	193	0	15.5112	660.911
+"16"	"00469"	"LMiller_00469.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"5/24/2013"	"1/16/2014"	"7m 23d"	233	6.38	NA	1279.789
+"17"	"00469"	"LMiller_00469.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"5/24/2013"	"1/16/2014"	"7m 23d"	233	6.38	NA	1279.789
+"18"	"00473"	"LMiller_00473.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"5/30/2013"	"1/16/2014"	"7m 17d"	227	0	20.1005	608.508
+"19"	"00473"	"LMiller_00473.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"5/30/2013"	"1/16/2014"	"7m 17d"	227	0	20.1005	608.508
+"20"	"00474"	"LMiller_00474.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"7/26/2013"	"1/29/2014"	"6m 3d"	183	0	44.6992	443.989
+"21"	"00476"	"LMiller_00476.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"6/26/2013"	"1/29/2014"	"7m 3d"	213	5.48	NA	476.431
+"22"	"00476"	"LMiller_00476.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"6/26/2013"	"1/29/2014"	"7m 3d"	213	5.48	NA	476.431
+"23"	"00477"	"LMiller_00477.BAL"	"H.pylori_(+)"	"BAL"	"Female"	"6/7/2013"	"1/29/2014"	"7m 22d"	232	5.81	NA	715.056
+"24"	"00477"	"LMiller_00477.Swab"	"H.pylori_(+)"	"Swab"	"Female"	"6/7/2013"	"1/29/2014"	"7m 22d"	232	5.81	NA	715.056
+"25"	"00481"	"LMiller_00481.BAL"	"H.pylori_(-)"	"BAL"	"Female"	"6/20/2013"	"1/30/2014"	"7m 10d"	220	0	17.622	NA
+"26"	"00481"	"LMiller_00481.Swab"	"H.pylori_(-)"	"Swab"	"Female"	"6/20/2013"	"1/30/2014"	"7m 10d"	220	0	17.622	NA

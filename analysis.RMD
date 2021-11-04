@@ -84,7 +84,9 @@ subsetted <- subsetted[1:(length(subsetted)-1)]
 ## Odds ratios of variables based on H. pylori status
 
 ```{r echo=F}
-age_data <- read_excel("data/metadata.xlsx", na = "NA")
+# Read age data as text
+age_data <- read.table(file.path(getwd(),"data", "rdu_table.txt"), row.names=NULL, sep='\t', quote="", header=TRUE, colClasses = c(RDU. = "character"))
+
 age_data <- na.omit(age_data) # remove NA rows
 
 model <- age_data %>% 
@@ -674,9 +676,9 @@ p
 
 ```{r echo=F, out.extra='style="float:left"'}
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
- hp@sam_data$MMU <- factor( hp@sam_data$MMU)
+ hp@sam_data$RDU. <- factor( hp@sam_data$RDU.)
 
-p <- plot_bar(hp, "MMU", "Abundance","Species", title="Helicobacter ASVs")  +
+p <- plot_bar(hp, "RDU.", "Abundance","Species", title="Helicobacter ASVs")  +
   theme_classic(base_size = 28) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +

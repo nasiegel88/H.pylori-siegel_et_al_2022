@@ -1,27 +1,27 @@
-SampleID	MMU	Treatment	site	sex	DOB	bx_date	age_at_bx	age_at_bx_days	log10_cfu-gm	IL8_Lavage	IL8_Plasma
-LMiller_43630.BAL	43630	H.pylori_(-)	BAL	Female	5/6/2013	12/12/2013	7m 6d	216	0	19.104	1075.626
-LMiller_43630.Swab	43630	H.pylori_(-)	Swab	Female	5/6/2013	12/12/2013	7m 6d	216	0	19.104	1075.626
-LMiller_43752.BAL	43752	H.pylori_(-)	BAL	Female	5/22/2013	11/22/2013	6m	180	0	NA	463.376
-LMiller_43752.Swab	43752	H.pylori_(-)	Swab	Female	5/22/2013	11/22/2013	6m	180	0	NA	463.376
-LMiller_43753.BAL	43753	H.pylori_(-)	BAL	Female	5/22/2013	11/22/2013	6m	180	0	NA	258.416
-LMiller_43753.Swab	43753	H.pylori_(-)	Swab	Female	5/22/2013	11/22/2013	6m	180	0	NA	258.416
-LMiller_43767.BAL	43767	H.pylori_(+)	BAL	Female	5/24/2013	12/11/2013	6m 17d	197	7.66	NA	704.55
-LMiller_43767.Swab	43767	H.pylori_(+)	Swab	Female	5/24/2013	12/11/2013	6m 17d	197	7.66	NA	704.55
-LMiller_43768.BAL	43768	H.pylori_(+)	BAL	Female	5/24/2013	1/16/2014	7m 23d	233	6.38	NA	1279.789
-LMiller_43768.Swab	43768	H.pylori_(+)	Swab	Female	5/24/2013	1/16/2014	7m 23d	233	6.38	NA	1279.789
-LMiller_43803.BAL	43803	H.pylori_(-)	BAL	Female	5/30/2013	1/16/2014	7m 17d	227	0	20.1005	608.508
-LMiller_43803.Swab	43803	H.pylori_(-)	Swab	Female	5/30/2013	1/16/2014	7m 17d	227	0	20.1005	608.508
-LMiller_43829.BAL	43829	H.pylori_(+)	BAL	Female	6/7/2013	1/29/2014	7m 22d	232	5.81	NA	715.056
-LMiller_43829.Swab	43829	H.pylori_(+)	Swab	Female	6/7/2013	1/29/2014	7m 22d	232	5.81	NA	715.056
-LMiller_43858.BAL	43858	H.pylori_(+)	BAL	Female	6/13/2013	1/14/2014	7m 1d	211	3.81	11.2014	642.148
-LMiller_43858.Swab	43858	H.pylori_(+)	Swab	Female	6/13/2013	1/14/2014	7m 1d	211	3.81	11.2014	642.148
-LMiller_43880.BAL	43880	H.pylori_(-)	BAL	Female	6/20/2013	1/30/2014	7m 10d	220	0	17.622	NA
-LMiller_43880.Swab	43880	H.pylori_(-)	Swab	Female	6/20/2013	1/30/2014	7m 10d	220	0	17.622	NA
-LMiller_43882.BAL	43882	H.pylori_(+)	BAL	Female	6/20/2013	1/14/2014	6m 25d	205	6.09	15.5112	425.782
-LMiller_43882.Swab	43882	H.pylori_(+)	Swab	Female	6/20/2013	1/14/2014	6m 25d	205	6.09	15.5112	425.782
-LMiller_43900.BAL	43900	H.pylori_(+)	BAL	Female	6/26/2013	1/29/2014	7m 3d	213	5.48	NA	476.431
-LMiller_43900.Swab	43900	H.pylori_(+)	Swab	Female	6/26/2013	1/29/2014	7m 3d	213	5.48	NA	476.431
-LMiller_43915.BAL	43915	H.pylori_(-)	BAL	Female	7/1/2013	1/14/2014	6m 13d	193	0	15.5112	660.911
-LMiller_43915.Swab	43915	H.pylori_(-)	Swab	Female	7/1/2013	1/14/2014	6m 13d	193	0	15.5112	660.911
-LMiller_43828.BAL	43828	H.pylori_(-)	BAL	Female	6/20/2013	1/14/2014	6m 25d	185	0	11.5902	423.59
-LMiller_43964.BAL	43964	H.pylori_(-)	BAL	Female	7/26/2013	1/29/2014	6m 3d	183	0	44.6992	443.989
+SampleID	RDU.	Treatment	site	sex	DOB	bx_date	age_at_bx	age_at_bx_days	log10_cfu.gm	IL8_Lavage	IL8_Plasma
+LMiller_00458.BAL	458	H.pylori_(-)	BAL	Female	5/22/2013	11/22/2013	6m	180	0	NA	463.376
+LMiller_00458.Swab	458	H.pylori_(-)	Swab	Female	5/22/2013	11/22/2013	6m	180	0	NA	463.376
+LMiller_00459.BAL	459	H.pylori_(-)	BAL	Female	5/22/2013	11/22/2013	6m	180	0	NA	258.416
+LMiller_00459.Swab	459	H.pylori_(-)	Swab	Female	5/22/2013	11/22/2013	6m	180	0	NA	258.416
+LMiller_00461.BAL	461	H.pylori_(+)	BAL	Female	5/24/2013	12/11/2013	6m 17d	197	7.66	NA	704.55
+LMiller_00461.Swab	461	H.pylori_(+)	Swab	Female	5/24/2013	12/11/2013	6m 17d	197	7.66	NA	704.55
+LMiller_00462.BAL	462	H.pylori_(-)	BAL	Female	5/6/2013	12/12/2013	7m 6d	216	0	19.104	1075.626
+LMiller_00462.Swab	462	H.pylori_(-)	Swab	Female	5/6/2013	12/12/2013	7m 6d	216	0	19.104	1075.626
+LMiller_00463.BAL	463	H.pylori_(-)	BAL	Female	6/20/2013	1/14/2014	6m 25d	185	0	11.5902	423.59
+LMiller_00466.BAL	466	H.pylori_(+)	BAL	Female	6/13/2013	1/14/2014	7m 1d	211	3.81	11.2014	642.148
+LMiller_00466.Swab	466	H.pylori_(+)	Swab	Female	6/13/2013	1/14/2014	7m 1d	211	3.81	11.2014	642.148
+LMiller_00467.BAL	467	H.pylori_(+)	BAL	Female	6/20/2013	1/14/2014	6m 25d	205	6.09	15.5112	425.782
+LMiller_00467.Swab	467	H.pylori_(+)	Swab	Female	6/20/2013	1/14/2014	6m 25d	205	6.09	15.5112	425.782
+LMiller_00468.BAL	468	H.pylori_(-)	BAL	Female	7/1/2013	1/14/2014	6m 13d	193	0	15.5112	660.911
+LMiller_00468.Swab	468	H.pylori_(-)	Swab	Female	7/1/2013	1/14/2014	6m 13d	193	0	15.5112	660.911
+LMiller_00469.BAL	469	H.pylori_(+)	BAL	Female	5/24/2013	1/16/2014	7m 23d	233	6.38	NA	1279.789
+LMiller_00469.Swab	469	H.pylori_(+)	Swab	Female	5/24/2013	1/16/2014	7m 23d	233	6.38	NA	1279.789
+LMiller_00473.BAL	473	H.pylori_(-)	BAL	Female	5/30/2013	1/16/2014	7m 17d	227	0	20.1005	608.508
+LMiller_00473.Swab	473	H.pylori_(-)	Swab	Female	5/30/2013	1/16/2014	7m 17d	227	0	20.1005	608.508
+LMiller_00474.BAL	474	H.pylori_(-)	BAL	Female	7/26/2013	1/29/2014	6m 3d	183	0	44.6992	443.989
+LMiller_00476.BAL	476	H.pylori_(+)	BAL	Female	6/26/2013	1/29/2014	7m 3d	213	5.48	NA	476.431
+LMiller_00476.Swab	476	H.pylori_(+)	Swab	Female	6/26/2013	1/29/2014	7m 3d	213	5.48	NA	476.431
+LMiller_00477.BAL	477	H.pylori_(+)	BAL	Female	6/7/2013	1/29/2014	7m 22d	232	5.81	NA	715.056
+LMiller_00477.Swab	477	H.pylori_(+)	Swab	Female	6/7/2013	1/29/2014	7m 22d	232	5.81	NA	715.056
+LMiller_00481.BAL	481	H.pylori_(-)	BAL	Female	6/20/2013	1/30/2014	7m 10d	220	0	17.622	NA
+LMiller_00481.Swab	481	H.pylori_(-)	Swab	Female	6/20/2013	1/30/2014	7m 10d	220	0	17.622	NA

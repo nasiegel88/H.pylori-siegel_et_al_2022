@@ -988,7 +988,7 @@ t1$cal_cor(use_data = "other",
            cor_method="spearman",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
-p <- t1$plot_cor() +
+p <- t1$plot_corr() +
   theme_classic(base_size = 20) +
   theme(plot.title = element_text(hjust = 0.5)) +
    ggtitle(expression(atop("Lavage Genus Abundance",
@@ -1005,7 +1005,7 @@ p
 # calculate correlations for different groups using parameter by_group
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
-p <- t1$plot_cor()+
+p <- t1$plot_corr()+
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
@@ -1030,7 +1030,7 @@ t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
-p <- t1$plot_cor() +
+p <- t1$plot_corr() +
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
@@ -1091,7 +1091,7 @@ p <- t1$cal_cor(use_data = "other",
            cor_method="spearman",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
-p <- t1$plot_cor() +
+p <- t1$plot_corr() +
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
@@ -1106,7 +1106,7 @@ p
 ```{r echo=F, fig.cap = "IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status"}
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
-p <- t1$plot_cor()+
+p <- t1$plot_corr()+
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
@@ -1131,7 +1131,7 @@ t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
-p <- t1$plot_cor() +
+p <- t1$plot_corr() +
   theme_classic(base_size = 20)+
   theme(plot.title = element_text(hjust = 0.5)) +
 ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))

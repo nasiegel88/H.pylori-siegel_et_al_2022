@@ -57,7 +57,8 @@ if(!require(tidyverse)){
 }
 
 if(!require(tidyMicro)){
-    install.packages("tidyMicro")
+    devtools::install_github("CharlieCarpenter/tidyMicro@0e6f7b5", 
+                           build_vignettes = FALSE)
   library(tidyMicro)
 }
 
@@ -71,7 +72,7 @@ if(!require(magrittr)){
   library(magrittr)
 }
 if(!require(microeco)){
-  install.packages("microeco")
+  devtools::install_github("ChiLiubio/microeco@e9e8bcd")
   library(microeco)
 }
 if(!require(ggpubr)){

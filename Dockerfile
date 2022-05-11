@@ -1,7 +1,9 @@
-FROM rocker/binder:3.4.2
+FROM rocker/rstudio-stable:devel
 
+# Set working directory
 WORKDIR ${HOME}
-	
+
+# Copy directory files to image	
 COPY . ${HOME}
 
 # Copy repo into ${HOME}, make user own $HOME
@@ -22,13 +24,27 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 # Put conda in path so we can use conda activate
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-# Install mamba
-RUN conda install -y mamba -c conda-forge
+# Install umamba
+RUN conda install -y micromamba -c conda-forge
 
+# Create a conda environment from the environment yml
 COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yml /tmp/environment.yml
-RUN mamba env create --file /tmp/environment.yml && \
-    mamba clean --all --yes
+RUN micromamba create --yes --file /tmp/environment.yml && \
+    micromamba  clean --all --yes
 
-COPY . ${HOME}
-RUN chown -R ${NB_USER} ${HOME}
+# Activate the conda environment
+ARG MAMBA_DOCKERFILE_ACTIVATE=1 
+
+RUN chown -R ${NB_USER} . ${HOME}
 USER ${NB_USER}
+
+# Settings required for conda+rstudio
+ENV RSTUDIO_WHICH_R=${CONDAENV}/bin/R
+ENV RETICULATE_PYTHON=${CONDAENV}/bin/python
+
+RUN echo rsession-which-r=${RSTUDIO_WHICH_R} > /etc/rstudio/rserver.conf && \
+    echo rsession-ld-library-path=${CONDAENV}/lib >> /etc/rstudio/rserver.conf && \
+    echo "R_LIBS_USER=${CONDAENV}/lib/R/library" > /home/rstudio/.Renviron
+
+## Run an install.R script, if it exists.
+RUN if [ -f /R/install.R ]; then R --quiet -f /R/install.R; fi

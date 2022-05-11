@@ -47,4 +47,4 @@ RUN echo rsession-which-r=${RSTUDIO_WHICH_R} > /etc/rstudio/rserver.conf && \
     echo "R_LIBS_USER=${CONDAENV}/lib/R/library" > /home/rstudio/.Renviron
 
 ## Run an install.R script, if it exists.
-RUN if [ -f /R/install.R ]; then R --quiet -f /R/install.R; fi
+#RUN if [ -f /R/install.R ]; then R --quiet -f /R/install.R; fi

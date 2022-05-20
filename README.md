@@ -1,41 +1,23 @@
 # H. pylori early-life microbiome study
 
-This repo houses the analysis for the helicobacter study
+This repo houses the analysis for the Helicobacter study and can be reproduced following the steps listed below.
 
-See the Binder [example](https://github.com/binder-examples/dockerfile-rstudio) for information on setting up a local Docker image of Rstudio
+The only requirement is [Mamba](https://github.com/mamba-org/mamba), also [Miniconda](https://docs.conda.io/en/latest/miniconda.html) can be used but is significantly slower.
 
-### I. Build Docker image
-
-```docker
-docker build --tag umamba-rstudio -f Dockerfile .
+I. Clone this repo
+```
+git clone git@github.com:nasiegel88/H.pylori-siegel_et_al_2021.git
 ```
 
-### II. The output of this command will be your password
-
-```docker
-docker run --rm -p 8787:8787 rocker/rstudio:latest
+II. Create the mamba environment
+```
+mamba env create -n hp -f environment.yml
+mamba activate hp
 ```
 
-```docker
-# Testing
-docker run \
-    -e ENV_NAME=environment \
-    --mount type=bind,source="$(pwd)",destination=/home/rstudio \
-    --server-daemonize=0 \
-    --www-port 8787 \
-    --rsession-which-r=$(which R) \
-    --rsession-ld-library-path=$CONDA_PREFIX/lib \
-    --rm -p 8787:8787 rocker/rstudio:latest
+III. Create a docker image using [repo2docker](https://repo2docker.readthedocs.io/en/latest/index.html)
+```
+repo2docker -p 8888:8787 $PWD /usr/lib/rstudio-server/bin/rserver
 ```
 
-```docker
-# Testing
-docker run --rm \
-    -e ENV_NAME=environment \
-    --mount type=bind,source="$(pwd)",destination=/home/rstudio \
-    -p 127.0.0.1:8787:8787 \
-    -e DISABLE_AUTH=true \
-    umamba-rstudio
-```
-
-Next, go to `localhost:8787`. Username will be `rstudio` and password will be the output of the above code.
+Tested on Linux (Ubuntu 20.04.4 LTS)

@@ -2,7 +2,7 @@
 
 This repo houses the analysis for the Helicobacter study and can be reproduced following the steps listed below.
 
-The only requirement is [Mamba](https://github.com/mamba-org/mamba), also [Miniconda](https://docs.conda.io/en/latest/miniconda.html) can be used but is significantly slower.
+The only requirement is [Mamba](https://github.com/mamba-org/mamba), however [Miniconda](https://docs.conda.io/en/latest/miniconda.html) can be used but is significantly slower.
 
 I. Clone this repo
 ```

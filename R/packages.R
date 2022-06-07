@@ -56,6 +56,21 @@ if(!require(tidyverse)){
   library(tidyverse)
 }
 
+if(!require(GUniFrac)){
+  install_version("GUniFrac", "1.6")
+  library(GUniFrac)
+}
+
+if(!require(picante)){
+  install_version("picante", "1.8.2")
+  library(picante)
+}
+
+if(!require(randomForest)){
+  install_version("randomForest", "4.7-1.1")
+  library(randomForest)
+}
+
 if(!require(tidyMicro)){
     devtools::install_github("CharlieCarpenter/tidyMicro@0e6f7b5", 
                            build_vignettes = FALSE)
@@ -92,5 +107,3 @@ if(!require(tidytree)){
 #  BiocManager::install("ggtree")
 #  library("ggtree")
 #}
-
-

@@ -5,6 +5,11 @@ channels:
   - defaults
 dependencies:
   - r-base=4.1.3
+  - r-testthat
+  - r-pkgload
+  - r-gunifrac
+  - r-picante
+  - r-randomforest
   - r-devtools
   - r-readxl
   - r-sjPlot

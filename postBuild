@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+# Install non-cran/bioconductor packages from GitHub
+
+# Read in packages
+Rscript -e "library(withr)"
+Rscript -e "library(devtools)"
+
+# Install GitHub dependencies
+Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('CharlieCarpenter/tidyMicro@0e6f7b5', build_vignettes = FALSE, upgrade = 'never'))"
+Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('jbisanz/qiime2R@2a3cee1', upgrade = 'never'))"
+Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('ChiLiubio/microeco@e9e8bcd', upgrade = 'never'))"

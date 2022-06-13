@@ -21,6 +21,7 @@ dependencies:
   - r-ggpubr
   - r-rcolorbrewer
   - r-tidytree
+  - r-withr
   - bioconductor-phyloseq
   - bioconductor-deseq2
   - bioconductor-complexheatmap

@@ -22,6 +22,7 @@ dependencies:
   - r-rcolorbrewer
   - r-tidytree
   - r-withr
+  - r-rmarkdown
   - bioconductor-phyloseq
   - bioconductor-deseq2
   - bioconductor-complexheatmap

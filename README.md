@@ -14,7 +14,7 @@ II\. Create the mamba environment
     mamba create -n repo2docker -c conda-forge jupyter-repo2docker
     mamba activate repo2docker
 
-III\. Create a docker image using [repo2docker](https://repo2docker.readthedocs.io/en/latest/index.html)
+III\. Create a docker image using [repo2docker](https://repo2docker.readthedocs.io/en/latest/index.html). Once the Docker image is created clicked on the link to launch Jupyter and then select Rstudio. Lastly, the analysis is in the script title `analysis.RMD`.
 
     repo2docker $PWD
 

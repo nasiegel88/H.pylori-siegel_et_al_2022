@@ -1,8 +1,7 @@
 #!/bin/bash
 
+# Stop on fail!
 set -e
-
-# Install non-cran/bioconductor packages from GitHub
 
 # Read in packages
 Rscript -e "library(withr)"

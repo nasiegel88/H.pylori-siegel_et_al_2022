@@ -7,7 +7,8 @@ knit: (function(inputFile, encoding) {
   rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs",
   output_format = "all")})
 output:
-  html_document
+  rmarkdown::github_document
+always_allow_html: true
 ---
 
 ## Data used in analysis

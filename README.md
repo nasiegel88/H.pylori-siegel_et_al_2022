@@ -1,6 +1,6 @@
 # H. pylori early-life microbiome study
 
-This repo houses the analysis for the Helicobacter study and can be reproduced following the steps listed below. The full analysis can be found [here](https://htmlpreview.github.io/?https://raw.githubusercontent.com/nasiegel88/H.pylori-siegel_et_al_2022/master/docs/analysis.html?token=GHSAT0AAAAAABVP6ERMPNDBKTKVUEJVOQY4YVIYRFQ).
+This repo houses the analysis for the Helicobacter study and can be reproduced following the steps listed below. The full analysis can be found [here](https://github.com/nasiegel88/H.pylori-siegel_et_al_2022/blob/master/docs/analysis.md).
 
 [Mamba](https://github.com/mamba-org/mamba) and [Docker](https://docs.docker.com/get-docker/) are required to recreate the analysis conducted for this manuscript. If that software is not installed instructions for their installation can be found in the links above.
 

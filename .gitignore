@@ -10,3 +10,4 @@ docs/analysis_files/
 .subversion/
 analysis.log
 docs/analysis.tex
+.jupyter/

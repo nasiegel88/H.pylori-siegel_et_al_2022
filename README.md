@@ -2,6 +2,8 @@
 
 This repo houses the analysis for the Helicobacter study and can be reproduced following the steps listed below. The full analysis can be found [here](https://github.com/nasiegel88/H.pylori-siegel_et_al_2022/blob/master/docs/analysis.md).
 
+**Note**: Analysis figures will not render on the GitHub markdown file linked above and must be view either by downloading the repo or the [individual figures](https://github.com/nasiegel88/H.pylori-siegel_et_al_2022/tree/master/results).
+
 [Mamba](https://github.com/mamba-org/mamba) and [Docker](https://docs.docker.com/get-docker/) are required to recreate the analysis conducted for this manuscript. If that software is not installed instructions for their installation can be found in the links above.
 
 I. Clone this repo

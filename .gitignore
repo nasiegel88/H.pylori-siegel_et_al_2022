@@ -4,3 +4,9 @@
 .Ruserdata
 .vscode/
 docs/analysis_files/
+.config/
+.jupyter-server-log.txt
+.local/
+.subversion/
+analysis.log
+docs/analysis.tex

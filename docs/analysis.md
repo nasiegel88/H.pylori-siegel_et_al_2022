@@ -1,7 +1,7 @@
 H.pylori Rhesus Microbiome Analysis
 ================
 Noah Siegel
-16 June, 2022, 17:04
+16 June, 2022, 18:35
 
 ## Data used in analysis
 
@@ -54057,7 +54057,7 @@ NA
 
 ## Odds ratios of variables based on H. pylori status
 
-<img src="/home/noah/docs/analysis_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="results/hp-oddsratios.png" style="display: block; margin: auto;" />
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -54248,58 +54248,7 @@ H.pylori\_(-)\_Swab
 6e-04
 </td>
 <td style="text-align:center;">
-5.4177
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-k\_\_Bacteria\|p\_\_Campilobacterota
-</td>
-<td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Campilobacterota
-</td>
-<td style="text-align:center;">
-H.pylori\_(+)\_BAL
-</td>
-<td style="text-align:center;">
-1e-04
-</td>
-<td style="text-align:center;">
-5.3382
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria
-</td>
-<td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria
-</td>
-<td style="text-align:center;">
-H.pylori\_(+)\_BAL
-</td>
-<td style="text-align:center;">
-1e-04
-</td>
-<td style="text-align:center;">
-5.3382
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales
-</td>
-<td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales
-</td>
-<td style="text-align:center;">
-H.pylori\_(+)\_BAL
-</td>
-<td style="text-align:center;">
-1e-04
-</td>
-<td style="text-align:center;">
-5.3382
+5.3628
 </td>
 </tr>
 <tr>
@@ -54316,7 +54265,58 @@ H.pylori\_(+)\_BAL
 1e-04
 </td>
 <td style="text-align:center;">
-5.3279
+5.3460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter
+</td>
+<td style="text-align:center;">
+H.pylori\_(+)\_BAL
+</td>
+<td style="text-align:center;">
+1e-04
+</td>
+<td style="text-align:center;">
+5.3460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter\|s\_\_Campylobacter_canadensis
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter\|s\_\_Campylobacter_canadensis
+</td>
+<td style="text-align:center;">
+H.pylori\_(+)\_BAL
+</td>
+<td style="text-align:center;">
+1e-04
+</td>
+<td style="text-align:center;">
+5.3460
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+k\_\_Bacteria\|p\_\_Campilobacterota
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Campilobacterota
+</td>
+<td style="text-align:center;">
+H.pylori\_(+)\_BAL
+</td>
+<td style="text-align:center;">
+1e-04
+</td>
+<td style="text-align:center;">
+5.3322
 </td>
 </tr>
 </tbody>
@@ -54387,7 +54387,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9848
+4.9520
 </td>
 </tr>
 <tr>
@@ -54404,7 +54404,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9825
+4.9381
 </td>
 </tr>
 <tr>
@@ -54421,7 +54421,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9825
+4.9381
 </td>
 </tr>
 <tr>
@@ -54438,7 +54438,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9825
+4.9381
 </td>
 </tr>
 <tr>
@@ -54455,7 +54455,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9825
+4.9381
 </td>
 </tr>
 <tr>
@@ -54472,7 +54472,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.9588
+4.9136
 </td>
 </tr>
 <tr>
@@ -54489,7 +54489,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8660
+4.8178
 </td>
 </tr>
 <tr>
@@ -54506,7 +54506,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8510
+4.8050
 </td>
 </tr>
 <tr>
@@ -54523,7 +54523,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8510
+4.8050
 </td>
 </tr>
 <tr>
@@ -54540,7 +54540,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8452
+4.8000
 </td>
 </tr>
 <tr>
@@ -54557,7 +54557,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8452
+4.8000
 </td>
 </tr>
 <tr>
@@ -54574,7 +54574,7 @@ H.pylori\_(+)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.8452
+4.8000
 </td>
 </tr>
 <tr>
@@ -54591,7 +54591,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.4349
+4.5236
 </td>
 </tr>
 <tr>
@@ -54608,7 +54608,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.4043
+4.5005
 </td>
 </tr>
 <tr>
@@ -54625,7 +54625,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.4043
+4.5005
 </td>
 </tr>
 <tr>
@@ -54642,7 +54642,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.4043
+4.5005
 </td>
 </tr>
 <tr>
@@ -54659,7 +54659,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.2559
+4.3880
 </td>
 </tr>
 <tr>
@@ -54676,7 +54676,7 @@ H.pylori\_(-)\_BAL
 0.0001
 </td>
 <td style="text-align:center;">
-4.2559
+4.3880
 </td>
 </tr>
 <tr>
@@ -54693,7 +54693,7 @@ H.pylori\_(-)\_BAL
 0.0092
 </td>
 <td style="text-align:center;">
-4.2051
+4.1942
 </td>
 </tr>
 <tr>
@@ -54710,7 +54710,7 @@ H.pylori\_(+)\_BAL
 0.0092
 </td>
 <td style="text-align:center;">
-4.0935
+4.1397
 </td>
 </tr>
 <tr>
@@ -54727,7 +54727,7 @@ H.pylori\_(+)\_BAL
 0.0092
 </td>
 <td style="text-align:center;">
-3.8026
+3.8492
 </td>
 </tr>
 <tr>
@@ -54744,7 +54744,7 @@ H.pylori\_(-)\_BAL
 0.0059
 </td>
 <td style="text-align:center;">
-3.4056
+3.4573
 </td>
 </tr>
 <tr>
@@ -54761,7 +54761,7 @@ H.pylori\_(-)\_BAL
 0.0059
 </td>
 <td style="text-align:center;">
-3.4056
+3.4573
 </td>
 </tr>
 <tr>
@@ -54778,7 +54778,7 @@ H.pylori\_(-)\_BAL
 0.0059
 </td>
 <td style="text-align:center;">
-3.4056
+3.4573
 </td>
 </tr>
 <tr>
@@ -54795,7 +54795,7 @@ H.pylori\_(-)\_BAL
 0.0059
 </td>
 <td style="text-align:center;">
-3.4056
+3.4573
 </td>
 </tr>
 </tbody>
@@ -54866,7 +54866,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-5.0148
+5.0215
 </td>
 </tr>
 <tr>
@@ -54883,7 +54883,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-5.0148
+5.0215
 </td>
 </tr>
 <tr>
@@ -54900,7 +54900,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-5.0139
+5.0206
 </td>
 </tr>
 <tr>
@@ -54917,7 +54917,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-5.0139
+5.0206
 </td>
 </tr>
 <tr>
@@ -54934,7 +54934,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-5.0139
+5.0206
 </td>
 </tr>
 <tr>
@@ -54951,7 +54951,7 @@ H.pylori\_(+)\_Swab
 0.0059
 </td>
 <td style="text-align:center;">
-4.9947
+4.9929
 </td>
 </tr>
 <tr>
@@ -54968,7 +54968,7 @@ H.pylori\_(-)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-4.9811
+4.9829
 </td>
 </tr>
 <tr>
@@ -54985,7 +54985,7 @@ H.pylori\_(-)\_Swab
 0.0005
 </td>
 <td style="text-align:center;">
-4.9770
+4.9566
 </td>
 </tr>
 <tr>
@@ -55002,7 +55002,7 @@ H.pylori\_(-)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-4.7746
+4.8198
 </td>
 </tr>
 <tr>
@@ -55019,7 +55019,7 @@ H.pylori\_(-)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-4.7746
+4.8198
 </td>
 </tr>
 <tr>
@@ -55036,7 +55036,7 @@ H.pylori\_(-)\_Swab
 0.0092
 </td>
 <td style="text-align:center;">
-4.6923
+4.6337
 </td>
 </tr>
 <tr>
@@ -55053,7 +55053,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-4.4343
+4.4204
 </td>
 </tr>
 <tr>
@@ -55070,7 +55070,7 @@ H.pylori\_(+)\_Swab
 0.0039
 </td>
 <td style="text-align:center;">
-4.4343
+4.4204
 </td>
 </tr>
 </tbody>
@@ -58260,6 +58260,31 @@ IL8_Lavage
     BAL
     </td>
     <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pseudomonadales\|f\_\_Pseudomonadaceae\|g\_\_Pseudomonas
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    -0.0991
+    </td>
+    <td style="text-align:center;">
+    0.8155
+    </td>
+    <td style="text-align:center;">
+    0.9209
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V4
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
     k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Alphaproteobacteria\|o\_\_Caulobacterales\|f\_\_Caulobacteraceae\|g\_\_Brevundimonas
     </td>
     <td style="text-align:center;">
@@ -58279,7 +58304,132 @@ IL8_Lavage
     </tr>
     <tr>
     <td style="text-align:left;">
-    V4
+    V5
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    -0.0434
+    </td>
+    <td style="text-align:center;">
+    0.9186
+    </td>
+    <td style="text-align:center;">
+    0.9209
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V6
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    -0.1212
+    </td>
+    <td style="text-align:center;">
+    0.7749
+    </td>
+    <td style="text-align:center;">
+    0.9209
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V7
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    -0.1952
+    </td>
+    <td style="text-align:center;">
+    0.6432
+    </td>
+    <td style="text-align:center;">
+    0.9209
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V8
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Flavobacteriaceae\|g\_\_Flavobacterium
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    0.7803
+    </td>
+    <td style="text-align:center;">
+    0.0223
+    </td>
+    <td style="text-align:center;">
+    0.1490
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V9
+    </td>
+    <td style="text-align:center;">
+    BAL
+    </td>
+    <td style="text-align:center;">
+    k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
+    </td>
+    <td style="text-align:center;">
+    IL8_Lavage
+    </td>
+    <td style="text-align:center;">
+    -0.2237
+    </td>
+    <td style="text-align:center;">
+    0.5943
+    </td>
+    <td style="text-align:center;">
+    0.9209
+    </td>
+    <td style="text-align:center;">
+    </td>
+    </tr>
+    <tr>
+    <td style="text-align:left;">
+    V10
     </td>
     <td style="text-align:center;">
     BAL
@@ -58305,182 +58455,7 @@ IL8_Lavage
         </tr>
         <tr>
         <td style="text-align:left;">
-        V5
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.2237
-        </td>
-        <td style="text-align:center;">
-        0.5943
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V6
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.1952
-        </td>
-        <td style="text-align:center;">
-        0.6432
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V7
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.1212
-        </td>
-        <td style="text-align:center;">
-        0.7749
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V8
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pseudomonadales\|f\_\_Pseudomonadaceae\|g\_\_Pseudomonas
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.0991
-        </td>
-        <td style="text-align:center;">
-        0.8155
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V9
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Campilobacterota\|c\_\_Campylobacteria\|o\_\_Campylobacterales\|f\_\_Campylobacteraceae\|g\_\_Campylobacter
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.0434
-        </td>
-        <td style="text-align:center;">
-        0.9186
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V10
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Actinobacteriota\|c\_\_Actinobacteria\|o\_\_Micrococcales\|f\_\_Micrococcaceae\|g\_\_Rothia
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.1758
-        </td>
-        <td style="text-align:center;">
-        0.6771
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
         V11
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Flavobacteriaceae\|g\_\_Flavobacterium
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        0.7803
-        </td>
-        <td style="text-align:center;">
-        0.0223
-        </td>
-        <td style="text-align:center;">
-        0.1490
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V12
         </td>
         <td style="text-align:center;">
         BAL
@@ -58499,6 +58474,31 @@ IL8_Lavage
         </td>
         <td style="text-align:center;">
         0.9209
+        </td>
+        <td style="text-align:center;">
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align:left;">
+        V12
+        </td>
+        <td style="text-align:center;">
+        BAL
+        </td>
+        <td style="text-align:center;">
+        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Alphaproteobacteria\|o\_\_Rhizobiales\|f\_\_Beijerinckiaceae\|g\_\_Methylobacterium-Methylorubrum
+        </td>
+        <td style="text-align:center;">
+        IL8_Lavage
+        </td>
+        <td style="text-align:center;">
+        0.7498
+        </td>
+        <td style="text-align:center;">
+        0.0322
+        </td>
+        <td style="text-align:center;">
+        0.1609
         </td>
         <td style="text-align:center;">
         </td>
@@ -58536,19 +58536,19 @@ IL8_Lavage
         BAL
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Alphaproteobacteria\|o\_\_Rhizobiales\|f\_\_Beijerinckiaceae\|g\_\_Methylobacterium-Methylorubrum
+        k\_\_Bacteria\|p\_\_Actinobacteriota\|c\_\_Actinobacteria\|o\_\_Micrococcales\|f\_\_Micrococcaceae\|g\_\_Rothia
         </td>
         <td style="text-align:center;">
         IL8_Lavage
         </td>
         <td style="text-align:center;">
-        0.7498
+        -0.1758
         </td>
         <td style="text-align:center;">
-        0.0322
+        0.6771
         </td>
         <td style="text-align:center;">
-        0.1609
+        0.9209
         </td>
         <td style="text-align:center;">
         </td>
@@ -58561,16 +58561,16 @@ IL8_Lavage
         BAL
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Alphaproteobacteria\|o\_\_Sphingomonadales\|f\_\_Sphingomonadaceae\|g\_\_Sphingomonas
+        k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Staphylococcales\|f\_\_Gemellaceae\|g\_\_Gemella
         </td>
         <td style="text-align:center;">
         IL8_Lavage
         </td>
         <td style="text-align:center;">
-        -0.1600
+        -0.0681
         </td>
         <td style="text-align:center;">
-        0.7051
+        0.8726
         </td>
         <td style="text-align:center;">
         0.9209
@@ -58611,31 +58611,6 @@ IL8_Lavage
         BAL
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Staphylococcales\|f\_\_Gemellaceae\|g\_\_Gemella
-        </td>
-        <td style="text-align:center;">
-        IL8_Lavage
-        </td>
-        <td style="text-align:center;">
-        -0.0681
-        </td>
-        <td style="text-align:center;">
-        0.8726
-        </td>
-        <td style="text-align:center;">
-        0.9209
-        </td>
-        <td style="text-align:center;">
-        </td>
-        </tr>
-        <tr>
-        <td style="text-align:left;">
-        V18
-        </td>
-        <td style="text-align:center;">
-        BAL
-        </td>
-        <td style="text-align:center;">
         k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Sphingobacteriales\|f\_\_Sphingobacteriaceae\|g\_\_Sphingobacterium
         </td>
         <td style="text-align:center;">
@@ -58655,22 +58630,22 @@ IL8_Lavage
         </tr>
         <tr>
         <td style="text-align:left;">
-        V19
+        V18
         </td>
         <td style="text-align:center;">
         BAL
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
+        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Alphaproteobacteria\|o\_\_Sphingomonadales\|f\_\_Sphingomonadaceae\|g\_\_Sphingomonas
         </td>
         <td style="text-align:center;">
         IL8_Lavage
         </td>
         <td style="text-align:center;">
-        -0.0422
+        -0.1600
         </td>
         <td style="text-align:center;">
-        0.9209
+        0.7051
         </td>
         <td style="text-align:center;">
         0.9209
@@ -58680,7 +58655,7 @@ IL8_Lavage
         </tr>
         <tr>
         <td style="text-align:left;">
-        V20
+        V19
         </td>
         <td style="text-align:center;">
         BAL
@@ -58696,6 +58671,31 @@ IL8_Lavage
         </td>
         <td style="text-align:center;">
         0.3936
+        </td>
+        <td style="text-align:center;">
+        0.9209
+        </td>
+        <td style="text-align:center;">
+        </td>
+        </tr>
+        <tr>
+        <td style="text-align:left;">
+        V20
+        </td>
+        <td style="text-align:center;">
+        BAL
+        </td>
+        <td style="text-align:center;">
+        k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
+        </td>
+        <td style="text-align:center;">
+        IL8_Lavage
+        </td>
+        <td style="text-align:center;">
+        -0.0422
+        </td>
+        <td style="text-align:center;">
+        0.9209
         </td>
         <td style="text-align:center;">
         0.9209
@@ -59323,31 +59323,6 @@ V1
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
-</td>
-<td style="text-align:center;">
-IL8_Lavage
-</td>
-<td style="text-align:center;">
-0.1587
-</td>
-<td style="text-align:center;">
-0.7639
-</td>
-<td style="text-align:center;">
-0.8262
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-V2
-</td>
-<td style="text-align:center;">
-Swab
-</td>
-<td style="text-align:center;">
 k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Leptotrichiaceae\|g\_\_Leptotrichia
 </td>
 <td style="text-align:center;">
@@ -59361,6 +59336,31 @@ IL8_Lavage
 </td>
 <td style="text-align:center;">
 0.5676
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V2
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
+</td>
+<td style="text-align:center;">
+IL8_Lavage
+</td>
+<td style="text-align:center;">
+0.1587
+</td>
+<td style="text-align:center;">
+0.7639
+</td>
+<td style="text-align:center;">
+0.8721
 </td>
 <td style="text-align:center;">
 </td>
@@ -59398,19 +59398,19 @@ V4
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Porphyromonadaceae\|g\_\_Porphyromonas
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Actinobacillus
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.4514
+0.3045
 </td>
 <td style="text-align:center;">
-0.3689
+0.5573
 </td>
 <td style="text-align:center;">
-0.5676
+0.7431
 </td>
 <td style="text-align:center;">
 </td>
@@ -59418,31 +59418,6 @@ IL8_Lavage
 <tr>
 <td style="text-align:left;">
 V5
-</td>
-<td style="text-align:center;">
-Swab
-</td>
-<td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Burkholderiales\|f\_\_Neisseriaceae\|g\_\_Neisseria
-</td>
-<td style="text-align:center;">
-IL8_Lavage
-</td>
-<td style="text-align:center;">
--0.8919
-</td>
-<td style="text-align:center;">
-0.0169
-</td>
-<td style="text-align:center;">
-0.3382
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-V6
 </td>
 <td style="text-align:center;">
 Swab
@@ -59467,6 +59442,31 @@ IL8_Lavage
 </tr>
 <tr>
 <td style="text-align:left;">
+V6
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Burkholderiales\|f\_\_Neisseriaceae\|g\_\_Neisseria
+</td>
+<td style="text-align:center;">
+IL8_Lavage
+</td>
+<td style="text-align:center;">
+-0.8919
+</td>
+<td style="text-align:center;">
+0.0169
+</td>
+<td style="text-align:center;">
+0.3382
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 V7
 </td>
 <td style="text-align:center;">
@@ -59485,7 +59485,7 @@ IL8_Lavage
 0.9017
 </td>
 <td style="text-align:center;">
-0.9017
+0.9491
 </td>
 <td style="text-align:center;">
 </td>
@@ -59498,16 +59498,16 @@ V8
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Aggregatibacter
+k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.8228
+-0.6495
 </td>
 <td style="text-align:center;">
-0.0443
+0.1627
 </td>
 <td style="text-align:center;">
 0.3622
@@ -59548,16 +59548,16 @@ V10
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
+k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Lachnospirales\|f\_\_Lachnospiraceae\|g\_\_Johnsonella
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.6495
+-0.7313
 </td>
 <td style="text-align:center;">
-0.1627
+0.0986
 </td>
 <td style="text-align:center;">
 0.3622
@@ -59573,19 +59573,19 @@ V11
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
+k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Porphyromonadaceae\|g\_\_Porphyromonas
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
-0.2165
+-0.4514
 </td>
 <td style="text-align:center;">
-0.6804
+0.3689
 </td>
 <td style="text-align:center;">
-0.8262
+0.5676
 </td>
 <td style="text-align:center;">
 </td>
@@ -59598,19 +59598,19 @@ V12
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Actinobacillus
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Aggregatibacter
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
-0.3045
+-0.8228
 </td>
 <td style="text-align:center;">
-0.5573
+0.0443
 </td>
 <td style="text-align:center;">
-0.7431
+0.3622
 </td>
 <td style="text-align:center;">
 </td>
@@ -59623,19 +59623,19 @@ V13
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Lachnospirales\|f\_\_Lachnospiraceae\|g\_\_Johnsonella
+k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Weeksellaceae\|g\_\_Bergeyella
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.7313
+0.3131
 </td>
 <td style="text-align:center;">
-0.0986
+0.5457
 </td>
 <td style="text-align:center;">
-0.3622
+0.7431
 </td>
 <td style="text-align:center;">
 </td>
@@ -59673,19 +59673,19 @@ V15
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Patescibacteria\|c\_\_Gracilibacteria\|o\_\_Absconditabacteriales\_(SR1)\|f\_*Absconditabacteriales*(SR1)\|g\_*Absconditabacteriales*(SR1)
+k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.7323
+0.2165
 </td>
 <td style="text-align:center;">
-0.0979
+0.6804
 </td>
 <td style="text-align:center;">
-0.3622
+0.8505
 </td>
 <td style="text-align:center;">
 </td>
@@ -59698,19 +59698,19 @@ V16
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Weeksellaceae\|g\_\_Bergeyella
+k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Alloprevotella
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
-0.3131
+0.6092
 </td>
 <td style="text-align:center;">
-0.5457
+0.1992
 </td>
 <td style="text-align:center;">
-0.7431
+0.3622
 </td>
 <td style="text-align:center;">
 </td>
@@ -59723,16 +59723,16 @@ V17
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
+k\_\_Bacteria\|p\_\_Patescibacteria\|c\_\_Gracilibacteria\|o\_\_Absconditabacteriales\_(SR1)\|f\_*Absconditabacteriales*(SR1)\|g\_*Absconditabacteriales*(SR1)
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.6191
+-0.7323
 </td>
 <td style="text-align:center;">
-0.1900
+0.0979
 </td>
 <td style="text-align:center;">
 0.3622
@@ -59760,7 +59760,7 @@ IL8_Lavage
 0.7849
 </td>
 <td style="text-align:center;">
-0.8262
+0.8721
 </td>
 <td style="text-align:center;">
 </td>
@@ -59773,16 +59773,16 @@ V19
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Alloprevotella
+k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
-0.6092
+-0.6191
 </td>
 <td style="text-align:center;">
-0.1992
+0.1900
 </td>
 <td style="text-align:center;">
 0.3622
@@ -59798,19 +59798,19 @@ V20
 Swab
 </td>
 <td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Clostridia_UCG-014\|f\_\_Clostridia_UCG-014\|g\_\_Clostridia_UCG-014
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Haemophilus
 </td>
 <td style="text-align:center;">
 IL8_Lavage
 </td>
 <td style="text-align:center;">
--0.1663
+0.0090
 </td>
 <td style="text-align:center;">
-0.7529
+0.9866
 </td>
 <td style="text-align:center;">
-0.8262
+0.9866
 </td>
 <td style="text-align:center;">
 </td>
@@ -59818,31 +59818,6 @@ IL8_Lavage
 <tr>
 <td style="text-align:left;">
 V21
-</td>
-<td style="text-align:center;">
-Swab
-</td>
-<td style="text-align:center;">
-k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
-</td>
-<td style="text-align:center;">
-IL8_Plasma
-</td>
-<td style="text-align:center;">
--0.5748
-</td>
-<td style="text-align:center;">
-0.0644
-</td>
-<td style="text-align:center;">
-0.4290
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-V22
 </td>
 <td style="text-align:center;">
 Swab
@@ -59861,6 +59836,31 @@ IL8_Plasma
 </td>
 <td style="text-align:center;">
 0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V22
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Rodentibacter
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.5748
+</td>
+<td style="text-align:center;">
+0.0644
+</td>
+<td style="text-align:center;">
+0.4290
 </td>
 <td style="text-align:center;">
 </td>
@@ -59898,6 +59898,181 @@ V24
 Swab
 </td>
 <td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Actinobacillus
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+0.0031
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V25
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Peptostreptococcales-Tissierellales\|f\_\_Peptostreptococcaceae\|g\_\_\[Eubacterium\]\_yurii_group
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.0809
+</td>
+<td style="text-align:center;">
+0.8130
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V26
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Burkholderiales\|f\_\_Neisseriaceae\|g\_\_Neisseria
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.1381
+</td>
+<td style="text-align:center;">
+0.6855
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V27
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pseudomonadales\|f\_\_Moraxellaceae\|g\_\_Moraxella
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.2685
+</td>
+<td style="text-align:center;">
+0.4246
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V28
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.4677
+</td>
+<td style="text-align:center;">
+0.1469
+</td>
+<td style="text-align:center;">
+0.7346
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V29
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Flavobacteriaceae\|g\_\_Capnocytophaga
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.2721
+</td>
+<td style="text-align:center;">
+0.4182
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V30
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
+k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Lachnospirales\|f\_\_Lachnospiraceae\|g\_\_Johnsonella
+</td>
+<td style="text-align:center;">
+IL8_Plasma
+</td>
+<td style="text-align:center;">
+-0.1446
+</td>
+<td style="text-align:center;">
+0.6714
+</td>
+<td style="text-align:center;">
+0.9928
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+V31
+</td>
+<td style="text-align:center;">
+Swab
+</td>
+<td style="text-align:center;">
 k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Porphyromonadaceae\|g\_\_Porphyromonas
 </td>
 <td style="text-align:center;">
@@ -59918,82 +60093,7 @@ IL8_Plasma
     </tr>
     <tr>
     <td style="text-align:left;">
-    V25
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Burkholderiales\|f\_\_Neisseriaceae\|g\_\_Neisseria
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    -0.1381
-    </td>
-    <td style="text-align:center;">
-    0.6855
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V26
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Peptostreptococcales-Tissierellales\|f\_\_Peptostreptococcaceae\|g\_\_\[Eubacterium\]\_yurii_group
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    -0.0809
-    </td>
-    <td style="text-align:center;">
-    0.8130
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V27
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pseudomonadales\|f\_\_Moraxellaceae\|g\_\_Moraxella
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    -0.2685
-    </td>
-    <td style="text-align:center;">
-    0.4246
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V28
+    V32
     </td>
     <td style="text-align:center;">
     Swab
@@ -60018,122 +60118,22 @@ IL8_Plasma
     </tr>
     <tr>
     <td style="text-align:left;">
-    V29
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Flavobacteriaceae\|g\_\_Capnocytophaga
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    -0.2721
-    </td>
-    <td style="text-align:center;">
-    0.4182
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V30
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Fusobacteriota\|c\_\_Fusobacteriia\|o\_\_Fusobacteriales\|f\_\_Fusobacteriaceae\|g\_\_Fusobacterium
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    -0.4677
-    </td>
-    <td style="text-align:center;">
-    0.1469
-    </td>
-    <td style="text-align:center;">
-    0.7346
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V31
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    0.0980
-    </td>
-    <td style="text-align:center;">
-    0.7743
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
-    V32
-    </td>
-    <td style="text-align:center;">
-    Swab
-    </td>
-    <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Actinobacillus
-    </td>
-    <td style="text-align:center;">
-    IL8_Plasma
-    </td>
-    <td style="text-align:center;">
-    0.0031
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    0.9928
-    </td>
-    <td style="text-align:center;">
-    </td>
-    </tr>
-    <tr>
-    <td style="text-align:left;">
     V33
     </td>
     <td style="text-align:center;">
     Swab
     </td>
     <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Lachnospirales\|f\_\_Lachnospiraceae\|g\_\_Johnsonella
+    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Weeksellaceae\|g\_\_Bergeyella
     </td>
     <td style="text-align:center;">
     IL8_Plasma
     </td>
     <td style="text-align:center;">
-    -0.1446
+    -0.2584
     </td>
     <td style="text-align:center;">
-    0.6714
+    0.4430
     </td>
     <td style="text-align:center;">
     0.9928
@@ -60174,16 +60174,16 @@ IL8_Plasma
     Swab
     </td>
     <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Patescibacteria\|c\_\_Gracilibacteria\|o\_\_Absconditabacteriales\_(SR1)\|f\_*Absconditabacteriales*(SR1)\|g\_*Absconditabacteriales*(SR1)
+    k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Bacilli\|o\_\_Lactobacillales\|f\_\_Streptococcaceae\|g\_\_Streptococcus
     </td>
     <td style="text-align:center;">
     IL8_Plasma
     </td>
     <td style="text-align:center;">
-    0.0111
+    0.0980
     </td>
     <td style="text-align:center;">
-    0.9742
+    0.7743
     </td>
     <td style="text-align:center;">
     0.9928
@@ -60199,16 +60199,16 @@ IL8_Plasma
     Swab
     </td>
     <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Flavobacteriales\|f\_\_Weeksellaceae\|g\_\_Bergeyella
+    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Alloprevotella
     </td>
     <td style="text-align:center;">
     IL8_Plasma
     </td>
     <td style="text-align:center;">
-    -0.2584
+    0.2118
     </td>
     <td style="text-align:center;">
-    0.4430
+    0.5318
     </td>
     <td style="text-align:center;">
     0.9928
@@ -60224,16 +60224,16 @@ IL8_Plasma
     Swab
     </td>
     <td style="text-align:center;">
-    k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
+    k\_\_Bacteria\|p\_\_Patescibacteria\|c\_\_Gracilibacteria\|o\_\_Absconditabacteriales\_(SR1)\|f\_*Absconditabacteriales*(SR1)\|g\_*Absconditabacteriales*(SR1)
     </td>
     <td style="text-align:center;">
     IL8_Plasma
     </td>
     <td style="text-align:center;">
-    0.0311
+    0.0111
     </td>
     <td style="text-align:center;">
-    0.9276
+    0.9742
     </td>
     <td style="text-align:center;">
     0.9928
@@ -60275,16 +60275,16 @@ IL8_Plasma
         Swab
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Alloprevotella
+        k\_\_Bacteria\|p\_\_Bacteroidota\|c\_\_Bacteroidia\|o\_\_Bacteroidales\|f\_\_Prevotellaceae\|g\_\_Prevotella
         </td>
         <td style="text-align:center;">
         IL8_Plasma
         </td>
         <td style="text-align:center;">
-        0.2118
+        0.0311
         </td>
         <td style="text-align:center;">
-        0.5318
+        0.9276
         </td>
         <td style="text-align:center;">
         0.9928
@@ -60300,16 +60300,16 @@ IL8_Plasma
         Swab
         </td>
         <td style="text-align:center;">
-        k\_\_Bacteria\|p\_\_Firmicutes\|c\_\_Clostridia\|o\_\_Clostridia_UCG-014\|f\_\_Clostridia_UCG-014\|g\_\_Clostridia_UCG-014
+        k\_\_Bacteria\|p\_\_Proteobacteria\|c\_\_Gammaproteobacteria\|o\_\_Pasteurellales\|f\_\_Pasteurellaceae\|g\_\_Haemophilus
         </td>
         <td style="text-align:center;">
         IL8_Plasma
         </td>
         <td style="text-align:center;">
-        0.1085
+        -0.1123
         </td>
         <td style="text-align:center;">
-        0.7508
+        0.7423
         </td>
         <td style="text-align:center;">
         0.9928

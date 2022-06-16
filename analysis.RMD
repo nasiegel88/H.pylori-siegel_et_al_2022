@@ -14,7 +14,7 @@ always_allow_html: true
 ## Data used in analysis
 
 ```{r include=F}
-source("R/packages.R")
+#source("R/packages.R")
 # Set up global options for nice reports and keeping figures:
 knitr::opts_chunk$set(fig.width=14, fig.height=8, fig.align="center",
                       warning=FALSE, message=FALSE)
@@ -43,6 +43,7 @@ library(microeco)
 library(tidytree)
 library(RColorBrewer)
 library(questionr)
+library(rmarkdown)
 ```
 
 ```{r include=F}

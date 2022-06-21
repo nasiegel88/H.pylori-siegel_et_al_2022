@@ -11,6 +11,11 @@ I. Clone this repo
     git clone git@github.com:nasiegel88/H.pylori-siegel_et_al_2022.git
     cd H.pylori-siegel_et_al_2022
 
+II\. Make `start` and `postBuild` executable
+
+    chmod u+x start
+    chmod u+x postBuild
+
 II\. Create an environment to run `repo2docker`
 
     mamba create -n repo2docker -c conda-forge jupyter-repo2docker

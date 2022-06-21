@@ -16,12 +16,12 @@ II\. Make `start` and `postBuild` executable
     chmod u+x start
     chmod u+x postBuild
 
-II\. Create an environment to run `repo2docker`
+III\. Create an environment to run `repo2docker`
 
     mamba create -n repo2docker -c conda-forge jupyter-repo2docker
     mamba activate repo2docker
 
-III\. Create a docker image using [repo2docker](https://repo2docker.readthedocs.io/en/latest/index.html). Once the Docker image is created, click on the link to launch Jupyter and then select Rstudio. Lastly, the analysis is in the script titled `analysis.RMD`.
+IV\. Create a docker image using [repo2docker](https://repo2docker.readthedocs.io/en/latest/index.html). Once the Docker image is created, click on the link to launch Jupyter and then select Rstudio. Lastly, the analysis is in the script titled `analysis.RMD`.
 
     repo2docker $PWD
 

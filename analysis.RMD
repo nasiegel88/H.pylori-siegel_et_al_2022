@@ -524,6 +524,8 @@ uwunifrac$data$ProportionExplained
 ```{r echo=F}
 # principle component breakdown
 uwunifrac$data$ProportionExplained
+PC1 = paste0("PC1 (",round(uwunifrac$data$ProportionExplained$PC1, digits = 2)*100, "%)")
+PC2 = paste0("PC2 (",round(uwunifrac$data$ProportionExplained$PC2, digits = 2)*100, "%)")
 ```
 
 ```{r echo=F, figures-side, fig.show="hold"}
@@ -535,7 +537,7 @@ scale_color_manual(name="Site", labels = c("Lavage", "Buccal"),
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Unweighted unifrac PCoA") +
-            labs(x = "PC1 (40%)", y = "PC2 (9%)")
+            labs(x = PC1, y = PC2)
 ggsave(plot=site,
        filename="results/site-unweighted_unifrac.png",
        width=16,
@@ -550,7 +552,7 @@ theme_q2r() +
 theme_classic(base_size = 22) +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("Status Unweighted unifrac PCoA") +
-            labs(x = "PC1 (40%)", y = "PC2 (9%)")
+            labs(x = PC1, y = PC2)
                  
 ggsave(plot=treatment_site,
        filename="results/site_treatment-unweighted_unifrac.png",

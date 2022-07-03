@@ -25,4 +25,4 @@ IV\. Create a docker image using [repo2docker](https://repo2docker.readthedocs.i
 
     repo2docker $PWD
 
-Tested on Linux (Ubuntu 20.04.4 LTS)
+Tested on Linux (Ubuntu 20.04.4 LTS and Ubuntu 18.04.6 LTS)

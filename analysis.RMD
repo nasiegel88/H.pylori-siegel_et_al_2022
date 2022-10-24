@@ -2,13 +2,16 @@
 title: "H.pylori Rhesus Microbiome Analysis"
 author: 
   - "Noah Siegel"
-date:  "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
-knit: (function(inputFile, encoding) {
-  rmarkdown::render(inputFile, encoding = encoding, output_dir = "docs",
-  output_format = "all")})
 output:
-  rmarkdown::github_document
-always_allow_html: true
+    pdf_document:
+        includes:
+            in_header: file.tex
+geometry: margin = 0.5in
+fig_caption: yes
+header-includes: 
+  - \usepackage{placeins}
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
 ---
 
 ## Data used in analysis
@@ -22,22 +25,24 @@ knitr::opts_chunk$set(fig.width=14, fig.height=8, fig.align="center",
 ## Library
 
 ```{r echo=TRUE}
-library(sjPlot)
-library(readxl)
-library(phyloseq)
-library(microbiome)
-library(DESeq2)
-library(qiime2R)
-library(tidyverse)
-library(tidyMicro)
-library(kableExtra)
-library(magrittr)
-library(ggpubr)
-library(microeco)
-library(tidytree)
-library(RColorBrewer)
-library(questionr)
-library(rmarkdown)
+suppressPackageStartupMessages({
+  library(sjPlot)
+  library(readxl)
+  library(phyloseq)
+  library(microbiome)
+  library(DESeq2)
+  library(qiime2R)
+  library(tidyverse)
+  library(tidyMicro)
+  library(kableExtra)
+  library(magrittr)
+  library(ggpubr)
+  library(microeco)
+  library(tidytree)
+  library(RColorBrewer)
+  library(questionr)
+  library(rmarkdown)
+})
 ```
 
 ```{r include=F}
@@ -72,8 +77,21 @@ phytree <- phy_tree(physeq)
 # Create ASV count table, taxa table, and metadata table for reference
 table <- as.data.frame(otu_table(physeq))
 ## ASV count table
-kbl(table, booktabs = T, digits = 3, caption = "ASV Count Table") %>% kable_styling(position = "left") %>%
-  add_header_above(c("ASV Count Table" = 27), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
+# kbl(table, booktabs = T, digits = 3, caption = "ASV Count Table") %>% kable_styling(position = "left") %>%
+#   add_header_above(c("ASV Count Table" = 27), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
+
+# caption = 'ASV Count Table'
+# kbl(table,align = "l", digits = 3, booktabs = TRUE, longtable = TRUE, format = "latex",
+#     escape = TRUE, caption = caption) %>%
+#   kable_styling(
+#     latex_options = c("striped", "hold_position","repeat_header",
+#                       font_size = 16, pdf_font = "arial"))
+
+write.csv(table,file.path('results', 'count_table.csv'))
+```
+
+
+```{r echo=F}
 taxa <- as.data.frame(tax_table(physeq))
 taxa$Kingdom  <- str_replace(taxa$Kingdom, "d__" , "k__")
 taxa$Phylum   <- str_c("p_", taxa$Phylum  , sep="_")
@@ -83,8 +101,24 @@ taxa$Family   <- str_c("f_", taxa$Family  , sep="_")
 taxa$Genus    <- str_c("g_", taxa$Genus   , sep="_")
 taxa$Species  <- str_c("s_", taxa$Species, sep="_") 
 ## taxa table
-kbl(taxa, booktabs = T, digits = 3, caption = "ASV Taxa Table") %>% kable_styling(position = "left") %>%
-  add_header_above(c("ASV Taxa Table" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
+# kbl(taxa, booktabs = T, digits = 3, caption = "ASV Taxa Table") %>% kable_styling(position = "left") %>%
+#   add_header_above(c("ASV Taxa Table" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "200%", height = "600px")
+
+# caption = 'ASV Taxa Table'
+# kbl(taxa,align = "l", digits = 3, booktabs = TRUE, longtable = TRUE, format = "latex",
+#     escape = TRUE, caption = caption) %>%
+#   kable_styling(
+#     latex_options = c("striped", "hold_position","repeat_header",
+#                       font_size = 16, pdf_font = "arial"))
+write.csv(table,file.path('results', 'taxa_table.csv'))
+```
+
+[ASV counts]()
+[Taxa table]()
+
+\newpage
+
+```{r echo=F}
 subsetted <- metadata %>% select(SampleID,
                 Treatment,
                 site,
@@ -94,12 +128,23 @@ subsetted <- metadata %>% select(SampleID,
                 IL8_Lavage,
                 IL8_Plasma
 )
+df <- subsetted
 row.names(subsetted) <- subsetted[,1]
-## metadata table
-kable(subsetted, align = 'c', digits = 3, caption = "H.pylori Metadata") %>% kable_styling(position = "center") %>%
-  add_header_above(c("H.pylori Metadata" = 9), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
-subsetted <- subsetted[1:(length(subsetted)-1)]
+# ## metadata table
+# kable(subsetted, align = 'c', digits = 3, caption = "H.pylori Metadata") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("H.pylori Metadata" = 9), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# subsetted <- subsetted[1:(length(subsetted)-1)]
+
+caption = 'H.pylori Metadata'
+kbl(df,align = "l", digits = 3, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down",
+                      font_size = 16, pdf_font = "arial"))
+
 ```
+
+\newpage
 
 ## Odds ratios of variables based on H. pylori status
 
@@ -125,8 +170,8 @@ p
 ```
  
 ```{r echo=F}
-kable(odds.ratio(reg), digits = 3, booktabs = T) %>%
-  kable_styling(latex_options = c("striped", "scale_down"))
+kable(odds.ratio(reg), digits = 3, booktabs = TRUE, format = "latex",) %>%
+  kable_styling(latex_options = c("hold_position", "scale_down",font_size = 12, pdf_font = "arial"))
 ```
 
 ## Sequenced animal IL8 to H. pylori load correlations
@@ -188,7 +233,6 @@ dataset <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(dataset)
 dataset$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 dataset$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 dataset$tidy_dataset()
@@ -226,7 +270,6 @@ data <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(data)
 data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 data$tidy_dataset()
@@ -236,7 +279,8 @@ t1 <- trans_venn$new(data1, ratio = "numratio")
 p <- t1$plot_venn(color_circle = c("green", "purple"),
              text_name_size = 6,
              text_size = 9) +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")+ 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/venn-diagram-lavage.png",
        width=16,
@@ -275,7 +319,6 @@ data <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(data)
 data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 data$tidy_dataset()
@@ -285,7 +328,8 @@ t1 <- trans_venn$new(data1, ratio = "numratio")
 p <- t1$plot_venn(color_circle = c("orange", "blue"), 
              text_name_size = 6,
              text_size = 9) +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")+ 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/venn-diagram-buccal.png",
        width=16,
@@ -322,7 +366,6 @@ data <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(data)
 data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 data$tidy_dataset()
@@ -332,7 +375,8 @@ t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", al
 p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal", "H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("Orange", "Blue", "green", "purple"))  +
-  ggtitle("Lefse taxa from bronchoalveolar lavage and oral swab")
+  ggtitle("Lefse taxa from bronchoalveolar lavage and oral swab") + 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/lefse-bal-swab.png",
        width=16,
@@ -341,12 +385,20 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ### Lefse table
 
 ```{r echo=F}
 df <- t1$res_lefse[1:5, ]
-kable(df, align = 'c', digits = 4, caption = "Lefse taxa from bronchoalveolar lavage and oral swab") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Lefse taxa from bronchoalveolar lavage and oral swab" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Lefse taxa from bronchoalveolar lavage and oral swab") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Lefse taxa from bronchoalveolar lavage and oral swab" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Lefse taxa from bronchoalveolar lavage and oral swab'
+kbl(df,align = "l", digits = 3, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
 ```
 
 ### Relative abundance of differential taxa
@@ -394,7 +446,6 @@ data <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(data)
 data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 data$tidy_dataset()
@@ -405,7 +456,8 @@ t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", al
 p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
-  ggtitle("Lefse Taxa from Bronchoalveolar Lavage")
+  ggtitle("Lefse Taxa from Bronchoalveolar Lavage") + 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/lefse-bal.png",
        width=16,
@@ -414,12 +466,20 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ### Lefse table
 
 ```{r echo=F}
 df <- t1$res_lefse[1:25, ]
-kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from Bronchoalveolar Lavage") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Lefse Taxa from Bronchoalveolar Lavage" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from Bronchoalveolar Lavage") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Lefse Taxa from Bronchoalveolar Lavage" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Lefse Taxa from Bronchoalveolar Lavage'
+kbl(df,align = "l", digits = 3, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption)%>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
 ```
 
 ### Relative abundance of differential taxa
@@ -428,7 +488,8 @@ kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from Bronchoalveolar La
 p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
-  ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage")
+  ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage") + 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal.png",
        width=16,
@@ -467,7 +528,6 @@ data <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(data)
 data$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 data$tidy_dataset()
@@ -478,7 +538,8 @@ t1 <- trans_diff$new(dataset = data, method = "lefse", group = "Site_status", al
 p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("Orange", "Blue")) +
-  ggtitle("Lefse taxa from oral swabs")
+  ggtitle("Lefse taxa from oral swabs") + 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/lefse-swab.png",
        width=16,
@@ -487,12 +548,20 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ### Lefse table
 
 ```{r echo=F}
 df <- t1$res_lefse[1:13, ]
-kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from oral swabs") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Lefse taxa from oral swabs" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from oral swabs") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Lefse taxa from oral swabs" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Lefse Taxa from oral swabs'
+kbl(df,align = "l", digits = 3, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption)  %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
 ```
 
 ### Relative abundance of differential taxa
@@ -501,7 +570,8 @@ kable(df, align = 'c', digits = 4, caption = "Lefse Taxa from oral swabs") %>% k
 p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("Orange", "Blue")) +
-  ggtitle("Lefse relative abundance from oral swabs")
+  ggtitle("Lefse relative abundance from oral swabs") + 
+    theme(plot.title = element_text(size = 28))
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-swab.png",
        width=16,
@@ -664,21 +734,29 @@ ggsave(plot=p,
 p
 ```
 
-### Additional alpha diversity measures
+\newpage
 
 ```{r echo=F}
 data1$cal_alphadiv(PD = TRUE)
 t1 <- trans_alpha$new(dataset = data1, group = "Site_status")
 t1$cal_diff(method = "KW")
-kable(t1$res_alpha_diff, align = 'c', digits = 3, caption = "All alpha diversity measurees") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Apha Diversity Assessement" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%",height = "600px")
+# kable(t1$res_alpha_diff, align = 'c', digits = 3, caption = "All alpha diversity measurees") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Apha Diversity Assessement" = 5), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%",height = "600px")
+
+caption = 'All alpha diversity measurees'
+kbl(t1$res_alpha_diff,align = "l", digits = 3, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption)  %>%
+  kable_styling(
+    latex_options = c("scale_down",font_size = 16, pdf_font = "arial"))
 ```
+
+\newpage
 
 ## Helicobacter positive respiratory samples
 
 ### Helicobacter positive samples separated by site
 
-```{r echo=F, out.extra='style="float:left"'}
+```{r echo=F}
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
 
 p <- plot_bar(hp, "Treatment", "Abundance","Species", title="Helicobacter ASVs")  +
@@ -696,7 +774,7 @@ p
 
 ### Helicobacter positive samples separated by animal
 
-```{r echo=F, out.extra='style="float:left"'}
+```{r echo=F}
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
  hp@sam_data$RDU. <- factor( hp@sam_data$RDU.)
 
@@ -712,6 +790,8 @@ ggsave(plot=p,
        dpi=300)
 p
 ```
+
+\newpage
 
 ## Taxa barplots
 
@@ -748,6 +828,8 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # phyla pie chart
 df <- t3$abund_data
@@ -763,9 +845,17 @@ table_percent <- df %>%
 tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
 tab$Taxonomy <- as.character(tab$Taxonomy)
 kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
-kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Phylum" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Phylum" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Phylum Average Relative Abundance'
+kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 12, pdf_font = "arial"))
 ```
+
+\newpage
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Class level."}
 # increase the number color to match phyla number
@@ -797,6 +887,8 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # class pie chart
 df <- t3$abund_data
@@ -812,9 +904,17 @@ table_percent <- df %>%
 tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
 tab$Taxonomy <- as.character(tab$Taxonomy)
 kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
-kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Class" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Class" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Class Average Relative Abundance'
+kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 12, pdf_font = "arial"))
 ```
+
+\newpage
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Order level."}
 # increase the number color to match phyla number
@@ -846,6 +946,8 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # order pie chart
 df <- t3$abund_data
@@ -861,9 +963,17 @@ table_percent <- df %>%
 tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
 tab$Taxonomy <- as.character(tab$Taxonomy)
 kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
-kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Order" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Order" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Order Average Relative Abundance'
+kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 12, pdf_font = "arial"))
 ```
+
+\newpage
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Family level."}
 # increase the number color to match phyla number
@@ -895,6 +1005,8 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # family pie chart
 df <- t3$abund_data
@@ -910,9 +1022,17 @@ table_percent <- df %>%
 tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
 tab$Taxonomy <- as.character(tab$Taxonomy)
 kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
-kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Family" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Family" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Family Average Relative Abundance'
+kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 12, pdf_font = "arial"))
 ```
+
+\newpage
 
 ```{r echo=F, fig.cap = "Microbiota Composition at Genus level."}
 # increase the number color to match phyla number
@@ -946,6 +1066,8 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # genera pie chart
 df <- t3$abund_data
@@ -961,9 +1083,18 @@ table_percent <- df %>%
 tab <- table_percent[order(table_percent$Abundance, decreasing = T),][1:32,] 
 tab$Taxonomy <- as.character(tab$Taxonomy)
 kab <- tab %>% arrange(Taxonomy) %>% select(Taxonomy, Sample, `Average Percent Abundance`)
-kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Genus" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+# kable(kab, align = 'c', digits = 4, caption = "Average Relative Abundance") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Genus" = 3), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Genus Average Relative Abundance'
+kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 12, pdf_font = "arial"))
 ```
+
+\newpage
 
 ## Genera correlation with Il8 concentration (Serum and BAL)
 
@@ -994,7 +1125,6 @@ dataset <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(dataset)
 dataset$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 dataset$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 dataset$tidy_dataset()
@@ -1039,11 +1169,22 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # table of correlation values
 df <- t1$res_cor[1:20, ]
-kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Lavage IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Lavage IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+
+caption = 'Independent of H. pylori status'
+kbl(df,align = "l", digits = 2, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
+# %>%
+#   add_header_above(c("Lavage IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")
 ```
 
 ```{r echo=F, fig.cap = "IL8 and lavage alpha diversity Spearman correlations inpendent of H. pylori status."}
@@ -1064,11 +1205,22 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # table of correlation values
 df <- t1$res_cor[1:20, ]
-kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Lavage Alpha Diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Lavage Alpha Diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+
+caption = 'Independent of H. pylori status'
+kbl(df,align = "l", digits = 2, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
+# %>%
+#   add_header_above(c("Lavage Alpha Diversity" = 8), font_size = "larger", bold = T, align = "l")
 ```
 
 ```{r echo=F, cache=F, fig.cap = "IL8 and Buccal genus abundance Spearman correlations separated by H. pylori status"}
@@ -1098,7 +1250,6 @@ dataset <- microtable$new(sample_table = subsetted,
                           otu_table = table,
                           tax_table = taxa,
                           phylo_tree = phytree)
-class(dataset)
 dataset$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bacteria")
 dataset$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 dataset$tidy_dataset()
@@ -1140,11 +1291,21 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # table of correlation values
 df <- t1$res_cor[1:40, ]
-kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Oral IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Oral IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Independent of H. pylori status'
+kbl(df,align = "l", digits = 2, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
+# %>%
+#   add_header_above(c("Oral IL8 spearman" = 8), font_size = "larger", bold = T, align = "l")
 ```
 
 ```{r echo=F, fig.cap = "IL8 and Buccal alpha diversity Spearman correlations independent of H. pylori status"}
@@ -1154,7 +1315,7 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
-  theme_classic(base_size = 20)+
+  theme_classic(base_size = 28)+
   theme(plot.title = element_text(hjust = 0.5)) +
 ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
@@ -1165,18 +1326,24 @@ ggsave(plot=p,
 p
 ```
 
+\newpage
+
 ```{r echo=F}
 # table of correlation values
 df <- t1$res_cor[1:20, ]
-kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
-  add_header_above(c("Oral alpha diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+# kable(df, align = 'c', digits = 4, caption = "Independent of H. pylori status") %>% kable_styling(position = "center") %>%
+#   add_header_above(c("Oral alpha diversity" = 8), font_size = "larger", bold = T, align = "l")  %>% scroll_box(width = "100%")
+
+caption = 'Independent of H. pylori status'
+kbl(df,align = "l", digits = 2, booktabs = TRUE, longtable = FALSE, format = "latex",
+    escape = TRUE, caption = caption) %>%
+  kable_styling(
+    latex_options = c("scale_down", font_size = 16, pdf_font = "arial"))
+# %>%
+#   add_header_above(c("Oral alpha diversity" = 8), font_size = "larger", bold = T, align = "l")
 ```
 
-```{r save_object, include=F}
-## Save object
-dir.create("rdata_objects", showWarnings = FALSE)
-save.image(file=file.path("rdata_objects", "hp_analysis.Rdata"))
-```
+\newpage
 
 ## Record session information
 

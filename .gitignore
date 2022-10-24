@@ -11,3 +11,6 @@ docs/analysis_files/
 analysis.log
 docs/analysis.tex
 .jupyter/
+.TinyTeX/
+bin/
+.ipynb_checkpoints/

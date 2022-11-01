@@ -140,7 +140,7 @@ model <- age_data %>%
 reg <- glm(as.factor(HP_status) ~ infant_weight_kg  + age_days_infants + il_bal_pg.ml + il_plasma_pg.ml, data=model, family=binomial)
 p=plot_model(reg,
              type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", title="Odds ratios of variables based on H. pylori status", color=c("black")) + 
-theme(text = element_text(size=22))
+theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/hp-oddsratios.png",
        width=16,
@@ -171,7 +171,7 @@ p <- ggscatter(no_duplicates,
           cor.coef.size = 10,
           xlab = "Gastric H. pylori load (log10CFU/g)",
           ylab = "Lavage IL8 (pg)") +
-  theme_classic(base_size = 28) +
+  theme_classic(base_size = 30) +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("H.pylori Il8 Pearson correlation")
 p <- ggpar(p , ylim = c(5, 20))
@@ -196,7 +196,7 @@ p <- ggscatter(no_duplicates,
           cor.coef.size = 10,
           ylab = "Plasma IL8 (pg)", 
           xlab = "Gastric H. pylori load (log10CFU/g)") +
-  theme_classic(base_size = 28) +
+  theme_classic(base_size = 30) +
   theme(plot.title = element_text(hjust = 0.5)) +
   ggtitle("H.pylori plasma IL8 Pearson correlation")
 p <- ggpar(p)
@@ -260,7 +260,7 @@ p <- t1$plot_venn(color_circle = c("green", "purple"),
              text_name_size = 6,
              text_size = 9) +
 ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")+ 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/venn-diagram-lavage.png",
        width=16,
@@ -309,7 +309,7 @@ p <- t1$plot_venn(color_circle = c("orange", "blue"),
              text_name_size = 6,
              text_size = 9) +
 ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")+ 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/venn-diagram-buccal.png",
        width=16,
@@ -361,7 +361,7 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal", "H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("Orange", "Blue", "green", "purple"))  +
   ggtitle(title) + 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-bal-swab.png",
        width=16,
@@ -378,7 +378,8 @@ p
 p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal", "H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("Orange", "Blue", "green", "purple")) +
-  ggtitle("Lefse relative abundance from bronchoalveolar lavage and oral swab")
+  ggtitle("Lefse relative abundance from bronchoalveolar lavage and oral swab") +
+  theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal-swab.png",
        width=16,
@@ -433,7 +434,7 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
   ggtitle(title) + 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-bal.png",
        width=16,
@@ -452,7 +453,7 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage"), values=c("green", "purple")) +
   ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage") + 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal.png",
        width=16,
@@ -507,7 +508,7 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("Orange", "Blue")) +
   ggtitle(title) + 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-swab.png",
        width=16,
@@ -525,7 +526,7 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   scale_fill_manual(name="Status",labels = c("H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("Orange", "Blue")) +
   ggtitle("Lefse relative abundance from oral swabs") + 
-    theme(plot.title = element_text(size = 28))
+    theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-swab.png",
        width=16,
@@ -558,8 +559,8 @@ geom_point(alpha=0.8, size=5) +
 theme_q2r() +
 scale_color_manual(name="Site", labels = c("Lavage", "Buccal"),
                    values=c("dark red", "dark blue")) + 
-theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   ggtitle("Unweighted unifrac PCoA") +
             labs(x = PC1, y = PC2)
 ggsave(plot=site,
@@ -573,8 +574,8 @@ treatment_site = ggplot(data,aes(x=PC1, y=PC2, color=interaction(Treatment,site)
 geom_point(alpha=0.8, size=5) + 
 theme_q2r() +
   scale_color_manual(name="Status", labels = c("H. pylori (-) Lavage", "H. pylori (+) Lavage", "H. pylori (-) Buccal", "H. pylori (+) Buccal"), values=c("green", "purple", "orange", "blue")) + 
-theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   ggtitle("Status Unweighted unifrac PCoA") +
             labs(x = PC1, y = PC2)
                  
@@ -595,8 +596,10 @@ t1 <- trans_beta$new(dataset = data1, group = "Site_status", measure = "bray")
 t1$cal_group_distance(within_group = T)
 p <- t1$plot_group_distance(distance_pair_stat = T) +
   scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue")) +
-  theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5),
+        text = element_text(size=30),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Beta diversity")
 ggsave(plot=p,
        filename="results/bray-curtis-site_status.png",
@@ -617,8 +620,10 @@ t1 <- trans_beta$new(dataset = data1, group = "site", measure = "bray")
 t1$cal_group_distance(within_group = T)
 p <- t1$plot_group_distance(distance_pair_stat = T) +
   scale_color_manual(name="Status", values=c("dark red", "dark blue")) +
-  theme_classic(base_size = 22) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5),
+        text = element_text(size=30),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Beta diversity")
 ggsave(plot=p,
        filename="results/bray-curtis-site.png",
@@ -647,8 +652,10 @@ p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) +
             geom_boxplot(size = 1) +
             geom_point(size=4) +
             scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue"))+
-            theme_classic(base_size = 22) +
-            theme(plot.title = element_text(hjust = 0.5)) +
+            theme_classic() +
+            theme(plot.title = element_text(hjust = 0.5),
+                  text = element_text(size=30),
+                  axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
             ggtitle("Site & status") +
             labs(x = "", y = "Shannon")
 ggsave(plot=p,
@@ -676,8 +683,8 @@ p <- ggplot(df, aes_string(x = "site", y = "Value", col="site")) +
             geom_boxplot(size = 1) +
             geom_point(size=4) +
             scale_color_manual(name="Site", values=c("dark red", "dark blue"))+
-            theme_classic(base_size = 22) +
-            theme(plot.title = element_text(hjust = 0.5)) +
+            theme_classic() +
+            theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
             ggtitle("Status") +
             labs(x = "", y = "Shannon")
 ggsave(plot=p,
@@ -712,8 +719,8 @@ kbl(t1$res_alpha_diff,align = "l", digits = 3, booktabs = TRUE, longtable = FALS
 hp <-  subset_taxa(physeq, Genus == "Helicobacter")
 
 p <- plot_bar(hp, "Treatment", "Abundance","Species", title="Helicobacter ASVs")  +
-  theme_classic(base_size = 28) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   facet_grid(cols = vars(site))
 ggsave(plot=p,
@@ -731,8 +738,8 @@ hp <-  subset_taxa(physeq, Genus == "Helicobacter")
  hp@sam_data$RDU. <- factor( hp@sam_data$RDU.)
 
 p <- plot_bar(hp, "RDU.", "Abundance","Species", title="Helicobacter ASVs")  +
-  theme_classic(base_size = 28) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   facet_grid(cols = vars(site))
 ggsave(plot=p,
@@ -754,9 +761,9 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 9)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
+  theme_classic() +
   scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Phylum")
 ggsave(plot=p,
@@ -771,7 +778,8 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", groupmean="Site_status", ntaxa = 8)
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30)) 
 ggsave(plot=p,
        filename="results/phylum-piechart.png",
        width=16,
@@ -812,9 +820,9 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 9)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
+  theme_classic() +
   scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Class")
 ggsave(plot=p,
@@ -826,7 +834,8 @@ p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Class", groupmean="Site_status", ntaxa = 8)
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+  scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30)) 
 ggsave(plot=p,
        filename="results/class-piechart.png",
        width=16,
@@ -867,9 +876,9 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 9)
 p <- t1$plot_bar( others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
+  theme_classic() +
   scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Order")
 ggsave(plot=p,
@@ -881,7 +890,8 @@ p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Order", groupmean="Site_status", ntaxa = 8)
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30)) 
 ggsave(plot=p,
        filename="results/order-piechart.png",
        width=16,
@@ -922,9 +932,9 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 9)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
+  theme_classic() +
   scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle("Family")
 ggsave(plot=p,
@@ -936,7 +946,8 @@ p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Family", groupmean="Site_status", ntaxa = 8)
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+  scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30)) 
 ggsave(plot=p,
        filename="results/family-piechart.png",
        width=16,
@@ -979,10 +990,11 @@ t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 20)
 p <- t1$plot_bar(others_color = "grey70",
                  facet = c("site","Treatment"), 
                  xtext_keep = FALSE, legend_text_italic = FALSE) +
-  theme_classic(base_size = 22) +
+  theme_classic() +
   scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  guides(fill = guide_legend(ncol = 1)) +
   ggtitle("Genus")
 ggsave(plot=p,
        filename="results/genus-taxabarplots.png",
@@ -993,7 +1005,8 @@ p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Genus", groupmean="Site_status", ntaxa = 8)
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))
+  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30)) 
 ggsave(plot=p,
        filename="results/genus-piechart.png",
        width=16,
@@ -1072,14 +1085,16 @@ t1$cal_cor(use_data = "other",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
 p <- t1$plot_corr() +
-  theme_classic(base_size = 20) +
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5),
+        text = element_text(size=30),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
    ggtitle(expression(atop("Lavage Genus Abundance",
                            atop(italic("Grouped by H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 p
 ```
@@ -1089,13 +1104,13 @@ p
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
 p <- t1$plot_corr()+
-  theme_classic(base_size = 20)+
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=10,
        dpi=300)
 p
 ```
@@ -1116,13 +1131,13 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
-  theme_classic(base_size = 20)+
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/lavage-alpha_il8-spearman.png",
        width=16,
-       height=8,
+       height=10,
        dpi=300)
 p
 ```
@@ -1178,13 +1193,15 @@ p <- t1$cal_cor(use_data = "other",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
 p <- t1$plot_corr() +
-  theme_classic(base_size = 20)+
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5),
+        text = element_text(size=30),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 p
 ```
@@ -1195,13 +1212,13 @@ p
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
 p <- t1$plot_corr()+
-  theme_classic(base_size = 20)+
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
   ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=10,
        dpi=300)
 p
 ```
@@ -1222,8 +1239,8 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
-  theme_classic(base_size = 28)+
-  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()+
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
 ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ggsave(plot=p,
        filename="results/buccal-alpha_il8-spearman.png",

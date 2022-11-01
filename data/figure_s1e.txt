@@ -1,4 +1,4 @@
-H._pylori_neg	H_pylori_pos
+H_pylori_neg	H_pylori_pos
 252	215
 184	221
 199	208

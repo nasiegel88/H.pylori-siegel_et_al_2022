@@ -1,4 +1,4 @@
-log_10_CFU_gm	dam_age _months
+log_10_CFU_gm	dam_age_months
 3.81	104.8
 3.93	116.8
 4.33	102.6

@@ -58,3 +58,14 @@ line_plot(data = fig1[[3]],
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
   xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g'))))
+
+## Figure S1b
+line_plot(data = figs1[[2]],
+          x = 'age_days', y = 'hep_ser_ser',
+          dot.size = 5, cor.size = 10, p.digits = 1, 
+          x.by = 50, x.from = 100, xlim = c(100, 250),
+          y.by = 500, y.from = 0, ylim = c(0, 1500)) +
+  theme_classic() +
+  theme(text = element_text(size=30)) +
+  ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
+  xlab(expression(atop("Age", '(days)')))

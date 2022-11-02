@@ -1,7 +1,7 @@
 # Create list of assay data
 file <- lapply(list.files(path = 'data', pattern = 'figure', full.names =TRUE), function(x)
 {
-  read.delim2(x) %>% mutate_if(is.character,as.numeric)
+  read.delim(x) #%>% mutate_if(is.character,as.numeric)
 })
 
 # Subset list into figure lists
@@ -25,6 +25,10 @@ line_plot <-
       theme_classic() +
       theme(text = element_text(size=30)) 
   }
+
+ggplot(figs1[[1]], aes(x=Sex , y=Lung_lavage_il8_pg)) + 
+  geom_dotplot(binaxis='y', stackdir='center',
+               stackratio=1.5, dotsize=1.2)
 
 ## Figure 1a
 line_plot(data = fig1[[1]],

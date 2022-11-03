@@ -1,14 +1,27 @@
-Status	H_pylori_neg	H_pylori_pos
-Not weaned	4.98	3.043
-Not weaned	4.114	1.691
-Not weaned	2.574	2.237
-Not weaned	1.436	0.618
-Not weaned	2.79	2.077
-Not weaned	3.424	2.984
-Not weaned	0.888	2.763
-Not weaned	2.514	
-Not weaned	3.351	
-Weaned	2.681	4.053
-Weaned	3.675	3.082
-Weaned	7.925	5.493
-Weaned	2.937	3.576
+Status	hp_status	Age_corrected_plasma_il8_pg
+Not weaned	Negative_H_pylori	4.98
+Not weaned	Negative_H_pylori	4.114
+Not weaned	Negative_H_pylori	2.574
+Not weaned	Negative_H_pylori	1.436
+Not weaned	Negative_H_pylori	2.79
+Not weaned	Negative_H_pylori	3.424
+Not weaned	Negative_H_pylori	0.888
+Not weaned	Negative_H_pylori	2.514
+Not weaned	Negative_H_pylori	3.351
+Weaned	Negative_H_pylori	2.681
+Weaned	Negative_H_pylori	3.675
+Weaned	Negative_H_pylori	7.925
+Weaned	Negative_H_pylori	2.937
+Not weaned	Positive_H_pylori	3.043
+Not weaned	Positive_H_pylori	1.691
+Not weaned	Positive_H_pylori	2.237
+Not weaned	Positive_H_pylori	0.618
+Not weaned	Positive_H_pylori	2.077
+Not weaned	Positive_H_pylori	2.984
+Not weaned	Positive_H_pylori	2.763
+Not weaned	Positive_H_pylori	
+Not weaned	Positive_H_pylori	
+Weaned	Positive_H_pylori	4.053
+Weaned	Positive_H_pylori	3.082
+Weaned	Positive_H_pylori	5.493
+Weaned	Positive_H_pylori	3.576

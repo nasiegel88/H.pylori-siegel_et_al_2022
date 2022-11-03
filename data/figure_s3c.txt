@@ -1,13 +1,23 @@
-H_pylori_neg 	H_pylori_pos
-1075.626	642.148
-740.451	920.036
-463.376	365.177
-258.416	476.431
-608.508	715.056
-860.031	144.653
-516.165	425.782
-625.548	611.793
-660.911	704.55
-136.693	431.059
-459.984	
-442.338	
+hp_status	Plasma_il8_pg
+H_pylori_pos	642.148
+H_pylori_pos	920.036
+H_pylori_pos	365.177
+H_pylori_pos	476.431
+H_pylori_pos	715.056
+H_pylori_pos	144.653
+H_pylori_pos	425.782
+H_pylori_pos	611.793
+H_pylori_pos	704.55
+H_pylori_pos	431.059
+H_pylori_neg 	1075.626
+H_pylori_neg 	740.451
+H_pylori_neg 	463.376
+H_pylori_neg 	258.416
+H_pylori_neg 	608.508
+H_pylori_neg 	860.031
+H_pylori_neg 	516.165
+H_pylori_neg 	625.548
+H_pylori_neg 	660.911
+H_pylori_neg 	136.693
+H_pylori_neg 	459.984
+H_pylori_neg 	442.338

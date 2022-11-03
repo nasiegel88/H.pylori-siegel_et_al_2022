@@ -1,26 +1,26 @@
-H_pylori_neg	H_pylori_pos
-252	207
-212	238
-184	199
-184	235
-229	234
-235	220
-182	228
-221	215
-214	208
-197	231
-163	159
-181	
-163	
-134	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+hp_status	age_day
+H_pylori_pos	207
+H_pylori_pos	238
+H_pylori_pos	199
+H_pylori_pos	235
+H_pylori_pos	234
+H_pylori_pos	220
+H_pylori_pos	228
+H_pylori_pos	215
+H_pylori_pos	208
+H_pylori_pos	231
+H_pylori_pos	159
+H_pylori_neg	252
+H_pylori_neg	212
+H_pylori_neg	184
+H_pylori_neg	184
+H_pylori_neg	229
+H_pylori_neg	235
+H_pylori_neg	182
+H_pylori_neg	221
+H_pylori_neg	214
+H_pylori_neg	197
+H_pylori_neg	163
+H_pylori_neg	181
+H_pylori_neg	163
+H_pylori_neg	134

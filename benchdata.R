@@ -35,7 +35,6 @@ line_plot <-
       theme(text = element_text(size=30)) 
   }
 
-
 dot_plot <-
   function(data, x, y, binwidth,
            x.by, x.from, xlim, y.by, y.from, ylim, ...){
@@ -45,9 +44,18 @@ dot_plot <-
       scale_y_continuous(
         breaks = get_breaks(by = y.by, from = y.from), limits =  ylim)
   }
+
+save_image <-
+function(x)
+  {
+    ggsave(plot=p,
+           filename= file.path('results', x),
+           width=16,
+           height=8,
+           dpi=300)
+}
 ################################################################################
 # Figures
-
 ## Figure s1a
 dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 10,           
          y.by = 50, y.from = 0, ylim = c(0, 50)) +
@@ -56,15 +64,16 @@ dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 10,
   ylab(expression(atop("Lung Lavage",'IL-8 (pg)')))
 
 ## Figure s1c
-dot_plot(figs1[[2]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 10,           
+p <- dot_plot(figs1[[2]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 10,           
          y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   theme_classic() +
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)')))
 
+save_image()
 
 ## Figure 1a
-line_plot(data = fig1[[1]],
+p <- line_plot(data = fig1[[1]],
            x = 'log_10_CFU_gm', y = 'Lung_lavage_il8_pg',
            dot.size = 5, cor.size = 10, p.digits = 1,
            x.by = 2, x.from = 0, xlim = c(3, 9),
@@ -74,8 +83,10 @@ line_plot(data = fig1[[1]],
   ylab(expression(atop("Lung Lavage",'IL-8 (pg)'))) +
   xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g'))))
 
+save_image()
+
 ## Figure 1b
-line_plot(data = fig1[[2]],
+p <- line_plot(data = fig1[[2]],
            x = 'log_10_CFU_gm', y = 'dam_age_months',
            dot.size = 5, cor.size = 10, p.digits = 1, 
            x.by = 1, x.from = 3, xlim = c(3, 9),
@@ -85,8 +96,10 @@ line_plot(data = fig1[[2]],
   ylab(expression(atop("Dam age",'(months)'))) +
   xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g'))))
 
+save_image()
+
 ## Figure 1c
-line_plot(data = fig1[[3]],
+p <- line_plot(data = fig1[[3]],
           x = 'log_10_CFU_gm', y = 'hep_ser_ser',
           dot.size = 5, cor.size = 10, p.digits = 1, 
           x.by = 1, x.from = 3, xlim = c(3, 9),
@@ -96,15 +109,19 @@ line_plot(data = fig1[[3]],
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
   xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g'))))
 
+save_image()
+
 # Figure s1a
-dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 2,          
+p <- dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 2,          
          y.by = 10, y.from = 0, ylim = c(0, 50)) +
   theme_classic() +
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Lung Lavage",'IL-8 (pg)')))
 
+save_image()
+
 ## Figure S1b
-line_plot(data = figs1[[2]],
+p <- line_plot(data = figs1[[2]],
           x = 'age_days', y = 'hep_ser_ser',
           dot.size = 5, cor.size = 10, p.digits = 1, 
           x.by = 50, x.from = 100, xlim = c(100, 250),
@@ -114,15 +131,19 @@ line_plot(data = figs1[[2]],
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
   xlab(expression(atop("Age", '(days)')))
 
+save_image()
+
 ## Figure s1c
-dot_plot(figs1[[3]], x = 'Sex', y= 'Plasma_il8_pg', binwidth = 40,           
+p <- dot_plot(figs1[[3]], x = 'Sex', y= 'Plasma_il8_pg', binwidth = 40,           
          y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   theme_classic() +
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)')))
 
+save_image()
+
 ## Figure s1d
-dot_plot(figs1[[4]], x = 'hp_status', y= 'age_day', binwidth = 10,           
+p <- dot_plot(figs1[[4]], x = 'hp_status', y= 'age_day', binwidth = 10,           
          y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
     expression(italic('H. pylori (-)')), 
@@ -132,8 +153,10 @@ dot_plot(figs1[[4]], x = 'hp_status', y= 'age_day', binwidth = 10,
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
 
+save_image()
+
 ## Figure s1e
-dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day', binwidth = 10,           
+p <- dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day', binwidth = 10,           
          y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
     expression(italic('H. pylori (-)')), 
@@ -142,3 +165,5 @@ dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day', binwidth = 10,
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
+
+save_image()

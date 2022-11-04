@@ -52,7 +52,9 @@ save_image <-
            width=16,
            height=8,
            dpi=300)
-}
+  }
+
+std.error <- function(x) sd(x) / sqrt(length(x))
 ################################################################################
 # Figures
 ## Figure 1a
@@ -152,11 +154,11 @@ p <- dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day', binwidth = 10,
 save_image(plot = p, x= 'Figures1e')
 
 ## Figure s2a
-p <- dot_plot(figs2[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 2,           
+p <- dot_plot(figs2[[1]], x = 'hp_status', y= 'Lung_lavage_il8_pg', binwidth = 2,           
               y.by = 10, y.from = 0, ylim = c(0, 50)) +
   scale_x_discrete(labels = c(
-    'Female', 
-    'Male')) + 
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) +  
   theme_classic() +
   theme(text = element_text(size=30)) +
   ylab(expression(atop("Lung lavage",'(IL-8 (pg))'))) +
@@ -164,39 +166,69 @@ p <- dot_plot(figs2[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg', binwidth = 2,
 
 save_image(plot = p, x= 'Figures2a')
 
-################################################################################
-library(ggplot2)
-
-
-data %>%
-  na.omit() %>%
-  group_by(hp_status, Status) %>%
-  summarise(
-    mean = mean(Age_corrected_plasma_il8_pg),
-    SEM = std.error(Age_corrected_plasma_il8_pg), .groups = "keep"
-  ) %>%
-  ungroup('hp_status') %>%
-  
-  summarise(
-    hp_status,
-    mean,
-    SEM,
-    whole_mean = mean(mean), .groups = "keep") %>%
-  mutate(
-    whole_mean = replace(whole_mean, duplicated(whole_mean), NA)) %>%
-  ggplot(aes(fill=hp_status , y=whole_mean, x=Status)) +
-  geom_bar(position="stack", stat="identity") +
-  geom_errorbar(aes(ymin = mean - SEM, ymax =  mean + SEM), width = 0.2)
-
-
+## Figure s2b
+data = figs2[[2]]
 df <- data %>%
   na.omit() %>%
   group_by(hp_status, Status) %>%
   summarise(
     mean = mean(Age_corrected_plasma_il8_pg),
     SEM = std.error(Age_corrected_plasma_il8_pg), .groups = "keep"
-  ) 
+  )
 
-df$mean[df$Status == "Not weaned"][2]/df$mean[df$Status == "Not weaned"][1]
+df$percentage <- NA
 
-df$mean[df$Status == "Weaned"][2]/df$mean[df$Status == "Weaned"][1]
+df$percentage[2] <- 
+  df$mean[which(df$hp_status=="Positive_H_pylori" & df$Status == "Weaned")]/
+  df$mean[which(df$hp_status=="Negative_H_pylori" & df$Status == "Weaned")]
+
+df$percentage[1] <- 
+  df$mean[which(df$hp_status=="Positive_H_pylori" & df$Status == "Not weaned")]/
+  df$mean[which(df$hp_status=="Negative_H_pylori" & df$Status == "Not weaned")]
+
+df$percentage[4] <-
+  1 - df$percentage[2]
+
+df$percentage[3] <-
+  1 - df$percentage[1]
+
+p <- df %>%
+  group_by(Status) %>%
+  summarise(
+    hp_status,
+    SEM,
+    percentage,
+    Total = mean(mean)
+  ) %>%
+  mutate(
+    percent_total = percentage*Total,
+    hp_status = factor(
+      hp_status, levels = c('Positive_H_pylori', 'Negative_H_pylori'))
+  ) %>%
+  ggplot(aes(fill=hp_status, y=percent_total, x=Status)) +
+  geom_bar(position="stack", stat="identity", color = 'black') +
+  scale_fill_manual(values=c("green", "purple")) +
+  geom_errorbar(
+    aes(ymin = percent_total, ymax =  percent_total + SEM), width = 0.3, size = 1.5
+  ) +
+  theme_classic() +
+  theme(text = element_text(size=30)) +
+  ylab(expression(atop("Age-corrected Plasma",'IL-8 (pg)'))) +
+  xlab('') +
+  scale_y_continuous(
+    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6))
+
+save_image(plot = p, x= 'Figures2b')
+
+## Figure s2c
+p <- dot_plot(figs2[[3]], x = 'hp_status', y= 'Plasma_il8_pg', binwidth = 40,           
+              y.by = 500, y.from = 0, ylim = c(0, 1500)) +
+  scale_x_discrete(labels = c(
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) + 
+  theme_classic() +
+  theme(text = element_text(size=30)) +
+  ylab(expression(atop("Plasma",'(IL-8 (pg))'))) +
+  xlab('')
+
+save_image(plot = p, x= 'Figures2c')

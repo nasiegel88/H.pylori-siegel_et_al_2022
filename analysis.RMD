@@ -784,7 +784,8 @@ ggsave(plot=p,
        filename="results/phylum-piechart.png",
        width=16,
        height=8,
-       dpi=300)
+       dpi=300,
+       bg="white")
 p
 ```
 
@@ -822,8 +823,10 @@ t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 9)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
   scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
   ggtitle("Class")
 ggsave(plot=p,
        filename="results/class-taxabarplots.png",
@@ -840,7 +843,8 @@ ggsave(plot=p,
        filename="results/class-piechart.png",
        width=16,
        height=8,
-       dpi=300)
+       dpi=300,
+       bg="white")
 p
 ```
 
@@ -877,9 +881,11 @@ getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 9)
 p <- t1$plot_bar( others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
   ggtitle("Order")
 ggsave(plot=p,
        filename="results/order-taxabarplots.png",
@@ -896,7 +902,8 @@ ggsave(plot=p,
        filename="results/order-piechart.png",
        width=16,
        height=8,
-       dpi=300)
+       dpi=300,
+       bg="white")
 p
 ```
 
@@ -934,8 +941,10 @@ t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 9)
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
   scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
   ggtitle("Family")
 ggsave(plot=p,
        filename="results/family-taxabarplots.png",
@@ -952,7 +961,8 @@ ggsave(plot=p,
        filename="results/family-piechart.png",
        width=16,
        height=8,
-       dpi=300)
+       dpi=300,
+       bg="white")
 p
 ```
 
@@ -992,8 +1002,10 @@ p <- t1$plot_bar(others_color = "grey70",
                  xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
   scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
   guides(fill = guide_legend(ncol = 1)) +
   ggtitle("Genus")
 ggsave(plot=p,
@@ -1003,15 +1015,16 @@ ggsave(plot=p,
        dpi=300)
 p
 
-t3 <- trans_abund$new(dataset = dataset, taxrank = "Genus", groupmean="Site_status", ntaxa = 8)
+t3 <- trans_abund$new(dataset = dataset, taxrank = "Genus", groupmean="Site_status", ntaxa = 8) 
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(text = element_text(size=30)) 
+  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
+  theme(text = element_text(size=30))
 ggsave(plot=p,
        filename="results/genus-piechart.png",
        width=16,
        height=8,
-       dpi=300)
+       dpi=300,
+       bg="white")
 p
 ```
 

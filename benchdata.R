@@ -213,8 +213,10 @@ df <- data %>%
     SEM = std.error(Age_corrected_plasma_il8_pg), .groups = "keep"
   )
 
+### Create an empty column
 df$percentage <- NA
 
+### Calculate proportions of total averages
 df$percentage[2] <- 
   df$mean[which(df$hp_status=="Positive_H_pylori" & df$Status == "Weaned")]/
   df$mean[which(df$hp_status=="Negative_H_pylori" & df$Status == "Weaned")]
@@ -229,6 +231,7 @@ df$percentage[4] <-
 df$percentage[3] <-
   1 - df$percentage[1]
 
+### Generate plot
 p <- df %>%
   group_by(Status) %>%
   summarise(

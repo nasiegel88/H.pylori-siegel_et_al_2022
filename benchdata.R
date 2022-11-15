@@ -247,7 +247,12 @@ p <- df %>%
   ) %>%
   ggplot(aes(fill=hp_status, y=percent_total, x=Status)) +
   geom_bar(position="stack", stat="identity", color = 'black') +
-  scale_fill_manual(values=c("green", "purple")) +
+  scale_fill_manual(
+    values=c("green", "purple"),
+    labels=c(
+      expression(italic('H. pylori (+)')), 
+      expression(italic('H. pylori (-)')))) +
+  guides(fill=guide_legend(title="")) +
   geom_errorbar(
     aes(ymin = percent_total, ymax =  percent_total + SEM), width = 0.3, size = 1.5
   ) +

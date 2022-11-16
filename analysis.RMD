@@ -255,18 +255,23 @@ data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "uni
 data$tidy_dataset()
 data$cal_abund()
 data1 <- data$merge_samples(use_group = "Treatment")
+
 t1 <- trans_venn$new(data1, ratio = "numratio")
+
+t1$col_names <- t1$col_names  %>% str_replace('_', ' ')
+
 p <- t1$plot_venn(color_circle = c("green", "purple"),
              text_name_size = 6,
-             text_size = 9) +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")+ 
-    theme(text = element_text(size=30))
+             text_size = 9)
+
 ggsave(plot=p,
        filename="results/venn-diagram-lavage.png",
        width=16,
        height=8,
        dpi=300)
-p
+p +
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")+ 
+    theme(text = element_text(size=30))
 ```
 
 ### Buccal overlapping taxa
@@ -304,18 +309,22 @@ data$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "uni
 data$tidy_dataset()
 data$cal_abund()
 data1 <- data$merge_samples(use_group = "Treatment")
+
 t1 <- trans_venn$new(data1, ratio = "numratio")
+
+t1$col_names <- t1$col_names  %>% str_replace('_', ' ')
+
 p <- t1$plot_venn(color_circle = c("orange", "blue"), 
              text_name_size = 6,
-             text_size = 9) +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")+ 
-    theme(text = element_text(size=30))
+             text_size = 9) 
 ggsave(plot=p,
        filename="results/venn-diagram-buccal.png",
        width=16,
        height=8,
        dpi=300)
-p
+p +
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")+ 
+    theme(text = element_text(size=30))
 ```
 
 ## Lefse analysis and differential abundance for both sites
@@ -810,19 +819,27 @@ p
 
 ## Taxa barplots
 
-```{r echo=F, fig.cap = "Microbiota Composition at Phylum level."}
+```{r echo=F, warning=FALSE, fig.cap = "Microbiota Composition at Phylum level."}
 # increase the number color to match phyla number
 colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", ntaxa = 9)
+
+t1$sample_table <- t1$sample_table %>%
+  mutate(Treatment = str_replace_all(Treatment, '_', ' '))
+
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  scale_fill_manual("Phylum",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(), legend.position = "bottom", legend.justification = c(0,1)) +
+        axis.ticks.x=element_blank(), 
+        legend.position = "bottom",
+        legend.justification = c(0,1)) +
+  scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3)) +
   ggtitle("Phylum")
 ggsave(plot=p,
@@ -836,9 +853,17 @@ colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Phylum", groupmean="Site_status", ntaxa = 8)
+
+t3$abund_data <- t3$abund_data %>%
+  mutate(Sample = str_replace_all(Sample, '_', ' '))
+
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Phylum", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(text = element_text(size=30), legend.position = "left") 
+  scale_fill_manual("Phylum",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  theme(text = element_text(size=30),
+        legend.position = "left",
+         strip.text = element_text(size = 25)) 
+  
 ggsave(plot=p,
        filename="results/phylum-piechart.png",
        width=16,
@@ -873,19 +898,27 @@ kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "l
 
 \newpage
 
-```{r echo=F, fig.cap = "Microbiota Composition at Class level."}
+```{r echo=F, warning=FALSE, fig.cap = "Microbiota Composition at Class level."}
 # increase the number color to match phyla number
 colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Class", ntaxa = 9)
+
+t1$sample_table <- t1$sample_table %>%
+  mutate(Treatment = str_replace_all(Treatment, '_', ' '))
+
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  scale_fill_manual("Class",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(), legend.position = "bottom", legend.justification = c(0,1)) +
+        axis.ticks.x=element_blank(),
+        legend.position = "bottom",
+        legend.justification = c(0,1)) +
+  scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 4, ncol = 3)) +
   ggtitle("Class")
 ggsave(plot=p,
@@ -896,9 +929,15 @@ ggsave(plot=p,
 p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Class", groupmean="Site_status", ntaxa = 8)
+
+t3$abund_data <- t3$abund_data %>%
+  mutate(Sample = str_replace_all(Sample, '_', ' '))
+
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
   scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(text = element_text(size=30), legend.position = "left") 
+  theme(text = element_text(size=30),
+        legend.position = "left",
+         strip.text = element_text(size = 25)) 
 ggsave(plot=p,
        filename="results/class-piechart.png",
        width=16,
@@ -933,19 +972,27 @@ kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "l
 
 \newpage
 
-```{r echo=F, fig.cap = "Microbiota Composition at Order level."}
+```{r echo=F, warning=FALSE, fig.cap = "Microbiota Composition at Order level."}
 # increase the number color to match phyla number
 colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Order", ntaxa = 9)
+
+t1$sample_table <- t1$sample_table %>%
+  mutate(Treatment = str_replace_all(Treatment, '_', ' '))
+
 p <- t1$plot_bar( others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
+  scale_fill_manual("Order",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(), legend.position = "bottom", legend.justification = c(0,1)) +
+        axis.ticks.x=element_blank(),
+        legend.position = "bottom",
+        legend.justification = c(0,1)) +
+  scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3, ncol = 3)) +
   ggtitle("Order")
 ggsave(plot=p,
@@ -956,9 +1003,17 @@ ggsave(plot=p,
 p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Order", groupmean="Site_status", ntaxa = 8)
+
+t3$abund_data <- t3$abund_data %>%
+  mutate(Sample = str_replace_all(Sample, '_', ' '))
+
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
-  scale_fill_manual("Order", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(text = element_text(size=30), legend.position = "left") 
+  scale_fill_manual("Order",
+                    values = colorRampPalette(brewer.pal(11,"Set3"))(colourCount)) +
+  theme(text = element_text(size=30),
+        legend.position = "left",
+         strip.text = element_text(size = 25)) 
+
 ggsave(plot=p,
        filename="results/order-piechart.png",
        width=16,
@@ -993,19 +1048,27 @@ kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "l
 
 \newpage
 
-```{r echo=F, fig.cap = "Microbiota Composition at Family level."}
+```{r echo=F, warning=FALSE, fig.cap = "Microbiota Composition at Family level."}
 # increase the number color to match phyla number
 colourCount = 10
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Family", ntaxa = 9)
+
+t1$sample_table <- t1$sample_table %>%
+  mutate(Treatment = str_replace_all(Treatment, '_', ' '))
+
 p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  scale_fill_manual("Family",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(), legend.position = "bottom", legend.justification = c(0,1)) +
+        axis.ticks.x=element_blank(),
+        legend.position = "bottom",
+        legend.justification = c(0,1)) +
+  scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3, ncol = 3)) +
   ggtitle("Family")
 ggsave(plot=p,
@@ -1016,9 +1079,15 @@ ggsave(plot=p,
 p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Family", groupmean="Site_status", ntaxa = 8)
+
+t3$abund_data <- t3$abund_data %>%
+  mutate(Sample = str_replace_all(Sample, '_', ' '))
+
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
   scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
-  theme(text = element_text(size=30), legend.position = "left") 
+  theme(text = element_text(size=30),
+        legend.position = "left",
+         strip.text = element_text(size = 25))  
 ggsave(plot=p,
        filename="results/family-piechart.png",
        width=16,
@@ -1053,21 +1122,28 @@ kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "l
 
 \newpage
 
-```{r echo=F, fig.cap = "Microbiota Composition at Genus level."}
+```{r echo=F, warning=FALSE, fig.cap = "Microbiota Composition at Genus level."}
 # increase the number color to match phyla number
 colourCount = 21
 getPalette <- colorRampPalette(brewer.pal(8, "Paired"))
 
 t1 <- trans_abund$new(dataset = dataset, taxrank = "Genus", ntaxa = 20)
+
+t1$sample_table <- t1$sample_table %>%
+  mutate(Treatment = str_replace_all(Treatment, '_', ' '))
 p <- t1$plot_bar(others_color = "grey70",
                  facet = c("site","Treatment"), 
                  xtext_keep = FALSE, legend_text_italic = FALSE) +
   theme_classic() +
-  scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
+  scale_fill_manual("Genus",
+                    values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.title.x=element_blank(),
         axis.text.x=element_blank(),
-        axis.ticks.x=element_blank(), legend.position = "bottom", legend.justification = c(0,1)) +
+        axis.ticks.x=element_blank(),
+        legend.position = "bottom",
+        legend.justification = c(0,1)) +
+  scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 12, ncol = 2)) +
   ggtitle("Genus")
 ggsave(plot=p,
@@ -1078,9 +1154,15 @@ ggsave(plot=p,
 p
 
 t3 <- trans_abund$new(dataset = dataset, taxrank = "Genus", groupmean="Site_status", ntaxa = 8) 
+
+t3$abund_data <- t3$abund_data %>%
+  mutate(Sample = str_replace_all(Sample, '_', ' '))
+
 p <- t3$plot_pie(facet_nrow = 3, "grey50") + 
   scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
-  theme(text = element_text(size=30), legend.position = "left")
+  theme(text = element_text(size=30),
+        legend.position = "left",
+         strip.text = element_text(size = 25)) 
 ggsave(plot=p,
        filename="results/genus-piechart.png",
        width=16,
@@ -1148,7 +1230,6 @@ dataset$tax_table %<>% base::subset(Kingdom == "k__Archaea" | Kingdom == "k__Bac
 dataset$filter_pollution(taxa = c("mitochondria", "chloroplast", "uncultured", "unidentified"))
 dataset$tidy_dataset()
 dataset$cal_abund()
-
 
 t2 <- trans_diff$new(dataset = dataset, method = "rf", group = "Treatment", rf_taxa_level = "Genus")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])

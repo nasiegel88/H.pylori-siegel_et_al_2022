@@ -15,3 +15,4 @@ docs/analysis.tex
 bin/
 .ipynb_checkpoints/
 analysis_files/
+.active-rstudio-document

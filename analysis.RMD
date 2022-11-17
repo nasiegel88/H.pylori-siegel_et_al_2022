@@ -1254,15 +1254,16 @@ p <- t1$plot_corr() +
   theme_classic() +
   theme(plot.title = element_text(hjust = 0.5),
         text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-   ggtitle(expression(atop("Lavage Genus Abundance",
-                           atop(italic("Grouped by H. pylori status"), ""))))
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
 ggsave(plot=p,
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
        width=16,
        height=11,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Lavage Genus Abundance",
+                           atop(italic("Grouped by H. pylori status"), ""))))
 ```
 
 ```{r echo=F, fig.cap = "IL8 and lavage genus abundance Spearman correlations independent of H. pylori status"}
@@ -1271,14 +1272,15 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 
 p <- t1$plot_corr()+
   theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
        width=16,
        height=10,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ```
 
 ```{r echo=F}
@@ -1298,14 +1300,15 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
   theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lavage-alpha_il8-spearman.png",
        width=16,
        height=10,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ```
 
 ```{r echo=F}
@@ -1379,14 +1382,15 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 
 p <- t1$plot_corr()+
   theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
        width=16,
        height=10,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
 ```
 
 ```{r echo=F}
@@ -1406,14 +1410,15 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() +
   theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
+  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/buccal-alpha_il8-spearman.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
 ```
 
 ```{r echo=F}

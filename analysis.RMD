@@ -375,14 +375,15 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
                                expression(paste(italic("H. pylori"), "(-) Lavage")),
                                expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("Orange", "Blue", "green", "purple"))  +
-  ggtitle(title) + 
-    theme(text = element_text(size=30))
+  theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-bal-swab.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle(title)
 ```
 
 \newpage
@@ -399,14 +400,15 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                                expression(paste(italic("H. pylori"), "(-) Lavage")),
                                expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("Orange", "Blue", "green", "purple")) +
-  ggtitle("Lefse relative abundance from bronchoalveolar lavage and oral swab") +
   theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal-swab.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Lefse relative abundance from bronchoalveolar lavage and oral swab")
 ```
 
 ## Lefse and differential abundance for bronchoalveolar lavage
@@ -459,14 +461,15 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("green", "purple")) +
-  ggtitle(title) + 
-    theme(text = element_text(size=30))
+  theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-bal.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle(title)
 ```
 
 
@@ -483,14 +486,15 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("green", "purple")) +
-  ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage") + 
-    theme(text = element_text(size=30))
+  theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Lefse Relative Abundance from Bronchoalveolar Lavage") 
 ```
 
 ## Lefse and differential abundance for oral swabs
@@ -542,14 +546,15 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
                     labels = c(expression(paste(italic("H. pylori"), "(-) Buccal")),
                                expression(paste(italic("H. pylori"), "(+) Buccal"))),
                     values=c("Orange", "Blue")) +
-  ggtitle(title) + 
-    theme(text = element_text(size=30))
+  theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-swab.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle(title)
 ```
 
 \newpage
@@ -564,14 +569,15 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                     labels = c(expression(paste(italic("H. pylori"), "(-) Buccal")),
                                expression(paste(italic("H. pylori"), "(+) Buccal"))),
                     values=c("Orange", "Blue")) +
-  ggtitle("Lefse relative abundance from oral swabs") + 
-    theme(text = element_text(size=30))
+  theme(text = element_text(size=30))
+
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-swab.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Lefse relative abundance from oral swabs") 
 ```
 
 ## Beta diversity
@@ -600,14 +606,15 @@ scale_color_manual(name="Site", labels = c("Lavage", "Buccal"),
                    values=c("dark red", "dark blue")) + 
 theme_classic() +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  ggtitle("Unweighted unifrac PCoA") +
-            labs(x = PC1, y = PC2)
+  labs(x = PC1, y = PC2)
+
 ggsave(plot=site,
        filename="results/site-unweighted_unifrac.png",
        width=16,
        height=8,
        dpi=300)
-site
+
+site + ggtitle("Unweighted unifrac PCoA")
 
 treatment_site = ggplot(data,aes(x=PC1, y=PC2, color=interaction(Treatment,site))) +
 geom_point(alpha=0.8, size=5) + 
@@ -621,15 +628,15 @@ theme_q2r() +
                      values=c("green", "purple", "orange", "blue")) + 
 theme_classic() +
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  ggtitle("Status Unweighted unifrac PCoA") +
-            labs(x = PC1, y = PC2)
-                 
+  labs(x = PC1, y = PC2)
+
 ggsave(plot=treatment_site,
        filename="results/site_treatment-unweighted_unifrac.png",
        width=16,
        height=8,
        dpi=300)
-treatment_site
+
+treatment_site + ggtitle("Status Unweighted unifrac PCoA")
 ```
 
 ```{r echo=F}
@@ -650,14 +657,15 @@ p <- t1$plot_group_distance(distance_pair_stat = T) +
   theme_classic() +
   theme(plot.title = element_text(hjust = 0.5),
         text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle("Beta diversity")
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
 ggsave(plot=p,
        filename="results/bray-curtis-site_status.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Beta diversity")
 ```
 
 ### Bray-Curtis
@@ -676,14 +684,15 @@ p <- t1$plot_group_distance(distance_pair_stat = T) +
   theme_classic() +
   theme(plot.title = element_text(hjust = 0.5),
         text = element_text(size=30),
-        axis.text.x = element_text()) +
-  ggtitle("Beta diversity")
+        axis.text.x = element_text())
+
 ggsave(plot=p,
        filename="results/bray-curtis-site.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Beta diversity")
 ```
 
 ## Alpha Diversity
@@ -704,25 +713,26 @@ df <- t1$alpha_data %>%
 p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) + 
             geom_boxplot(size = 1) +
             geom_point(size=4) +
-            scale_color_manual(name="Site", values=c("green", "orange", "purple", "blue"))+
-            scale_x_discrete(
-              labels=c(expression(paste(italic('H. pylori (-)'), 'Lavage')),
-                       expression(paste(italic('H. pylori (-)'), 'Buccal')),
-                       expression(paste(italic('H. pylori (-)'), 'Lavage')),
-                       expression(paste(italic('H. pylori (-)'), 'Buccal'))
-              )) +
+  scale_color_manual(name="Status",
+                    labels = c(
+                      expression(paste(italic("H. pylori"), "(-) Buccal")),
+                      expression(paste(italic("H. pylori"), "(+) Buccal")),
+                      expression(paste(italic("H. pylori"), "(-) Lavage")),
+                      expression(paste(italic("H. pylori"), "(+) Lavage"))),
+                     values=c("green", "purple", "orange", "blue")) +
             theme_classic() +
             theme(plot.title = element_text(hjust = 0.5),
                   axis.text.x = element_text(size=20),
                   text = element_text(size=30)) +
-            ggtitle("Site & status") +
             labs(x = "", y = "Shannon")
+
 ggsave(plot=p,
        filename="results/shannon-site-status.png",
        width=16,
        height=8,
        dpi=300)
-p
+
+p + ggtitle("Site & status") 
 ```
 
 ### Shannon index by site only

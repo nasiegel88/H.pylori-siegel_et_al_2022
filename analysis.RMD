@@ -1256,7 +1256,7 @@ p <- t1$plot_corr() +
         text = element_text(size=30),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-ggsave(plot=p,
+ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
        width=16,
        height=11,
@@ -1274,7 +1274,7 @@ p <- t1$plot_corr()+
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
 
-ggsave(plot=p,
+ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
        width=16,
        height=10,
@@ -1302,7 +1302,8 @@ p <- t1$plot_corr() +
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
 
-ggsave(plot=p,
+
+ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-alpha_il8-spearman.png",
        width=16,
        height=10,
@@ -1365,14 +1366,15 @@ p <- t1$plot_corr() +
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5),
         text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-  ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
-ggsave(plot=p,
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
        width=16,
        height=11,
        dpi=300)
-p
+
+p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
 ```
 
 \newpage
@@ -1384,7 +1386,7 @@ p <- t1$plot_corr()+
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
 
-ggsave(plot=p,
+ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
        width=16,
        height=10,
@@ -1412,7 +1414,7 @@ p <- t1$plot_corr() +
   theme_classic()+
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
 
-ggsave(plot=p,
+ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-alpha_il8-spearman.png",
        width=16,
        height=8,

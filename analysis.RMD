@@ -46,6 +46,17 @@ suppressPackageStartupMessages({
 })
 ```
 
+```{r echo=FALSE}
+analysis_theme <-
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold"),
+    axis.text.y=element_text(size=25, face="bold")
+  )
+```
+
 ```{r include=F}
 # generate phyloseq object
 metadata<-read.table(file.path(getwd(),"data", "noblank-sample-metadata.txt"), row.names=1, sep='\t', quote="", header=TRUE) # updated metadata for MLD manuscript-1
@@ -134,13 +145,19 @@ age_data <- read.table(file.path(getwd(),"data", "rdu_table.txt"), row.names=NUL
 
 age_data <- na.omit(age_data) # remove NA rows
 
-model <- age_data %>% 
-  select(HP_status, age_days_infants, infant_weight_kg, il_bal_pg.ml, il_plasma_pg.ml)
+model <- age_data %>%
+  rename(
+    `Age (days)` = age_days_infants,
+    `Weight (kg)` = infant_weight_kg,
+    `IL-8 Lavage (pg)` = il_bal_pg.ml,
+    `IL-8 Plasma (pg)` = il_plasma_pg.ml
+  ) %>%
+  select(HP_status, `Age (days)`, `Weight (kg)`, `IL-8 Lavage (pg)`, `IL-8 Plasma (pg)`)
 
-reg <- glm(as.factor(HP_status) ~ infant_weight_kg  + age_days_infants + il_bal_pg.ml + il_plasma_pg.ml, data=model, family=binomial)
+reg <- glm(as.factor(HP_status) ~ `Weight (kg)`  + `Age (days)` + `IL-8 Lavage (pg)` + `IL-8 Plasma (pg)`, data=model, family=binomial)
 p=plot_model(reg,
              type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", title="Odds ratios of variables based on H. pylori status", color=c("black")) + 
-theme(text = element_text(size=30))
+analysis_theme
 ggsave(plot=p,
        filename="results/hp-oddsratios.png",
        width=16,
@@ -171,9 +188,8 @@ p <- ggscatter(no_duplicates,
           cor.coef.size = 10,
           xlab = "Gastric H. pylori load (log10CFU/g)",
           ylab = "Lavage IL8 (pg)") +
-  theme_classic(base_size = 30) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("H.pylori Il8 Pearson correlation")
+  ggtitle("H.pylori Il8 Pearson correlation") + 
+analysis_theme
 p <- ggpar(p , ylim = c(5, 20))
 ggsave(plot=p,
        filename="results/BAL_IL8-corr.png",
@@ -196,9 +212,8 @@ p <- ggscatter(no_duplicates,
           cor.coef.size = 10,
           ylab = "Plasma IL8 (pg)", 
           xlab = "Gastric H. pylori load (log10CFU/g)") +
-  theme_classic(base_size = 30) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  ggtitle("H.pylori plasma IL8 Pearson correlation")
+  ggtitle("H.pylori plasma IL8 Pearson correlation") + 
+analysis_theme
 p <- ggpar(p)
 ggsave(plot=p,
        filename="results/Serum_IL8_heparinized-corr.png",
@@ -270,8 +285,8 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage")+ 
-    theme(text = element_text(size=30))
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in lavage") + 
+analysis_theme
 ```
 
 ### Buccal overlapping taxa
@@ -323,8 +338,8 @@ ggsave(plot=p,
        height=8,
        dpi=300)
 p +
-ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity")+ 
-    theme(text = element_text(size=30))
+ggtitle("Overlapping taxa between H. pylori (+) and (-) in buccal cavity") + 
+analysis_theme
 ```
 
 ## Lefse analysis and differential abundance for both sites
@@ -374,8 +389,8 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
                                expression(paste(italic("H. pylori"), "(+) Buccal")),
                                expression(paste(italic("H. pylori"), "(-) Lavage")),
                                expression(paste(italic("H. pylori"), "(+) Lavage"))),
-                    values=c("Orange", "Blue", "green", "purple"))  +
-  theme(text = element_text(size=30))
+                    values=c("Orange", "Blue", "green", "purple")) + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-bal-swab.png",
@@ -399,8 +414,8 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                                expression(paste(italic("H. pylori"), "(+) Buccal")),
                                expression(paste(italic("H. pylori"), "(-) Lavage")),
                                expression(paste(italic("H. pylori"), "(+) Lavage"))),
-                    values=c("Orange", "Blue", "green", "purple")) +
-  theme(text = element_text(size=30))
+                    values=c("Orange", "Blue", "green", "purple")) + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal-swab.png",
@@ -460,8 +475,8 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
                     labels = c(
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
-                    values=c("green", "purple")) +
-  theme(text = element_text(size=30))
+                    values=c("green", "purple")) + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-bal.png",
@@ -485,8 +500,8 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                     labels = c(
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
-                    values=c("green", "purple")) +
-  theme(text = element_text(size=30))
+                    values=c("green", "purple"))  + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal.png",
@@ -545,12 +560,12 @@ p <- t1$plot_lefse_bar(LDA_score = 2) +
   scale_fill_manual(name="Status",
                     labels = c(expression(paste(italic("H. pylori"), "(-) Buccal")),
                                expression(paste(italic("H. pylori"), "(+) Buccal"))),
-                    values=c("Orange", "Blue")) +
-  theme(text = element_text(size=30))
+                    values=c("Orange", "Blue")) + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-swab.png",
-       width=16,
+       width=18,
        height=8,
        dpi=300)
 
@@ -568,8 +583,8 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
   scale_fill_manual(name="Status",
                     labels = c(expression(paste(italic("H. pylori"), "(-) Buccal")),
                                expression(paste(italic("H. pylori"), "(+) Buccal"))),
-                    values=c("Orange", "Blue")) +
-  theme(text = element_text(size=30))
+                    values=c("Orange", "Blue")) + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-swab.png",
@@ -601,12 +616,10 @@ PC2 = paste0("PC2 (",round(uwunifrac$data$ProportionExplained$PC2, digits = 2)*1
 ```{r echo=F, figures-side, fig.show="hold"}
 site = ggplot(data,aes(x=PC1, y=PC2, color=`site`)) +
 geom_point(alpha=0.8, size=5) + 
-theme_q2r() +
 scale_color_manual(name="Site", labels = c("Lavage", "Buccal"),
                    values=c("dark red", "dark blue")) + 
-theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  labs(x = PC1, y = PC2)
+  labs(x = PC1, y = PC2) + 
+analysis_theme
 
 ggsave(plot=site,
        filename="results/site-unweighted_unifrac.png",
@@ -618,7 +631,6 @@ site + ggtitle("Unweighted unifrac PCoA")
 
 treatment_site = ggplot(data,aes(x=PC1, y=PC2, color=interaction(Treatment,site))) +
 geom_point(alpha=0.8, size=5) + 
-theme_q2r() +
   scale_color_manual(name="Status",
                     labels = c(
                       expression(paste(italic("H. pylori"), "(-) Buccal")),
@@ -626,9 +638,8 @@ theme_q2r() +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                      values=c("green", "purple", "orange", "blue")) + 
-theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
-  labs(x = PC1, y = PC2)
+  labs(x = PC1, y = PC2) + 
+analysis_theme
 
 ggsave(plot=treatment_site,
        filename="results/site_treatment-unweighted_unifrac.png",
@@ -654,10 +665,12 @@ p <- t1$plot_group_distance(distance_pair_stat = T) +
                       expression(paste(italic("H. pylori"), "(+) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Buccal"))),
                      values=c("green", "orange", "purple", "blue")) +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5),
+        theme(
         text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        plot.title = element_text(hjust = 0.5),
+        axis.text.x=element_text(size=25, face="bold", angle = 90, vjust = 0.5, hjust=1),
+        axis.text.y=element_text(size=25, face="bold")
+      )
 
 ggsave(plot=p,
        filename="results/bray-curtis-site_status.png",
@@ -680,11 +693,8 @@ t1$cal_group_distance(within_group = T)
 p <- t1$plot_group_distance(distance_pair_stat = T) +
             scale_color_manual(name="Site", values=c("dark red", "dark blue"),
                                labels=c('Lavage', 'Buccal')) +
-  scale_x_discrete(labels=c('Lavage','Buccal')) +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5),
-        text = element_text(size=30),
-        axis.text.x = element_text())
+  scale_x_discrete(labels=c('Lavage','Buccal'))  + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/bray-curtis-site.png",
@@ -720,15 +730,12 @@ p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                      values=c("green", "purple", "orange", "blue")) +
-            theme_classic() +
-            theme(plot.title = element_text(hjust = 0.5),
-                  axis.text.x = element_text(size=20),
-                  text = element_text(size=30)) +
-            labs(x = "", y = "Shannon")
+            labs(x = "", y = "Shannon") + 
+analysis_theme
 
 ggsave(plot=p,
        filename="results/shannon-site-status.png",
-       width=16,
+       width=18,
        height=8,
        dpi=300)
 
@@ -755,10 +762,9 @@ p <- ggplot(df, aes_string(x = "site", y = "Value", col="site")) +
                                labels=c('Lavage', 'Buccal'))+
             scale_x_discrete(
               labels=c('Lavage','Buccal')) +
-            theme_classic() +
-            theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30)) +
             ggtitle("Status") +
-            labs(x = "", y = "Shannon")
+            labs(x = "", y = "Shannon") + 
+analysis_theme
 ggsave(plot=p,
        filename="results/shannon.png",
        width=16,
@@ -794,7 +800,7 @@ p <- plot_bar(hp, "Treatment", "Abundance","Species", title="Helicobacter ASVs")
   theme_classic() +
   scale_x_discrete(labels = c(
     expression(italic('H. pylori (-)')), 
-    expression(italic('H. pylori (+)')))) +
+    expression(italic('H. pylori (+)'))))  + 
   theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30),
         axis.text.x = element_text(size = 20)) +
   facet_grid(cols = vars(site))
@@ -1259,7 +1265,7 @@ p <- t1$plot_corr() +
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Lavage Genus Abundance",
@@ -1277,7 +1283,7 @@ p <- t1$plot_corr()+
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Lavage Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
@@ -1306,7 +1312,7 @@ p <- t1$plot_corr() +
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-alpha_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Lavage Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))
@@ -1371,7 +1377,7 @@ p <- t1$plot_corr() +
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Grouped by H. pylori status"), ""))))
@@ -1382,14 +1388,13 @@ p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Groupe
 ```{r echo=F, fig.cap = "IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status"}
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
-p <- t1$plot_corr()+
-  theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+p <- t1$plot_corr() + 
+analysis_theme
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Independent of H. pylori status"), ""))))
@@ -1410,14 +1415,13 @@ t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
-p <- t1$plot_corr() +
-  theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+p <- t1$plot_corr() + 
+analysis_theme
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-alpha_il8-spearman.png",
        width=16,
-       height=8,
+       height=11,
        dpi=300)
 
 p + ggtitle(expression(atop("Buccal Cavity Alpha Diversity", atop(italic("Independent of H. pylori status"), ""))))

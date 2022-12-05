@@ -693,8 +693,14 @@ t1$cal_group_distance(within_group = T)
 p <- t1$plot_group_distance(distance_pair_stat = T) +
             scale_color_manual(name="Site", values=c("dark red", "dark blue"),
                                labels=c('Lavage', 'Buccal')) +
-  scale_x_discrete(labels=c('Lavage','Buccal'))  + 
-analysis_theme
+  scale_x_discrete(labels=c('Lavage','Buccal'))  +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+     axis.text.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  )
 
 ggsave(plot=p,
        filename="results/bray-curtis-site.png",
@@ -730,8 +736,14 @@ p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                      values=c("green", "purple", "orange", "blue")) +
-            labs(x = "", y = "Shannon") + 
-analysis_theme
+            labs(x = "", y = "Shannon") +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+     axis.text.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  )
 
 ggsave(plot=p,
        filename="results/shannon-site-status.png",
@@ -1214,7 +1226,7 @@ kbl(kab,align = "l", digits = 4, booktabs = TRUE, longtable = FALSE, format = "l
 \newpage
 
 ## Genera correlation with Il8 concentration (Serum and BAL)
-
+####
 ```{r echo=F, cache=F, fig.cap = "IL8 and lavage genus abundance Spearman correlations separated by H. pylori status"}
 # lavage
 bp <- subset_samples(physeq, site=="BAL")
@@ -1255,12 +1267,24 @@ t1$cal_cor(use_data = "other",
            p_adjust_method = "fdr",
            cor_method="spearman",
            by_group="Treatment",
+          
            other_taxa = t2$res_rf$Taxa[1:20])
-p <- t1$plot_corr() +
+p <- t1$plot_corr()  + 
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma', 
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
   theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5),
-        text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
@@ -1276,9 +1300,22 @@ p + ggtitle(expression(atop("Lavage Genus Abundance",
 # calculate correlations for different groups using parameter by_group
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
-p <- t1$plot_corr()+
-  theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+p <- t1$plot_corr() + 
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma', 
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
@@ -1304,9 +1341,22 @@ t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
-p <- t1$plot_corr() +
-  theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5), text = element_text(size=30))
+p <- t1$plot_corr()  + 
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma', 
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 
 ggsave(plot=p + ggtitle('lavage'),
@@ -1368,11 +1418,22 @@ p <- t1$cal_cor(use_data = "other",
            cor_method="spearman",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
-p <- t1$plot_corr() +
-  theme_classic()+
-  theme(plot.title = element_text(hjust = 0.5),
-        text = element_text(size=30),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+p <- t1$plot_corr()  + 
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma', 
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
@@ -1388,8 +1449,22 @@ p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Groupe
 ```{r echo=F, fig.cap = "IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status"}
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
-p <- t1$plot_corr() + 
-analysis_theme
+p <- t1$plot_corr()  + 
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma', 
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
@@ -1416,7 +1491,19 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() + 
-analysis_theme
+  scale_x_discrete(labels=c(
+    'IL-8 Lavage', 
+    'IL-8 Plasma')
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.title.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  ) +
+   geom_text(aes(label = Significance), color="white", size=10)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-alpha_il8-spearman.png",

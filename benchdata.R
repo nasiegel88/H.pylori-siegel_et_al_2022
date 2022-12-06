@@ -137,8 +137,8 @@ save_image(plot = p, x= 'Figures1c')
 p <- dot_plot(figs1[[4]], x = 'hp_status', y= 'age_day',
               y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
-    expression(italic('H. pylori (-)')), 
-    expression(italic('H. pylori (+)')))) + 
+    expression(bolditalic('H. pylori (-)')), 
+    expression(bolditalic('H. pylori (+)')))) + 
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
 
@@ -148,8 +148,8 @@ save_image(plot = p, x= 'Figures1d')
 p <- dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day',
               y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
-    expression(italic('H. pylori (-)')), 
-    expression(italic('H. pylori (+)')))) + 
+    expression(bolditalic('H. pylori (-)')), 
+    expression(bolditalic('H. pylori (+)')))) + 
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
 
@@ -159,8 +159,8 @@ save_image(plot = p, x= 'Figures1e')
 p <- dot_plot(figs2[[1]], x = 'hp_status', y= 'Lung_lavage_il8_pg',
               y.by = 10, y.from = 0, ylim = c(0, 50)) +
   scale_x_discrete(labels = c(
-    expression(italic('H. pylori (-)')), 
-    expression(italic('H. pylori (+)')))) +  
+    expression(bolditalic('H. pylori (-)')), 
+    expression(bolditalic('H. pylori (+)')))) +  
   ylab(expression(atop("Lung lavage",'(IL-8 (pg))'))) +
   xlab('') +
   ggtitle('Lavage')
@@ -214,8 +214,8 @@ p <- df %>%
   scale_fill_manual(
     values=c("green", "purple"),
     labels=c(
-      expression(italic('H. pylori (+)')), 
-      expression(italic('H. pylori (-)')))) +
+      expression(bolditalic('H. pylori (+)')), 
+      expression(bolditalic('H. pylori (-)')))) +
   guides(fill=guide_legend(title="")) +
   geom_errorbar(
     aes(ymin = percent_total, ymax =  percent_total + SEM), width = 0.3, size = 1.5
@@ -239,8 +239,8 @@ save_image(plot = p, x= 'Figures2b')
 p <- dot_plot(figs2[[3]], x = 'hp_status', y= 'Plasma_il8_pg',
               y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   scale_x_discrete(labels = c(
-    expression(italic('H. pylori (-)')), 
-    expression(italic('H. pylori (+)')))) + 
+    expression(bolditalic('H. pylori (-)')), 
+    expression(bolditalic('H. pylori (+)')))) + 
   theme_classic() +
   theme(
     text = element_text(size=30),

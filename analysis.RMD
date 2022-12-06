@@ -155,15 +155,15 @@ model <- age_data %>%
   select(HP_status, `Age (days)`, `Weight (kg)`, `IL-8 Lavage (pg)`, `IL-8 Plasma (pg)`)
 
 reg <- glm(as.factor(HP_status) ~ `Weight (kg)`  + `Age (days)` + `IL-8 Lavage (pg)` + `IL-8 Plasma (pg)`, data=model, family=binomial)
-p=plot_model(reg,
-             type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", title="Odds ratios of variables based on H. pylori status", color=c("black")) + 
+p <- plot_model(reg,
+             type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", color=c("black")) + 
 analysis_theme
 ggsave(plot=p,
        filename="results/hp-oddsratios.png",
        width=16,
        height=8,
        dpi=300)
-p
+p + ggtitle('Odds ratios of variables based on H. pylori status')
 ```
  
 ```{r echo=F}
@@ -275,9 +275,20 @@ t1 <- trans_venn$new(data1, ratio = "numratio")
 
 t1$col_names <- t1$col_names  %>% str_replace('_', ' ')
 
+# Create positions for labels
+pos <- switch(1, 
+data.frame(x = c(3.5, 6.5), y = c(8.5, 8.5)),
+data.frame(x = c(2, 8, 5), y = c(7.9, 7.9, 1.6)),
+data.frame(x = c(1, 2.6, 6.8, 9), y = c(7.4, 8.2, 8.2,7.4)),
+data.frame(x = c(4.8, 9.2, 8.8, 1.65, 0.72), y = c(10.6, 7.7, 0.3, 0.2, 7.05)))
+
 p <- t1$plot_venn(color_circle = c("green", "purple"),
-             text_name_size = 6,
-             text_size = 9)
+             text_size = 9) + 
+  annotate("text", x = pos$x, y = pos$y,
+           label = c(
+      expression(bolditalic('H. pylori (-)')), 
+      expression(bolditalic('H. pylori (+)'))),
+      size = 10)
 
 ggsave(plot=p,
        filename="results/venn-diagram-lavage.png",
@@ -1311,11 +1322,11 @@ p <- t1$plot_corr() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=20)
 
 ggsave(plot=p + ggtitle('lavage'),
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
@@ -1352,11 +1363,11 @@ p <- t1$plot_corr()  +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=20)
 
 
 ggsave(plot=p + ggtitle('lavage'),
@@ -1429,11 +1440,11 @@ p <- t1$plot_corr()  +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=20)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
@@ -1460,11 +1471,11 @@ p <- t1$plot_corr()  +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=20)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
@@ -1499,11 +1510,11 @@ p <- t1$plot_corr() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=20)
 
 ggsave(plot=p + ggtitle('Buccal'),
        filename="results/buccal-alpha_il8-spearman.png",

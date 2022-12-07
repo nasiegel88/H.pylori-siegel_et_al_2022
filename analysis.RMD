@@ -273,14 +273,10 @@ data1 <- data$merge_samples(use_group = "Treatment")
 
 t1 <- trans_venn$new(data1, ratio = "numratio")
 
-t1$col_names <- t1$col_names  %>% str_replace('_', ' ')
+t1$col_names <- t1$col_names  %>% str_replace('.*', '')
 
 # Create positions for labels
-pos <- switch(1, 
-data.frame(x = c(3.5, 6.5), y = c(8.5, 8.5)),
-data.frame(x = c(2, 8, 5), y = c(7.9, 7.9, 1.6)),
-data.frame(x = c(1, 2.6, 6.8, 9), y = c(7.4, 8.2, 8.2,7.4)),
-data.frame(x = c(4.8, 9.2, 8.8, 1.65, 0.72), y = c(10.6, 7.7, 0.3, 0.2, 7.05)))
+pos <- data.frame(x = c(3.5, 6.5), y = c(8.5, 8.5))
 
 p <- t1$plot_venn(color_circle = c("green", "purple"),
              text_size = 9) + 
@@ -338,11 +334,18 @@ data1 <- data$merge_samples(use_group = "Treatment")
 
 t1 <- trans_venn$new(data1, ratio = "numratio")
 
-t1$col_names <- t1$col_names  %>% str_replace('_', ' ')
+t1$col_names <- t1$col_names  %>% str_replace('.*', '')
+
+# Create positions for labels
+pos <- data.frame(x = c(3.5, 6.5), y = c(8.5, 8.5))
 
 p <- t1$plot_venn(color_circle = c("orange", "blue"), 
-             text_name_size = 6,
-             text_size = 9) 
+             text_size = 9) + 
+  annotate("text", x = pos$x, y = pos$y,
+           label = c(
+      expression(bolditalic('H. pylori (-)')), 
+      expression(bolditalic('H. pylori (+)'))),
+      size = 10)
 ggsave(plot=p,
        filename="results/venn-diagram-buccal.png",
        width=16,

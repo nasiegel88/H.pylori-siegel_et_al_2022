@@ -157,6 +157,7 @@ model <- age_data %>%
 reg <- glm(as.factor(HP_status) ~ `Weight (kg)`  + `Age (days)` + `IL-8 Lavage (pg)` + `IL-8 Plasma (pg)`, data=model, family=binomial)
 p <- plot_model(reg,
              type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", color=c("black")) + 
+ggtitle("") +
 analysis_theme
 ggsave(plot=p,
        filename="results/hp-oddsratios.png",
@@ -284,7 +285,9 @@ p <- t1$plot_venn(color_circle = c("green", "purple"),
            label = c(
       expression(bolditalic('H. pylori (-)')), 
       expression(bolditalic('H. pylori (+)'))),
-      size = 10)
+      size = 10) +
+  annotate("text", x = 5, y = 9,
+           label = expression(bold('Lavage')), size = 12)
 
 ggsave(plot=p,
        filename="results/venn-diagram-lavage.png",
@@ -345,7 +348,10 @@ p <- t1$plot_venn(color_circle = c("orange", "blue"),
            label = c(
       expression(bolditalic('H. pylori (-)')), 
       expression(bolditalic('H. pylori (+)'))),
-      size = 10)
+      size = 10) +
+  annotate("text", x = 5, y = 9,
+           label = expression(bold('Buccal')), size = 12)
+
 ggsave(plot=p,
        filename="results/venn-diagram-buccal.png",
        width=16,
@@ -787,16 +793,22 @@ p <- ggplot(df, aes_string(x = "site", y = "Value", col="site")) +
             scale_color_manual(name="Site", values=c("dark red", "dark blue"),
                                labels=c('Lavage', 'Buccal'))+
             scale_x_discrete(
-              labels=c('Lavage','Buccal')) +
-            ggtitle("Status") +
-            labs(x = "", y = "Shannon") + 
-analysis_theme
+              labels=c('Lavage','Buccal'))  +
+            labs(x = "", y = "Shannon") +
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+     axis.text.x=element_blank(),
+    axis.text.y=element_text(size=25, face="bold")
+  )
+
 ggsave(plot=p,
        filename="results/shannon.png",
        width=16,
        height=8,
        dpi=300)
-p
+p + ggtitle("Status")
 ```
 
 \newpage
@@ -1294,7 +1306,7 @@ p <- t1$plot_corr()  +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold", angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30, face="bold", angle = 45, vjust = 1, hjust=1),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25, face="bold")
   ) +

@@ -158,7 +158,13 @@ reg <- glm(as.factor(HP_status) ~ `Weight (kg)`  + `Age (days)` + `IL-8 Lavage (
 p <- plot_model(reg,
              type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", color=c("black")) + 
 ggtitle("") +
-analysis_theme
+  theme_classic() +
+  theme(
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25, face="bold"),
+    axis.text.y=element_text(size=25, face="bold")
+  )
 ggsave(plot=p,
        filename="results/hp-oddsratios.png",
        width=16,
@@ -283,8 +289,8 @@ p <- t1$plot_venn(color_circle = c("green", "purple"),
              text_size = 9) + 
   annotate("text", x = pos$x, y = pos$y,
            label = c(
-      expression(bolditalic('H. pylori (-)')), 
-      expression(bolditalic('H. pylori (+)'))),
+      expression(italic('H. pylori (-)')), 
+      expression(italic('H. pylori (+)'))),
       size = 10) +
   annotate("text", x = 5, y = 9,
            label = expression(bold('Lavage')), size = 12)
@@ -346,8 +352,8 @@ p <- t1$plot_venn(color_circle = c("orange", "blue"),
              text_size = 9) + 
   annotate("text", x = pos$x, y = pos$y,
            label = c(
-      expression(bolditalic('H. pylori (-)')), 
-      expression(bolditalic('H. pylori (+)'))),
+      expression(italic('H. pylori (-)')), 
+      expression(italic('H. pylori (+)'))),
       size = 10) +
   annotate("text", x = 5, y = 9,
            label = expression(bold('Buccal')), size = 12)
@@ -435,7 +441,14 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                                expression(paste(italic("H. pylori"), "(-) Lavage")),
                                expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("Orange", "Blue", "green", "purple")) + 
-analysis_theme
+theme_classic() +
+theme(
+  text = element_text(size=30),
+  plot.title = element_text(hjust = 0.5),
+  axis.text.x=element_text(size=25, face="bold"),
+  axis.title.y=element_blank(),
+  axis.text.y=element_text(size=25, face="bold")
+)
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal-swab.png",
@@ -521,7 +534,14 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                       expression(paste(italic("H. pylori"), "(-) Lavage")),
                       expression(paste(italic("H. pylori"), "(+) Lavage"))),
                     values=c("green", "purple"))  + 
-analysis_theme
+theme_classic() +
+theme(
+  text = element_text(size=30),
+  plot.title = element_text(hjust = 0.5),
+  axis.text.x=element_text(size=25, face="bold"),
+  axis.title.y=element_blank(),
+  axis.text.y=element_text(size=25, face="bold")
+)
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-bal.png",
@@ -604,7 +624,14 @@ p <- t1$plot_diff_abund(use_number = 1:10) +
                     labels = c(expression(paste(italic("H. pylori"), "(-) Buccal")),
                                expression(paste(italic("H. pylori"), "(+) Buccal"))),
                     values=c("Orange", "Blue")) + 
-analysis_theme
+theme_classic() +
+theme(
+  text = element_text(size=30),
+  plot.title = element_text(hjust = 0.5),
+  axis.text.x=element_text(size=25, face="bold"),
+  axis.title.y=element_blank(),
+  axis.text.y=element_text(size=25, face="bold")
+)
 
 ggsave(plot=p,
        filename="results/lefse-rel.abundance-swab.png",
@@ -686,7 +713,7 @@ p <- t1$plot_group_distance(distance_pair_stat = T) +
                       expression(paste(italic("H. pylori"), "(+) Buccal"))),
                      values=c("green", "orange", "purple", "blue")) +
         theme(
-        text = element_text(size=30),
+        text = element_text(size=30, ),
         plot.title = element_text(hjust = 0.5),
         axis.text.x=element_text(size=25, face="bold", angle = 90, vjust = 0.5, hjust=1),
         axis.text.y=element_text(size=25, face="bold")

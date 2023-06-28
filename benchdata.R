@@ -35,8 +35,8 @@ line_plot <-
       theme(
         text = element_text(size=30),
         plot.title = element_text(hjust = 0.5),
-        axis.text.x=element_text(size=25, face="bold"),
-        axis.text.y=element_text(size=25, face="bold")
+        axis.text.x=element_text(size=25),
+        axis.text.y=element_text(size=25)
       )
   }
 
@@ -52,8 +52,8 @@ dot_plot <-
       theme(
         text = element_text(size=30),
         plot.title = element_text(hjust = 0.5),
-        axis.text.x=element_text(size=25, face="bold"),
-        axis.text.y=element_text(size=25, face="bold")
+        axis.text.x=element_text(size=25),
+        axis.text.y=element_text(size=25)
       )
   }
 
@@ -73,11 +73,10 @@ std.error <- function(x) sd(x) / sqrt(length(x))
 p <- line_plot(data = fig1[[1]],
                x = 'log_10_CFU_gm', y = 'Lung_lavage_il8_pg',
                dot.size = 5, cor.size = 10, p.digits = 1,
-               x.by = 2, x.from = 0, xlim = c(3, 9),
+               x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 10, y.from = 0, ylim = c(0, 40)) +
   ylab(expression(atop("Lung Lavage",'IL-8 (pg)'))) +
-  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) +
-  ggtitle('Lavage')
+  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figure1a')
 
@@ -99,8 +98,7 @@ p <- line_plot(data = fig1[[3]],
                x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
-  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) +
-  ggtitle('Plasma')
+  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figure1c')
 
@@ -108,8 +106,7 @@ save_image(plot = p, x= 'Figure1c')
 p <- dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg',
               y.by = 10, y.from = 0, ylim = c(0, 50)) +
   ylab(expression(atop("Lung Lavage",'IL-8 (pg)'))) +
-  xlab('') +
-  ggtitle('Lavage')
+  xlab('') #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figures1a')
 
@@ -120,16 +117,14 @@ p <- line_plot(data = figs1[[2]],
                x.by = 50, x.from = 100, xlim = c(100, 250),
                y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
-  xlab(expression(atop("Age", '(days)'))) +
-  ggtitle('Plasma')
+  xlab(expression(atop("Age", '(days)'))) #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figures1b')
 
 ## Figure s1c
 p <- dot_plot(figs1[[3]], x = 'Sex', y= 'Plasma_il8_pg',
               y.by = 500, y.from = 0, ylim = c(0, 1500)) +
-  ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
-  ggtitle('Plasma')
+  ylab(expression(atop("Plasma",'IL-8 (pg)'))) #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figures1c')
 
@@ -162,8 +157,7 @@ p <- dot_plot(figs2[[1]], x = 'hp_status', y= 'Lung_lavage_il8_pg',
     expression(bolditalic('H. pylori (-)')), 
     expression(bolditalic('H. pylori (+)')))) +  
   ylab(expression(atop("Lung lavage",'(IL-8 (pg))'))) +
-  xlab('') +
-  ggtitle('Lavage')
+  xlab('') #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figures2a')
 
@@ -223,14 +217,13 @@ p <- df %>%
   ylab(expression(atop("Age-corrected Plasma",'IL-8 (pg)'))) +
   xlab('') +
   scale_y_continuous(
-    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6)) +
-  ggtitle('Plasma') +
+    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6)) #+ ggtitle('Plasma') +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=25, face="bold"),
-    axis.text.y=element_text(size=25, face="bold")
+    axis.text.x=element_text(size=25),
+    axis.text.y=element_text(size=25)
   )
 
 save_image(plot = p, x= 'Figures2b')
@@ -247,7 +240,6 @@ p <- dot_plot(figs2[[3]], x = 'hp_status', y= 'Plasma_il8_pg',
     plot.title = element_text(hjust = 0.5)
   ) +
   ylab(expression(atop("Plasma",'(IL-8 (pg))'))) +
-  xlab('') +
-  ggtitle('Plasma')
+  xlab('') #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figures2c')

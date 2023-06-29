@@ -953,7 +953,8 @@ p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_k
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(), 
         legend.position = "bottom",
-        legend.justification = c(0,1)) +
+        legend.justification = c(0,1),
+        strip.text.x = element_text(face = "italic")) +
   scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3)) +
   ggtitle("Phylum")
@@ -977,7 +978,8 @@ p <- t3$plot_pie(facet_nrow = 3, "grey50") +
                     values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(text = element_text(size=30),
         legend.position = "left",
-         strip.text = element_text(size = 25)) 
+         strip.text = element_text(size = 25),
+         strip.text.x = element_text(face = "italic")) 
   
 ggsave(plot=p,
        filename="results/phylum-piechart.png",
@@ -1032,7 +1034,8 @@ p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_k
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "bottom",
-        legend.justification = c(0,1)) +
+        legend.justification = c(0,1),
+        strip.text.x = element_text(face = "italic")) +
   scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 4, ncol = 3)) +
   ggtitle("Class")
@@ -1052,7 +1055,8 @@ p <- t3$plot_pie(facet_nrow = 3, "grey50") +
   scale_fill_manual("Class", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(text = element_text(size=30),
         legend.position = "left",
-         strip.text = element_text(size = 25)) 
+         strip.text = element_text(size = 25),
+         strip.text.x = element_text(face = "italic")) 
 ggsave(plot=p,
        filename="results/class-piechart.png",
        width=16,
@@ -1106,7 +1110,8 @@ p <- t1$plot_bar( others_color = "grey70", facet = c("Treatment","site"), xtext_
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "bottom",
-        legend.justification = c(0,1)) +
+        legend.justification = c(0,1),
+        strip.text.x = element_text(face = "italic")) +
   scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3, ncol = 3)) +
   ggtitle("Order")
@@ -1127,7 +1132,8 @@ p <- t3$plot_pie(facet_nrow = 3, "grey50") +
                     values = colorRampPalette(brewer.pal(11,"Set3"))(colourCount)) +
   theme(text = element_text(size=30),
         legend.position = "left",
-         strip.text = element_text(size = 25)) 
+         strip.text = element_text(size = 25),
+         strip.text.x = element_text(face = "italic")) 
 
 ggsave(plot=p,
        filename="results/order-piechart.png",
@@ -1182,7 +1188,8 @@ p <- t1$plot_bar(others_color = "grey70", facet = c("Treatment","site"), xtext_k
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "bottom",
-        legend.justification = c(0,1)) +
+        legend.justification = c(0,1),
+        strip.text.x = element_text(face = "italic")) +
   scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 3, ncol = 3)) +
   ggtitle("Family")
@@ -1202,7 +1209,8 @@ p <- t3$plot_pie(facet_nrow = 3, "grey50") +
   scale_fill_manual("Family", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount)) +
   theme(text = element_text(size=30),
         legend.position = "left",
-         strip.text = element_text(size = 25))  
+         strip.text = element_text(size = 25),
+         strip.text.x = element_text(face = "italic"))  
 ggsave(plot=p,
        filename="results/family-piechart.png",
        width=16,
@@ -1257,7 +1265,8 @@ p <- t1$plot_bar(others_color = "grey70",
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank(),
         legend.position = "bottom",
-        legend.justification = c(0,1)) +
+        legend.justification = c(0,1),
+        strip.text.x = element_text(face = "italic")) +
   scale_fill_discrete(name = "") +
   guides(fill = guide_legend(rnow = 12, ncol = 2)) +
   ggtitle("Genus")
@@ -1277,7 +1286,8 @@ p <- t3$plot_pie(facet_nrow = 3, "grey50") +
   scale_fill_manual("Genus", values = colorRampPalette(brewer.pal(11, "Set3"))(colourCount))  +
   theme(text = element_text(size=30),
         legend.position = "left",
-         strip.text = element_text(size = 25)) 
+         strip.text = element_text(size = 25),
+         strip.text.x = element_text(face = "italic")) 
 ggsave(plot=p,
        filename="results/genus-piechart.png",
        width=16,
@@ -1354,8 +1364,10 @@ t1$cal_cor(use_data = "other",
            p_adjust_method = "fdr",
            cor_method="spearman",
            by_group="Treatment",
-          
            other_taxa = t2$res_rf$Taxa[1:20])
+
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
     'Lung', 
@@ -1369,9 +1381,11 @@ p <- t1$plot_corr()  +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=10)
+   geom_text(aes(label = Significance), color="white", size=10, position = position_nudge(y = -0.3))+
+  labs(fill = "Spearman") 
 
 ggsave(plot=p,
        filename="results/lavage-abundance_sep-hp_il8-spearman.png",
@@ -1387,6 +1401,8 @@ p + ggtitle(expression(atop("Lavage Genus Abundance",
 # calculate correlations for different groups using parameter by_group
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 p <- t1$plot_corr() + 
   scale_x_discrete(labels=c(
     'Lung', 
@@ -1400,9 +1416,11 @@ p <- t1$plot_corr() +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=20)
+   geom_text(aes(label = Significance), color="white", size=20, position = position_nudge(y = -0.3)) +
+  labs(fill = "Pearson") 
 
 ggsave(plot=p,
        filename="results/lavage-abundance_ind-hp_il8-spearman.png",
@@ -1428,6 +1446,9 @@ t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
+
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
     'Lung', 
@@ -1441,9 +1462,11 @@ p <- t1$plot_corr()  +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=20)
+   geom_text(aes(label = Significance), color="white", size=20, position = position_nudge(y = -0.3)) +
+  labs(fill = "Pearson") 
 
 
 ggsave(plot=p,
@@ -1505,6 +1528,9 @@ p <- t1$cal_cor(use_data = "other",
            cor_method="spearman",
            by_group="Treatment",
            other_taxa = t2$res_rf$Taxa[1:20])
+
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
     'Lung', 
@@ -1518,9 +1544,11 @@ p <- t1$plot_corr()  +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=20)
+   geom_text(aes(label = Significance), color="white", size=20, position = position_nudge(y = -0.3)) +
+  labs(fill = "Spearman") 
 
 ggsave(plot=p,
        filename="results/buccal-abundance_sep-hp_il8-spearman.png",
@@ -1536,6 +1564,8 @@ p + ggtitle(expression(atop("Buccal Cavity Genus Abundance", atop(italic("Groupe
 ```{r echo=F, fig.cap = "IL8 and  Buccal genus abundance Spearman correlations independent of H. pylori status"}
 t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other_taxa = t2$res_rf$Taxa[1:20])
 
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
     'Lung', 
@@ -1549,9 +1579,11 @@ p <- t1$plot_corr()  +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=20)
+   geom_text(aes(label = Significance), color="white", size=20, position = position_nudge(y = -0.3)) +
+  labs(fill = "Pearson") 
 
 ggsave(plot=p,
        filename="results/buccal-abundance_ind-hp_il8-spearman.png",
@@ -1576,11 +1608,13 @@ dataset$cal_alphadiv(PD = TRUE)
 t1 <- trans_alpha$new(dataset = dataset, group = "Site_status")
 t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 
+t1$res_cor$Type <- str_replace(t1$res_cor$Type, '_', ' ') 
+
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr() + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
@@ -1588,9 +1622,11 @@ p <- t1$plot_corr() +
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    strip.text.x = element_text(face = "italic")
   ) +
-   geom_text(aes(label = Significance), color="white", size=20)
+   geom_text(aes(label = Significance), color = "white", size = 20, position = position_nudge(y = -0.3)) +
+   labs(fill = "Pearson") 
 
 ggsave(plot=p,
        filename="results/buccal-alpha_il8-spearman.png",

@@ -76,7 +76,7 @@ p <- line_plot(data = fig1[[1]],
                x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 10, y.from = 0, ylim = c(0, 40)) +
   ylab(expression(atop("Lung",'IL-8 (pg)'))) +
-  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) #+ ggtitle('Lavage')
+  xlab(expression(atop(paste("Gastric ", italic("H. pylori"), " load"), Log[10]("CFU/g")))) #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figure1a')
 
@@ -87,7 +87,7 @@ p <- line_plot(data = fig1[[2]],
                x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 20, y.from = 60, ylim = c(60, 140)) +
   ylab(expression(atop("Dam age",'(months)'))) +
-  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g'))))
+  xlab(expression(atop(paste("Gastric ", italic("H. pylori"), " load"), Log[10]("CFU/g"))))
 
 save_image(plot = p, x= 'Figure1b')
 
@@ -98,7 +98,7 @@ p <- line_plot(data = fig1[[3]],
                x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
-  xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) #+ ggtitle('Plasma')
+  xlab(expression(atop(paste("Gastric ", italic("H. pylori"), " load"), Log[10]("CFU/g")))) #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figure1c')
 
@@ -201,31 +201,37 @@ p <- df %>%
     Total = mean(mean)
   ) %>%
   mutate(
-    percent_total = percentage*Total,
+    percent_total = percentage * Total,
     hp_status = factor(
       hp_status, levels = c('Positive_H_pylori', 'Negative_H_pylori'))
   ) %>%
-  ggplot(aes(fill=hp_status, y=percent_total, x=Status)) +
-  geom_bar(position="stack", stat="identity", color = 'black') +
+  ggplot(aes(fill = hp_status, y = percentage, x = Status)) +
+  geom_bar(position = position_dodge(), stat = "identity", color = 'black') +
+  geom_errorbar(
+    aes(ymin = percentage , ymax = percentage  + SEM),
+    position = position_dodge(width = 0.9),
+    width = 0.3,
+    size = 1.5,
+    na.rm = TRUE
+  ) +
   theme_classic() +
   scale_fill_manual(
-    values=c("green", "purple"),
-    labels=c(
-      expression(italic('H. pylori (+)')), 
-      expression(italic('H. pylori (-)')))) +
-  guides(fill=guide_legend(title="")) +
-  geom_errorbar(
-    aes(ymin = percent_total, ymax =  percent_total + SEM), width = 0.3, size = 1.5
+    values = c("green", "purple"),
+    labels = c(
+      expression(italic('H. pylori (+)')),
+      expression(italic('H. pylori (-)'))
+    )
   ) +
+  guides(fill = guide_legend(title = ""))+
   ylab(expression(atop("Age-corrected Plasma",'IL-8 (pg)'))) +
   xlab('') +
-  scale_y_continuous(
-    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6)) + #+ ggtitle('Plasma') +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
     axis.text.x=element_text(size=25),
-    axis.text.y=element_text(size=25)
+    axis.text.y=element_text(size=25),
+    legend.text.align = 0,
+    legend.text = element_text(hjust = 0)
   )
 
 save_image(plot = p, x= 'Figures2b')

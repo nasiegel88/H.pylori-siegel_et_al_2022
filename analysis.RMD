@@ -163,7 +163,10 @@ model <- age_data %>%
 
 reg <- glm(as.factor(HP_status) ~ `Weight (kg)`  + `Age (days)` + `IL-8 Lung (pg)` + `IL-8 Plasma (pg)`, data=model, family=binomial)
 p <- plot_model(reg,
-             type="std2", group.terms = c(1, 2, 3, 4), vline.color="black", color=c("black")) + 
+             type="std2",
+             group.terms = c(1, 2, 3, 4),
+             vline.color="black", color=c("black"),) + 
+labs(y = "") +
 ggtitle("") +
   theme_classic() +
   theme(
@@ -1355,16 +1358,16 @@ t1$cal_cor(use_data = "other",
            other_taxa = t2$res_rf$Taxa[1:20])
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma', 
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma', 
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +
@@ -1386,16 +1389,16 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 
 p <- t1$plot_corr() + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma', 
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma', 
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +
@@ -1427,16 +1430,16 @@ t1 <- trans_env$new(dataset = dataset, add_data = subsetted[, 7:8])
 t1$cal_cor(add_abund_table = dataset$alpha_diversity)
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma', 
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma', 
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +
@@ -1504,16 +1507,16 @@ p <- t1$cal_cor(use_data = "other",
            other_taxa = t2$res_rf$Taxa[1:20])
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma', 
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma', 
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +
@@ -1535,16 +1538,16 @@ t1$cal_cor(by_group = "site", use_data = "other", p_adjust_method = "fdr", other
 
 p <- t1$plot_corr()  + 
   scale_x_discrete(labels=c(
-    'IL-8 Lung', 
-    'IL-8 Plasma', 
-    'IL-8 Lung', 
-    'IL-8 Plasma')
+    'Lung', 
+    'Plasma', 
+    'Lung', 
+    'Plasma')
   ) +
   theme_classic() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +
@@ -1583,7 +1586,7 @@ p <- t1$plot_corr() +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
-    axis.text.x=element_text(size=30, angle = 45, vjust = 1, hjust=1),
+    axis.text.x=element_text(size=30),
     axis.title.x=element_blank(),
     axis.text.y=element_text(size=25)
   ) +

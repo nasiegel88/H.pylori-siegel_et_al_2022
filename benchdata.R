@@ -75,7 +75,7 @@ p <- line_plot(data = fig1[[1]],
                dot.size = 5, cor.size = 10, p.digits = 1,
                x.by = 1, x.from = 3, xlim = c(3, 9),
                y.by = 10, y.from = 0, ylim = c(0, 40)) +
-  ylab(expression(atop("Lung Lavage",'IL-8 (pg)'))) +
+  ylab(expression(atop("Lung",'IL-8 (pg)'))) +
   xlab(expression(atop("Gastric H. pylori load", Log[10]('CFU/g')))) #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figure1a')
@@ -105,7 +105,7 @@ save_image(plot = p, x= 'Figure1c')
 # Figure s1a
 p <- dot_plot(figs1[[1]], x = 'Sex', y= 'Lung_lavage_il8_pg',
               y.by = 10, y.from = 0, ylim = c(0, 50)) +
-  ylab(expression(atop("Lung Lavage",'IL-8 (pg)'))) +
+  ylab(expression(atop("Lung",'IL-8 (pg)'))) +
   xlab('') #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figures1a')
@@ -117,14 +117,16 @@ p <- line_plot(data = figs1[[2]],
                x.by = 50, x.from = 100, xlim = c(100, 250),
                y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   ylab(expression(atop("Plasma",'IL-8 (pg)'))) +
-  xlab(expression(atop("Age", '(days)'))) #+ ggtitle('Plasma')
+  xlab(expression(atop("Age", '(days)'))) +
+  xlab('') #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figures1b')
 
 ## Figure s1c
 p <- dot_plot(figs1[[3]], x = 'Sex', y= 'Plasma_il8_pg',
               y.by = 500, y.from = 0, ylim = c(0, 1500)) +
-  ylab(expression(atop("Plasma",'IL-8 (pg)'))) #+ ggtitle('Plasma')
+  ylab(expression(atop("Plasma",'IL-8 (pg)')))  +
+  xlab('') #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figures1c')
 
@@ -132,8 +134,8 @@ save_image(plot = p, x= 'Figures1c')
 p <- dot_plot(figs1[[4]], x = 'hp_status', y= 'age_day',
               y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
-    expression(bolditalic('H. pylori (-)')), 
-    expression(bolditalic('H. pylori (+)')))) + 
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) + 
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
 
@@ -143,8 +145,8 @@ save_image(plot = p, x= 'Figures1d')
 p <- dot_plot(figs1[[5]], x = 'hp_status', y= 'age_day',
               y.by = 50, y.from = 100, ylim = c(100, 300)) +
   scale_x_discrete(labels = c(
-    expression(bolditalic('H. pylori (-)')), 
-    expression(bolditalic('H. pylori (+)')))) + 
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) + 
   ylab(expression(atop("Age",'(days)'))) +
   xlab('')
 
@@ -154,9 +156,9 @@ save_image(plot = p, x= 'Figures1e')
 p <- dot_plot(figs2[[1]], x = 'hp_status', y= 'Lung_lavage_il8_pg',
               y.by = 10, y.from = 0, ylim = c(0, 50)) +
   scale_x_discrete(labels = c(
-    expression(bolditalic('H. pylori (-)')), 
-    expression(bolditalic('H. pylori (+)')))) +  
-  ylab(expression(atop("Lung lavage",'(IL-8 (pg))'))) +
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) +  
+  ylab(expression(atop("Lung",'(IL-8 (pg))'))) +
   xlab('') #+ ggtitle('Lavage')
 
 save_image(plot = p, x= 'Figures2a')
@@ -205,11 +207,12 @@ p <- df %>%
   ) %>%
   ggplot(aes(fill=hp_status, y=percent_total, x=Status)) +
   geom_bar(position="stack", stat="identity", color = 'black') +
+  theme_classic() +
   scale_fill_manual(
     values=c("green", "purple"),
     labels=c(
-      expression(bolditalic('H. pylori (+)')), 
-      expression(bolditalic('H. pylori (-)')))) +
+      expression(italic('H. pylori (+)')), 
+      expression(italic('H. pylori (-)')))) +
   guides(fill=guide_legend(title="")) +
   geom_errorbar(
     aes(ymin = percent_total, ymax =  percent_total + SEM), width = 0.3, size = 1.5
@@ -217,8 +220,7 @@ p <- df %>%
   ylab(expression(atop("Age-corrected Plasma",'IL-8 (pg)'))) +
   xlab('') +
   scale_y_continuous(
-    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6)) #+ ggtitle('Plasma') +
-  theme_classic() +
+    breaks = get_breaks(by = 2, from = 0), limits = c(0, 6)) + #+ ggtitle('Plasma') +
   theme(
     text = element_text(size=30),
     plot.title = element_text(hjust = 0.5),
@@ -232,8 +234,8 @@ save_image(plot = p, x= 'Figures2b')
 p <- dot_plot(figs2[[3]], x = 'hp_status', y= 'Plasma_il8_pg',
               y.by = 500, y.from = 0, ylim = c(0, 1500)) +
   scale_x_discrete(labels = c(
-    expression(bolditalic('H. pylori (-)')), 
-    expression(bolditalic('H. pylori (+)')))) + 
+    expression(italic('H. pylori (-)')), 
+    expression(italic('H. pylori (+)')))) + 
   theme_classic() +
   theme(
     text = element_text(size=30),

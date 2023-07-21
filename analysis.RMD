@@ -712,10 +712,10 @@ treatment_site = ggplot(data,aes(x=PC1, y=PC2, color=interaction(Treatment,site)
 geom_point(alpha=0.8, size=5) + 
   scale_color_manual(name="Status",
                     labels = c(
-                      expression(paste(italic("H. pylori"), "(-) Oral")),
-                      expression(paste(italic("H. pylori"), "(+) Oral")),
                       expression(paste(italic("H. pylori"), "(-) Lung")),
-                      expression(paste(italic("H. pylori"), "(+) Lung"))),
+                      expression(paste(italic("H. pylori"), "(+) Lung")),
+                      expression(paste(italic("H. pylori"), "(-) Oral")),
+                      expression(paste(italic("H. pylori"), "(+) Oral"))),
                      values=c("green", "purple", "orange", "blue")) + 
   labs(x = PC1, y = PC2) + 
   analysis_theme
@@ -810,10 +810,10 @@ p <- ggplot(df, aes_string(x = "Site_status", y = "Value", col="Site_status")) +
             geom_point(size=4) +
   scale_color_manual(name="Status",
                     labels = c(
-                      expression(paste(italic("H. pylori"), "(-) Oral")),
-                      expression(paste(italic("H. pylori"), "(+) Oral")),
                       expression(paste(italic("H. pylori"), "(-) Lung")),
-                      expression(paste(italic("H. pylori"), "(+) Lung"))),
+                      expression(paste(italic("H. pylori"), "(+) Lung")),
+                      expression(paste(italic("H. pylori"), "(-) Oral")),
+                      expression(paste(italic("H. pylori"), "(+) Oral"))),
                      values=c("green", "purple", "orange", "blue")) +
             labs(x = "", y = "Shannon") +
   theme_classic() +

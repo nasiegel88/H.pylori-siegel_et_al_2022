@@ -442,7 +442,8 @@ p + ggtitle(title)
 ### Relative abundance of differential taxa
 
 ```{r cache=F, echo=F}
-p <- t1$plot_diff_abund(use_number = 1:10) +
+p <- t1$plot_diff_abund(use_number = 1:10,
+                        add_significance = TRUE) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   guides(colour = "none") +
   scale_fill_manual(name="Status",
@@ -546,7 +547,8 @@ p + ggtitle(title)
 ### Relative abundance of differential taxa
 
 ```{r echo=F}
-p <- t1$plot_diff_abund(use_number = 1:10) +
+p <- t1$plot_diff_abund(use_number = 1:10, 
+                        add_significance = TRUE) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   guides(colour = "none") +
   scale_fill_manual(name="Status",
@@ -647,7 +649,8 @@ p + ggtitle(title)
 ### Relative abundance of differential taxa
 
 ```{r echo=F}
-p <- t1$plot_diff_abund(use_number = 1:10) +
+p <- t1$plot_diff_abund(use_number = 1:10,
+                        add_significance = TRUE) +
   scale_colour_manual(values=c("black", "black", "black", "black")) +
   guides(colour = "none") +
   scale_fill_manual(name="Status",

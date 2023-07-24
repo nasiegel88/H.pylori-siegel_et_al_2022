@@ -11,3 +11,6 @@ Rscript -e "library(devtools)"
 Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('CharlieCarpenter/tidyMicro@0e6f7b5', build_vignettes = FALSE, upgrade = 'never'))"
 Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('jbisanz/qiime2R@2a3cee1', upgrade = 'never'))"
 Rscript -e "withr::with_libpaths(new = '/srv/conda/envs/notebook/lib/R/library', devtools::install_github('ChiLiubio/microeco@e9e8bcd', upgrade = 'never'))"
+
+
+# https://github.com/ChiLiubio/microeco/commits/master?after=14a1544ddb357b6b5e74141fa90fc8cb716f17da+454&branch=master&qualified_name=refs%2Fheads%2Fmaster

@@ -251,3 +251,43 @@ p <- dot_plot(figs2[[3]], x = 'hp_status', y= 'Plasma_il8_pg',
   xlab('') #+ ggtitle('Plasma')
 
 save_image(plot = p, x= 'Figures2c')
+###############################################################################
+library(sjPlot)
+library(lmerTest)
+library(dplyr)
+
+
+df <- read.delim('data/il8_model.csv', sep = ',')
+
+
+fit <- df %>%
+  drop_na() %>%
+  mutate(Status = factor(Status)) %>%
+  mutate(
+    Status = str_replace(Status, "yes", "H. pylori (+)"),
+    Status = str_replace(Status, "no", "H. pylori (-)")
+  ) %>%
+  lmerTest::lmer(IL8 ~ Age..Days.*Status + (1|Age..Days.), data=.) 
+
+p <- fit %>%
+  plot_model(type = "pred", title ="", terms = c('Age..Days.', 'Status'),
+             colors = c("#00468BFF", "#ED0000FF"), show.data=TRUE)+
+  xlab("Age (day)") +
+  ylab("Plasma IL-8 (pg)") +
+  theme_classic() +
+  theme(
+    legend.text = element_text(face = "italic"),
+    text = element_text(size=30),
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x=element_text(size=25),
+    axis.text.y=element_text(size=25)
+  )
+
+save_image(p, "Figures3a")
+
+dt <- anova(fit)
+table <- dt %>% 
+  as.data.frame() %>%
+  mutate_if(is.numeric, round, digits = 3) 
+row.names(table) <- c('Age (days)', 'Status', 'Age (days):Status')
+write.csv(table,file.path('results',  paste0('il8_age_status_regression','.csv')))
